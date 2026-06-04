@@ -38,9 +38,6 @@ export default function Home() {
   // As scroll progress goes from 0 to 0.45, scale the Hero content from 1 to 10 and fade out.
   const heroScale = useTransform(scrollYProgress, [0, 0.45], [1, 10]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]);
-  const heroDisplay = useTransform(scrollYProgress, (progress) =>
-    progress >= 0.48 ? "none" : "flex"
-  );
 
   // Marquees: scale up and move apart as the hero zooms in
   const marqueeScale = useTransform(scrollYProgress, [0, 0.35], [1, 3]);
@@ -51,14 +48,23 @@ export default function Home() {
   // Background particles: dim/fade opacity slightly as we enter the content zone
   const bgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
 
-  // About Me Section: appears as hero zooms out, aligned with card animation start
-  const aboutOpacity = useTransform(scrollYProgress, [0.25, 0.35], [0, 1]);
+  // About Me Section: appears once scroll passes 25%, stays visible
   const aboutDisplay = useTransform(scrollYProgress, (progress) =>
     progress < 0.25 ? "none" : "flex"
   );
+  // Card slides up from below the viewport
+  const aboutCardY = useTransform(scrollYProgress, (v) => {
+    if (v <= 0.25) return 1200;
+    if (v >= 0.45) return 0;
+    return 1200 - (v - 0.25) / 0.20 * 1200;
+  });
 
-  // Map the master scroll [0.4, 0.95] to [0, 1] for the Card Scroll Animation inside ContainerScroll
-  const cardProgress = useTransform(scrollYProgress, [0.25, 0.98], [0, 1]);
+  // Map the master scroll [0.25, 0.98] to [0, 1] for the Card Scroll Animation inside ContainerScroll
+  const cardProgress = useTransform(scrollYProgress, (v) => {
+    if (v <= 0.25) return 0;
+    if (v >= 0.98) return 1;
+    return (v - 0.25) / 0.73;
+  });
 
   return (
     <div ref={containerRef} className="relative w-full h-[320vh] bg-transparent">
@@ -87,8 +93,8 @@ export default function Home() {
         <ParticleBackground />
       </motion.div>
 
-      {/* Sticky Viewport Container */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none">
+      {/* Fixed Viewport Container — stays in view regardless of scroll distance */}
+      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none">
         
         {/* Curved Marquees - scale up and move apart as hero zooms in */}
         <motion.div
@@ -117,8 +123,6 @@ export default function Home() {
           style={{
             scale: heroScale,
             opacity: heroOpacity,
-            display: heroDisplay,
-            pointerEvents: "auto",
           }}
           className="absolute inset-0 flex items-center justify-center"
         >
@@ -131,18 +135,23 @@ export default function Home() {
           </main>
         </motion.div>
 
-        {/* About Me Section Wrapper */}
+        {/* About Me Background — dark canvas, always 100% opacity when visible */}
+        <motion.div
+          style={{ display: aboutDisplay }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <ParticleBackgroundMono />
+        </motion.div>
+
+        {/* About Me Card — slides up from below viewport */}
         <motion.div
           style={{
             display: aboutDisplay,
-            opacity: aboutOpacity,
+            y: aboutCardY,
             pointerEvents: "auto",
           }}
           className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
         >
-          {/* B&W particle canvas — fills the About Me panel only */}
-          <ParticleBackgroundMono />
-
           <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
             <ContainerScroll progress={cardProgress}>
               <TerminalAbout progress={cardProgress} />

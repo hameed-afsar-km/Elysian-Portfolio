@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { useState } from "react";
+import { MotionValue, useMotionValueEvent } from "framer-motion";
 
 type LineType = "command" | "output" | "loading" | "success" | "empty";
 
@@ -28,77 +29,69 @@ const lines: TerminalLineData[] = [
   { text: "digital products, and ambitious ideas.", type: "output" },
 ];
 
-const totalLines = lines.length;
-
 const promptPrefix = "visitor@portfolio:~$ ";
 
-function TerminalLine({
-  line,
-  index,
-  progress,
-}: {
-  line: TerminalLineData;
-  index: number;
-  progress: MotionValue<number>;
-}) {
-  const threshold = index / totalLines;
-  const nextThreshold = (index + 1) / totalLines;
-
-  const lineProgress = useTransform(progress, [threshold, nextThreshold], [0, 1]);
-  const opacity = useTransform(lineProgress, [0, 0.3], [0, 1]);
-  const y = useTransform(lineProgress, [0, 1], [8, 0]);
-
-  if (line.type === "empty") {
+function TerminalLine({ line, visible }: { line: TerminalLineData; visible: boolean }) {
+  const content = (() => {
+    if (line.type === "empty") {
+      return null;
+    }
     return (
-      <motion.div
-        style={{ opacity, y }}
-        className="terminal-empty-line"
-      />
+      <>
+        {line.type === "command" && (
+          <>
+            <span className="terminal-prompt">
+              <span className="tp-user">visitor</span>
+              <span className="tp-at">@</span>
+              <span className="tp-host">portfolio</span>
+              <span className="tp-colon">:</span>
+              <span className="tp-path">~</span>
+              <span className="tp-dollar">$</span>
+            </span>
+            <span className="terminal-cmd-text">
+              {line.text.replace(promptPrefix, "")}
+            </span>
+          </>
+        )}
+        {line.type === "loading" && (
+          <>
+            <span className="terminal-spinner">&#x27F3;</span>
+            <span className="terminal-loading-text"> {line.text}</span>
+          </>
+        )}
+        {line.type === "success" && (
+          <>
+            <span className="terminal-checkmark">&#x2713;</span>
+            <span className="terminal-success-text"> {line.text}</span>
+          </>
+        )}
+        {line.type === "output" && (
+          <span className="terminal-output-text">{line.text}</span>
+        )}
+      </>
     );
-  }
+  })();
 
   return (
-    <motion.div
-      style={{ opacity, y }}
-      className="terminal-line"
+    <div
+      className={line.type === "empty" ? "terminal-empty-line" : "terminal-line"}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(6px)",
+        transition: "opacity 0.35s ease, transform 0.35s ease",
+      }}
     >
-      {line.type === "command" && (
-        <>
-          <span className="terminal-prompt">
-            <span className="tp-user">visitor</span>
-            <span className="tp-at">@</span>
-            <span className="tp-host">portfolio</span>
-            <span className="tp-colon">:</span>
-            <span className="tp-path">~</span>
-            <span className="tp-dollar">$</span>
-          </span>
-          <span className="terminal-cmd-text">
-            {line.text.replace(promptPrefix, "")}
-          </span>
-        </>
-      )}
-      {line.type === "loading" && (
-        <>
-          <span className="terminal-spinner">&#x27F3;</span>
-          <span className="terminal-loading-text"> {line.text}</span>
-        </>
-      )}
-      {line.type === "success" && (
-        <>
-          <span className="terminal-checkmark">&#x2713;</span>
-          <span className="terminal-success-text"> {line.text}</span>
-        </>
-      )}
-      {line.type === "output" && (
-        <span className="terminal-output-text">{line.text}</span>
-      )}
-    </motion.div>
+      {content}
+    </div>
   );
 }
 
 export function TerminalAbout({ progress }: { progress: MotionValue<number> }) {
-  const showCursor = useTransform(progress, [0.97, 1], [0, 1]);
-  const cursorOpacity = useTransform(showCursor, [0, 1], [0, 1]);
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useMotionValueEvent(progress, "change", (latest) => {
+    setVisibleCount(Math.min(Math.floor(latest * lines.length), lines.length));
+  });
 
   return (
     <div className="terminal-wrap">
@@ -116,19 +109,9 @@ export function TerminalAbout({ progress }: { progress: MotionValue<number> }) {
         </div>
         <div className="terminal-body">
           {lines.map((line, i) => (
-            <TerminalLine
-              key={i}
-              line={line}
-              index={i}
-              progress={progress}
-            />
+            <TerminalLine key={i} line={line} visible={i < visibleCount} />
           ))}
-          <motion.span
-            style={{ opacity: cursorOpacity }}
-            className="terminal-cursor"
-          >
-            _
-          </motion.span>
+          {visibleCount >= lines.length && <span className="terminal-cursor">_</span>}
         </div>
       </div>
     </div>
