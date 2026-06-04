@@ -54,7 +54,7 @@ export default function ParticleBackgroundMono() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-        ctx.strokeStyle = "rgba(15, 15, 20, 0.14)";
+        ctx.strokeStyle = "rgba(236, 232, 225, 0.10)";
         ctx.lineWidth = 1;
         if (this.type === "circle") {
           ctx.beginPath(); ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2); ctx.stroke();
@@ -82,8 +82,8 @@ export default function ParticleBackgroundMono() {
       if (!ctx) return;
       time++;
 
-      // White background — B&W mirror of the red hero background
-      ctx.fillStyle = "#f5f5f5";
+      // Dark background — inverted from the original white
+      ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, width, height);
 
       const spacing = 80;
@@ -97,13 +97,13 @@ export default function ParticleBackgroundMono() {
 
           let angleOffset = 0;
           let scale = 1;
-          let color = "rgba(15, 15, 20, 0.13)";
+          let color = "rgba(236, 232, 225, 0.10)";
 
           if (dist < 180) {
             const factor = (180 - dist) / 180;
             angleOffset = factor * 0.5;
             scale = 1 + factor * 2.5;
-            color = `rgba(15, 15, 20, ${0.13 + factor * 0.55})`;
+            color = `rgba(236, 232, 225, ${0.10 + factor * 0.50})`;
           }
 
           ctx.save();
@@ -117,7 +117,7 @@ export default function ParticleBackgroundMono() {
           ctx.restore();
 
           if ((Math.floor(x) % 240 === 0) && (Math.floor(y) % 240 === 0)) {
-            ctx.fillStyle = "rgba(15, 15, 20, 0.28)";
+            ctx.fillStyle = "rgba(236, 232, 225, 0.20)";
             ctx.font = "8px monospace";
             ctx.fillText(`[${Math.floor(x)},${Math.floor(y)}]`, x + 10, y + 3);
           }

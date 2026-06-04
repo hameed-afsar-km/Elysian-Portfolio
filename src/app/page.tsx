@@ -51,9 +51,10 @@ export default function Home() {
   // Background particles: dim/fade opacity slightly as we enter the content zone
   const bgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
 
-  // About Me Section: visible after hero zooms out
+  // About Me Section: appears as hero zooms out, aligned with card animation start
+  const aboutOpacity = useTransform(scrollYProgress, [0.25, 0.35], [0, 1]);
   const aboutDisplay = useTransform(scrollYProgress, (progress) =>
-    progress < 0.3 ? "none" : "flex"
+    progress < 0.25 ? "none" : "flex"
   );
 
   // Map the master scroll [0.4, 0.95] to [0, 1] for the Card Scroll Animation inside ContainerScroll
@@ -134,6 +135,7 @@ export default function Home() {
         <motion.div
           style={{
             display: aboutDisplay,
+            opacity: aboutOpacity,
             pointerEvents: "auto",
           }}
           className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
