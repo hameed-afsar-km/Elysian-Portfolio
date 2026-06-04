@@ -166,9 +166,8 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 4vh;
   position: relative;
   z-index: 10;
   opacity: 0;
