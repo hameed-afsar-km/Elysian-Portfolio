@@ -31,7 +31,8 @@ body {
   padding: 0;
   background-color: var(--val-dark);
   color: var(--val-light);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* ─── Loader ───────────────────────────────────────────── */
@@ -466,4 +467,179 @@ body {
     margin: auto 0;
     transform: rotate(-2deg);
   }
+}
+
+/* ─── About Me HUD Section ──────────────────────────────── */
+.about-section {
+  position: relative;
+  background-color: var(--val-dark);
+  padding: 6rem 1rem;
+  z-index: 20;
+  width: 100%;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding: 1.5rem;
+  height: 100%;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1.2fr 1.8fr;
+    gap: 3.5rem;
+    padding: 2.5rem;
+  }
+}
+
+.about-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  max-height: 480px;
+  border: 1px solid rgba(255, 70, 85, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 70, 85, 0.1);
+  background-color: rgba(8, 8, 16, 0.8);
+}
+
+.about-image-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 70, 85, 0.15) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* HUD Scanning line */
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.about-image-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--val-red);
+  box-shadow: 0 0 10px var(--val-red);
+  animation: scanLine 4s linear infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hud-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--val-red);
+  z-index: 4;
+}
+
+.hud-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+.hud-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+.hud-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+.hud-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  color: var(--val-light);
+  font-family: 'Droid Sans', sans-serif;
+  text-align: left;
+}
+
+.hud-tag {
+  display: inline-block;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--val-red);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: -0.5rem;
+}
+
+.about-title {
+  font-family: 'Droid 1997', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--val-light);
+  margin: 0;
+}
+
+.about-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--val-gray);
+  margin: 0;
+}
+
+.about-desc strong {
+  color: var(--val-light);
+}
+
+.hud-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.hud-metric-card {
+  border: 1px solid rgba(236, 232, 225, 0.08);
+  background-color: rgba(8, 8, 16, 0.4);
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'Droid Sans Mono', monospace;
+}
+
+.hud-metric-label {
+  font-size: 0.7rem;
+  color: var(--val-gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hud-metric-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--val-red);
+  margin-top: 0.25rem;
+}
+
+.hud-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.hud-skill-badge {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(255, 70, 85, 0.06);
+  border: 1px solid rgba(255, 70, 85, 0.25);
+  border-radius: 4px;
+  color: var(--val-light);
+  transition: all 0.3s ease;
+}
+
+.hud-skill-badge:hover {
+  background-color: var(--val-red);
+  color: var(--val-dark);
+  box-shadow: 0 0 15px rgba(255, 70, 85, 0.4);
+  border-color: var(--val-red);
 }
