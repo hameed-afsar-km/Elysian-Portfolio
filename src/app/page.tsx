@@ -41,6 +41,12 @@ export default function Home() {
     progress >= 0.48 ? "none" : "flex"
   );
 
+  // Marquees: scale up and move apart as the hero zooms in
+  const marqueeScale = useTransform(scrollYProgress, [0, 0.35], [1, 3]);
+  const marqueeAY = useTransform(scrollYProgress, [0, 0.35], [0, -600]);
+  const marqueeBY = useTransform(scrollYProgress, [0, 0.35], [0, 600]);
+  const marqueeOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
   // Background particles: dim/fade opacity slightly as we enter the content zone
   const bgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
 
@@ -85,6 +91,28 @@ export default function Home() {
       {/* Sticky Viewport Container */}
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none">
         
+        {/* Curved Marquees - scale up and move apart as hero zooms in */}
+        <motion.div
+          style={{
+            scale: marqueeScale,
+            y: marqueeBY,
+            opacity: marqueeOpacity,
+          }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]"
+        >
+          <CurvedMarquee ribbon="b" />
+        </motion.div>
+        <motion.div
+          style={{
+            scale: marqueeScale,
+            y: marqueeAY,
+            opacity: marqueeOpacity,
+          }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-[6]"
+        >
+          <CurvedMarquee ribbon="a" />
+        </motion.div>
+
         {/* Hero Section Wrapper */}
         <motion.div
           style={{
@@ -96,7 +124,6 @@ export default function Home() {
           className="absolute inset-0 flex items-center justify-center"
         >
           <main className="hero-container">
-            <CurvedMarquee />
             <h1 className="val-heading">
               <span className="word-wrap"><span>THINK</span></span>
               <span className="word-wrap"><span>MAKE</span></span>
