@@ -34,9 +34,7 @@ export default function Navbar() {
       className={`hud-link-item ${activeId === item.id ? "active" : ""}`}
       onClick={(e) => handleLinkClick(item.id, item.href, e)}
     >
-      <span className="hud-bracket-l">[</span>
       <span className="hud-link-label">{item.label}</span>
-      <span className="hud-bracket-r">]</span>
     </a>
   );
 

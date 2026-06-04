@@ -21,10 +21,16 @@ export default function Home() {
       <ParticleBackground />
 
       <main className="hero-container">
+        <div className="marquee">
+          <div className="marquee-track">
+            <span>AI SYSTEMS • AI AGENTS • AUTOMATION • DIGITAL EXPERIENCES •</span>
+            <span>AI SYSTEMS • AI AGENTS • AUTOMATION • DIGITAL EXPERIENCES •</span>
+          </div>
+        </div>
         <h1 className="val-heading">
-          <span className="word-wrap"><span>THINK.</span></span>
-          <span className="word-wrap"><span>MAKE.</span></span>
-          <span className="word-wrap"><span>REPEAT.</span></span>
+          <span className="word-wrap"><span>THINK</span></span>
+          <span className="word-wrap"><span>MAKE</span></span>
+          <span className="word-wrap"><span>REPEAT</span></span>
         </h1>
       </main>
     </>
