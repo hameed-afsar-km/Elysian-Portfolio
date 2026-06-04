@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
-import Image from "next/image";
 import ParticleBackground from "@/components/ParticleBackground";
+import ParticleBackgroundMono from "@/components/ParticleBackgroundMono";
 import CurvedMarquee from "@/components/CurvedMarquee";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { TerminalAbout } from "@/components/TerminalAbout";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -50,16 +51,13 @@ export default function Home() {
   // Background particles: dim/fade opacity slightly as we enter the content zone
   const bgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
 
-  // About Me Section transitions:
-  // As scroll progress goes from 0.35 to 0.5, fade in and scale up the About Me content.
-  const aboutOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 1]);
-  const aboutScale = useTransform(scrollYProgress, [0.35, 0.5], [0.75, 1]);
+  // About Me Section: visible after hero zooms out
   const aboutDisplay = useTransform(scrollYProgress, (progress) =>
     progress < 0.3 ? "none" : "flex"
   );
 
-  // Map the master scroll [0.5, 0.95] to [0, 1] for the Card Scroll Animation inside ContainerScroll
-  const cardProgress = useTransform(scrollYProgress, [0.5, 0.95], [0, 1]);
+  // Map the master scroll [0.4, 0.95] to [0, 1] for the Card Scroll Animation inside ContainerScroll
+  const cardProgress = useTransform(scrollYProgress, [0.25, 0.98], [0, 1]);
 
   return (
     <div ref={containerRef} className="relative w-full h-[320vh] bg-transparent">
@@ -135,74 +133,17 @@ export default function Home() {
         {/* About Me Section Wrapper */}
         <motion.div
           style={{
-            opacity: aboutOpacity,
-            scale: aboutScale,
             display: aboutDisplay,
             pointerEvents: "auto",
           }}
-          className="absolute inset-0 w-full h-full flex items-center justify-center"
+          className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
         >
-          <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
-            <ContainerScroll
-              progress={cardProgress}
-              titleComponent={
-                <div className="mb-4">
-                  <span className="hud-tag">SYSTEM DOS // INITIALIZED</span>
-                  <h2 className="text-3xl md:text-5xl font-bold mt-2 font-mono text-white tracking-widest">
-                    CORE SYSTEM FILE
-                  </h2>
-                </div>
-              }
-            >
-              <div className="about-grid">
-                {/* Left Column: Avatar with HUD effect */}
-                <div className="about-image-wrap">
-                  <div className="hud-corner tl"></div>
-                  <div className="hud-corner tr"></div>
-                  <div className="hud-corner bl"></div>
-                  <div className="hud-corner br"></div>
-                  <Image
-                    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000"
-                    alt="Afsar Dev Profile"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover opacity-80"
-                    priority
-                  />
-                </div>
+          {/* B&W particle canvas — fills the About Me panel only */}
+          <ParticleBackgroundMono />
 
-                {/* Right Column: Bio details */}
-                <div className="about-content">
-                  <span className="hud-tag">USER PROFILE // AFSAR</span>
-                  <h3 className="about-title">CREATIVE DEVELOPER</h3>
-                  <p className="about-desc">
-                    I build next-generation <strong>AI agents, autonomous systems,</strong> and high-performance digital architectures. Bridging the gap between intelligent reasoning engines and beautiful user interfaces is my core specialty.
-                  </p>
-                  
-                  <div className="hud-metrics">
-                    <div className="hud-metric-card">
-                      <div className="hud-metric-label">Location</div>
-                      <div className="hud-metric-value">Earth / Remote</div>
-                    </div>
-                    <div className="hud-metric-card">
-                      <div className="hud-metric-label">Status</div>
-                      <div className="hud-metric-value">Online / Active</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-2">
-                    <span className="hud-tag">TECH STACK DIRECTORY</span>
-                    <div className="hud-skills">
-                      <span className="hud-skill-badge">Next.js</span>
-                      <span className="hud-skill-badge">React 19</span>
-                      <span className="hud-skill-badge">Tailwind v4</span>
-                      <span className="hud-skill-badge">TypeScript</span>
-                      <span className="hud-skill-badge">Framer Motion</span>
-                      <span className="hud-skill-badge">AI Integration</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
+            <ContainerScroll progress={cardProgress}>
+              <TerminalAbout progress={cardProgress} />
             </ContainerScroll>
           </div>
         </motion.div>

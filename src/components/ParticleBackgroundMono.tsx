@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function ParticleBackground() {
+export default function ParticleBackgroundMono() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -11,22 +11,20 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = (canvas.width = window.innerWidth);
+    // The About Me panel is absolute inset-0 inside a h-screen sticky container,
+    // so it always equals the viewport. Use window dimensions directly to avoid
+    // the 0×0 bug that occurs when the parent has display:none at mount time.
+    let width  = (canvas.width  = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     let animationId: number;
     let time = 0;
-    let isVisible = true;
 
     const mouse = { x: -1000, y: -1000, active: false };
 
+    // ── Floating outline shapes (same geometry as hero ParticleBackground) ──
     class FloatingShape {
-      x: number;
-      y: number;
-      size: number;
-      vx: number;
-      vy: number;
-      angle: number;
-      rotationSpeed: number;
+      x: number; y: number; size: number;
+      vx: number; vy: number; angle: number; rotationSpeed: number;
       type: "circle" | "square" | "triangle" | "crosshair";
 
       constructor() {
@@ -37,16 +35,14 @@ export default function ParticleBackground() {
         this.vy = (Math.random() - 0.5) * 0.4;
         this.angle = Math.random() * Math.PI * 2;
         this.rotationSpeed = (Math.random() - 0.5) * 0.005;
-        
-        const types: ("circle" | "square" | "triangle" | "crosshair")[] = ["circle", "square", "triangle", "crosshair"];
+        const types: ("circle" | "square" | "triangle" | "crosshair")[] = [
+          "circle", "square", "triangle", "crosshair",
+        ];
         this.type = types[Math.floor(Math.random() * types.length)];
       }
 
       update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.angle += this.rotationSpeed;
-
+        this.x += this.vx; this.y += this.vy; this.angle += this.rotationSpeed;
         if (this.x < -this.size) this.x = width + this.size;
         if (this.x > width + this.size) this.x = -this.size;
         if (this.y < -this.size) this.y = height + this.size;
@@ -58,13 +54,10 @@ export default function ParticleBackground() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-        ctx.strokeStyle = "rgba(7, 7, 11, 0.18)";
+        ctx.strokeStyle = "rgba(15, 15, 20, 0.14)";
         ctx.lineWidth = 1;
-
         if (this.type === "circle") {
-          ctx.beginPath();
-          ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-          ctx.stroke();
+          ctx.beginPath(); ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2); ctx.stroke();
         } else if (this.type === "square") {
           ctx.strokeRect(-this.size / 2, -this.size / 2, this.size, this.size);
         } else if (this.type === "triangle") {
@@ -72,15 +65,13 @@ export default function ParticleBackground() {
           ctx.moveTo(0, -this.size / 2);
           ctx.lineTo(this.size / 2, this.size / 2);
           ctx.lineTo(-this.size / 2, this.size / 2);
-          ctx.closePath();
-          ctx.stroke();
-        } else if (this.type === "crosshair") {
+          ctx.closePath(); ctx.stroke();
+        } else {
           ctx.beginPath();
           ctx.moveTo(-this.size / 2, 0); ctx.lineTo(this.size / 2, 0);
           ctx.moveTo(0, -this.size / 2); ctx.lineTo(0, this.size / 2);
           ctx.stroke();
         }
-
         ctx.restore();
       }
     }
@@ -89,13 +80,10 @@ export default function ParticleBackground() {
 
     function animate() {
       if (!ctx) return;
-      if (!isVisible) {
-        animationId = requestAnimationFrame(animate);
-        return;
-      }
       time++;
 
-      ctx.fillStyle = "#ff4655";
+      // White background — B&W mirror of the red hero background
+      ctx.fillStyle = "#f5f5f5";
       ctx.fillRect(0, 0, width, height);
 
       const spacing = 80;
@@ -106,64 +94,49 @@ export default function ParticleBackground() {
           const dx = mouse.x - x;
           const dy = mouse.y - y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          
+
           let angleOffset = 0;
           let scale = 1;
-          let color = "rgba(7, 7, 11, 0.15)";
+          let color = "rgba(15, 15, 20, 0.13)";
 
           if (dist < 180) {
             const factor = (180 - dist) / 180;
             angleOffset = factor * 0.5;
             scale = 1 + factor * 2.5;
-            color = `rgba(7, 7, 11, ${0.15 + factor * 0.55})`;
+            color = `rgba(15, 15, 20, ${0.13 + factor * 0.55})`;
           }
 
           ctx.save();
           ctx.translate(x, y);
           ctx.rotate(angleOffset + time * 0.002);
           ctx.strokeStyle = color;
-
           ctx.beginPath();
           ctx.moveTo(-4 * scale, 0); ctx.lineTo(4 * scale, 0);
           ctx.moveTo(0, -4 * scale); ctx.lineTo(0, 4 * scale);
           ctx.stroke();
-
           ctx.restore();
 
           if ((Math.floor(x) % 240 === 0) && (Math.floor(y) % 240 === 0)) {
-            ctx.fillStyle = "rgba(7, 7, 11, 0.35)";
+            ctx.fillStyle = "rgba(15, 15, 20, 0.28)";
             ctx.font = "8px monospace";
-            ctx.fillText(
-              `[${Math.floor(x)},${Math.floor(y)}]`,
-              x + 10,
-              y + 3
-            );
+            ctx.fillText(`[${Math.floor(x)},${Math.floor(y)}]`, x + 10, y + 3);
           }
         }
       }
 
-      for (const shape of shapes) {
-        shape.update();
-        shape.draw();
-      }
-
+      for (const shape of shapes) { shape.update(); shape.draw(); }
       animationId = requestAnimationFrame(animate);
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
       mouse.active = true;
     };
-
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-      mouse.active = false;
-    };
-
+    const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.active = false; };
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
+      width  = canvas.width  = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
 
@@ -171,19 +144,10 @@ export default function ParticleBackground() {
     window.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("resize", handleResize);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-      },
-      { threshold: 0 }
-    );
-    observer.observe(canvas);
-
     animate();
 
     return () => {
       cancelAnimationFrame(animationId);
-      observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);
@@ -194,13 +158,14 @@ export default function ParticleBackground() {
     <canvas
       ref={canvasRef}
       style={{
-        position: "fixed",
+        position: "absolute",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
         zIndex: 0,
-        pointerEvents: "none", // Avoid intercepting clicks so page works fine
+        pointerEvents: "none",
+        display: "block",
       }}
     />
   );

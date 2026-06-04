@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useScroll, useTransform, motion } from "framer-motion";
 
 const LEFT_ITEMS = [
   { id: "home", label: "Home", href: "/" },
@@ -22,6 +23,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const { scrollYProgress } = useScroll();
+  const navY = useTransform(scrollYProgress, [0.25, 0.32], [0, -120]);
+  const navPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.32 ? "none" : "auto"));
+
   const handleLinkClick = (id: string, href: string, e: React.MouseEvent) => {
     if (href === "/") e.preventDefault();
     setActiveId(id);
@@ -39,7 +44,9 @@ export default function Navbar() {
   );
 
   return (
-    <nav className={`hud-nav-wrap ${scrolled ? "scrolled" : ""}`}>
+    <motion.nav
+      style={{ x: "-50%", y: navY, pointerEvents: navPointerEvents }}
+      className={`hud-nav-wrap ${scrolled ? "scrolled" : ""}`}>
       <div className="hud-nav-container">
         <div className="hud-section hud-section-left">
           {LEFT_ITEMS.map(renderLink)}
@@ -52,6 +59,6 @@ export default function Navbar() {
           {RIGHT_ITEMS.map(renderLink)}
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

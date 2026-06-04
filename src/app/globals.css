@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Orbitron:wght@800;900&family=Syne:wght@700;800&family=Barlow+Condensed:wght@700;800;900&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -6,6 +5,7 @@
   src: url('/fonts/Droid1997.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -13,6 +13,7 @@
   src: url('/fonts/LEDLIGHT.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
@@ -99,6 +100,7 @@ body {
   justify-content: center;
   animation: loaderFadeOut 0.01s forwards 3.3s;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .loader-stripes {
@@ -265,7 +267,6 @@ body {
   position: fixed;
   top: 2rem;
   left: 50%;
-  transform: translateX(-50%);
   width: auto;
   min-width: 600px;
   max-width: 90vw;
@@ -500,10 +501,10 @@ body {
   width: 100%;
   aspect-ratio: 4/5;
   max-height: 480px;
-  border: 1px solid rgba(255, 70, 85, 0.3);
+  border: 1px solid rgba(236, 232, 225, 0.15);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 30px rgba(255, 70, 85, 0.1);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
   background-color: rgba(8, 8, 16, 0.8);
 }
 
@@ -511,7 +512,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(255, 70, 85, 0.15) 50%);
+  background: linear-gradient(to bottom, transparent 50%, rgba(236, 232, 225, 0.06) 50%);
   background-size: 100% 4px;
   z-index: 2;
   pointer-events: none;
@@ -531,8 +532,8 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background-color: var(--val-red);
-  box-shadow: 0 0 10px var(--val-red);
+  background-color: rgba(236, 232, 225, 0.4);
+  box-shadow: 0 0 10px rgba(236, 232, 225, 0.15);
   animation: scanLine 4s linear infinite;
   z-index: 3;
   pointer-events: none;
@@ -542,7 +543,7 @@ body {
   position: absolute;
   width: 12px;
   height: 12px;
-  border: 2px solid var(--val-red);
+  border: 2px solid rgba(236, 232, 225, 0.3);
   z-index: 4;
 }
 
@@ -630,16 +631,185 @@ body {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.75rem;
   padding: 0.4rem 0.8rem;
-  background-color: rgba(255, 70, 85, 0.06);
-  border: 1px solid rgba(255, 70, 85, 0.25);
+  background-color: rgba(236, 232, 225, 0.06);
+  border: 1px solid rgba(236, 232, 225, 0.2);
   border-radius: 4px;
   color: var(--val-light);
   transition: all 0.3s ease;
 }
 
 .hud-skill-badge:hover {
-  background-color: var(--val-red);
+  background-color: var(--val-light);
   color: var(--val-dark);
-  box-shadow: 0 0 15px rgba(255, 70, 85, 0.4);
-  border-color: var(--val-red);
+  box-shadow: 0 0 15px rgba(236, 232, 225, 0.3);
+  border-color: var(--val-light);
+}
+
+/* ─── Terminal About Section ──────────────────────────────── */
+.terminal-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.terminal-window {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Droid Sans Mono', monospace;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.03);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #121212;
+  border-bottom: 1px solid #2a2a2a;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.terminal-titlebar-text {
+  color: #666;
+  font-size: 0.7rem;
+  font-family: 'Droid Sans Mono', monospace;
+  text-align: center;
+  flex: 1;
+  letter-spacing: 0.5px;
+}
+
+.terminal-titlebar-spacer {
+  width: 48px;
+  flex-shrink: 0;
+}
+
+.terminal-body {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  justify-content: center;
+}
+
+.terminal-line {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-empty-line {
+  height: 0.4rem;
+}
+
+/* Prompt */
+.terminal-prompt {
+  display: inline;
+}
+
+.tp-user { color: #00ff41; }
+.tp-at { color: #555; }
+.tp-host { color: #00ff41; }
+.tp-colon { color: #555; }
+.tp-path { color: #555; }
+.tp-dollar { color: var(--val-red); }
+
+.terminal-cmd-text {
+  color: var(--val-light);
+  margin-left: 0.25rem;
+}
+
+/* Loading */
+.terminal-spinner {
+  display: inline-block;
+  animation: terminalSpin 1s linear infinite;
+  color: #888;
+}
+
+@keyframes terminalSpin {
+  to { transform: rotate(360deg); }
+}
+
+.terminal-loading-text {
+  color: #888;
+}
+
+/* Success */
+.terminal-checkmark {
+  color: #00ff41;
+}
+
+.terminal-success-text {
+  color: #00ff41;
+}
+
+/* Output */
+.terminal-output-text {
+  color: var(--val-light);
+}
+
+/* Cursor */
+@keyframes terminalBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  color: var(--val-red);
+  font-size: 0.8rem;
+  line-height: 1;
+  animation: terminalBlink 1s step-end infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .terminal-body {
+    padding: 0.75rem;
+    gap: 0.05rem;
+  }
+
+  .terminal-line {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+
+  .terminal-empty-line {
+    height: 0.25rem;
+  }
+
+  .terminal-titlebar {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .terminal-titlebar-text {
+    font-size: 0.6rem;
+  }
 }
