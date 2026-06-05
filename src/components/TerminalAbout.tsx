@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { MotionValue, useMotionValueEvent } from "framer-motion";
+import { useState, useEffect } from "react";
+import { MotionValue, useMotionValueEvent, motion } from "framer-motion";
 
 type LineType = "command" | "output" | "loading" | "success" | "empty";
 
@@ -32,7 +32,7 @@ const lines: TerminalLineData[] = [
 
 const promptPrefix = "visitor@portfolio:~$ ";
 
-function TerminalLine({ line, visible, exiting }: { line: TerminalLineData; visible: boolean; exiting: boolean }) {
+function TerminalLine({ line, visible, exiting, nameY }: { line: TerminalLineData; visible: boolean; exiting: boolean; nameY?: MotionValue<number> }) {
   const content = (() => {
     if (line.type === "empty") {
       return null;
@@ -73,26 +73,33 @@ function TerminalLine({ line, visible, exiting }: { line: TerminalLineData; visi
     );
   })();
 
+  const isName = line.text === "Hameed Afsar KM";
+  const lineY = visible
+    ? exiting
+      ? -12
+      : 0
+    : 6;
+
   return (
-    <div
+    <motion.div
       className={line.type === "empty" ? "terminal-empty-line" : "terminal-line"}
       style={{
-        opacity: visible ? (exiting ? 0 : 1) : 0,
-        transform: visible
-          ? exiting
-            ? "translateY(-12px) scale(0.95)"
-            : "translateY(0)"
-          : "translateY(6px)",
-        filter: visible && exiting ? "blur(4px)" : "none",
-        transition: "opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease",
+        y: isName && nameY ? nameY : lineY,
+        ...(isName ? { outline: "2px solid cyan", outlineOffset: "2px" } : {}),
       }}
+      animate={{
+        opacity: visible ? (exiting ? 0 : 1) : 0,
+        scale: visible ? (exiting ? 0.95 : 1) : 1,
+        filter: visible && exiting ? "blur(4px)" : "none",
+      }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
     >
       {content}
-    </div>
+    </motion.div>
   );
 }
 
-export function TerminalAbout({ progress, exitProgress }: { progress: MotionValue<number>; exitProgress: MotionValue<number> }) {
+export function TerminalAbout({ progress, exitProgress, nameY }: { progress: MotionValue<number>; exitProgress: MotionValue<number>; nameY?: MotionValue<number> }) {
   const [visibleCount, setVisibleCount] = useState(0);
   const [exitAmount, setExitAmount] = useState(0);
 
@@ -103,6 +110,12 @@ export function TerminalAbout({ progress, exitProgress }: { progress: MotionValu
   useMotionValueEvent(exitProgress, "change", (latest) => {
     setExitAmount(latest);
   });
+
+  useEffect(() => {
+    if (!nameY) return;
+    const unsub = nameY.on("change", (v) => console.log("nameY:", v));
+    return unsub;
+  }, [nameY]);
 
   return (
     <div className="terminal-wrap">
@@ -123,7 +136,7 @@ export function TerminalAbout({ progress, exitProgress }: { progress: MotionValu
             const exitThreshold = (lines.length - i) / lines.length;
             const exiting = exitAmount > exitThreshold;
             return (
-              <TerminalLine key={i} line={line} visible={i < visibleCount} exiting={exiting} />
+              <TerminalLine key={i} line={line} visible={i < visibleCount} exiting={exiting} nameY={nameY} />
             );
           })}
           {visibleCount >= lines.length && exitAmount < 0.5 && <span className="terminal-cursor">_</span>}

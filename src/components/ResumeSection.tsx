@@ -291,12 +291,14 @@ export default function ResumeSection() {
           >
             <motion.div
               className="rs-modal"
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
+              <span className="rs-modal-corner rs-modal-corner--bl" />
+              <span className="rs-modal-corner rs-modal-corner--br" />
               <button className="rs-modal-close" onClick={() => setShowViewer(false)}>
                 ✕
               </button>

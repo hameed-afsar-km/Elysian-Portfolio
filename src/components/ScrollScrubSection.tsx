@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useCallback } from "react";
+import { motion, useMotionValue, useTransform, useSpring, useMotionValueEvent, type MotionValue } from "framer-motion";
+import { useLenis } from "lenis/react";
+import type Lenis from "lenis";
 
 // ── Scrub frames configuration ───────────────────────────
 // Place your video frames as numbered images inside public/assets/scrub/
@@ -29,7 +31,7 @@ interface AnimLineProps {
   text: string;
   dir: 1 | -1;
   accent: boolean;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  progress: MotionValue<number>;
   triggerAt: number;
 }
 
@@ -51,10 +53,25 @@ function AnimLine({ text, dir, accent, progress, triggerAt }: AnimLineProps) {
 
 export default function ScrollScrubSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
+  const scrollYProgress = useMotionValue(0);
+
+  useLenis(
+    useCallback((lenis: Lenis) => {
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const elTop = rect.top + lenis.scroll;
+      const elHeight = rect.height;
+      const vh = window.innerHeight;
+      const scrollRange = elHeight - vh;
+      if (scrollRange <= 0) {
+        scrollYProgress.set(0);
+        return;
+      }
+      const p = (lenis.scroll - elTop) / scrollRange;
+      scrollYProgress.set(Math.max(0, Math.min(1, p)));
+    }, [])
+  );
 
   const hasFrames = TOTAL_FRAMES > 0;
 

@@ -103,6 +103,10 @@ export default function Home() {
   const aboutCardY = useSpring(rawAboutCardY, { stiffness: 300, damping: 40, restDelta: 0.1 });
   const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 250, damping: 35, restDelta: 0.001 });
 
+  // Name parallax — gently drifts upward as you scroll through about section
+  const rawNameY = useTransform(scrollYProgress, [0.15, 0.30, 0.60, 1.0], [150, 0, 0, -300]);
+  const nameY = useSpring(rawNameY, { stiffness: 150, damping: 30, restDelta: 0.1 });
+
   // Terminal typing animation progress
   const rawCardProgress = useTransform(scrollYProgress, [0.30, 0.60], [0, 1]);
   const cardProgress = useSpring(rawCardProgress, {
@@ -208,7 +212,7 @@ export default function Home() {
         >
           <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
             <ContainerScroll progress={cardProgress}>
-              <TerminalAbout progress={cardProgress} exitProgress={aboutExit} />
+              <TerminalAbout progress={cardProgress} exitProgress={aboutExit} nameY={nameY} />
             </ContainerScroll>
           </div>
         </motion.div>

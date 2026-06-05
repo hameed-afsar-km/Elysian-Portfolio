@@ -34,40 +34,39 @@ function SocialLink({ label, href }: { label: string; href: string }) {
   );
 }
 
-const SCRAMBLE_CHARS = "!@#$%^&*<>?/+=";
-
-function ScrambleText({ text, active }: { text: string; active: boolean }) {
-  const [display, setDisplay] = useState(text);
-  const frameRef = useRef(0);
+function TypewriterText({ text, active }: { text: string; active: boolean }) {
+  const [display, setDisplay] = useState("");
+  const [cursorVis, setCursorVis] = useState(true);
 
   useEffect(() => {
     if (!active) {
-      setDisplay(text);
+      setDisplay("");
       return;
     }
 
-    frameRef.current = 0;
-    const totalFrames = 12;
-
+    let i = 0;
     const timer = setInterval(() => {
-      frameRef.current++;
-      if (frameRef.current >= totalFrames) {
-        clearInterval(timer);
-        setDisplay(text);
-        return;
-      }
-      setDisplay(
-        text
-          .split("")
-          .map((c) => (c === " " ? " " : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]))
-          .join("")
-      );
-    }, 50);
+      i++;
+      setDisplay(text.slice(0, i));
+      if (i >= text.length) clearInterval(timer);
+    }, 60);
 
     return () => clearInterval(timer);
   }, [active, text]);
 
-  return <span>{display}</span>;
+  useEffect(() => {
+    const blink = setInterval(() => setCursorVis((v) => !v), 500);
+    return () => clearInterval(blink);
+  }, []);
+
+  return (
+    <span>
+      {display}
+      {active && display.length < text.length && (
+        <span style={{ opacity: cursorVis ? 1 : 0 }}>|</span>
+      )}
+    </span>
+  );
 }
 
 export default function FooterSection() {
@@ -144,7 +143,7 @@ export default function FooterSection() {
           >
             <span className="ftr-email-bg" />
             <span className="ftr-email-text">
-              <ScrambleText text="BUILD SOMETHING GREAT" active={scrambleHover} />
+              <TypewriterText text="BUILD SOMETHING GREAT" active={scrambleHover} />
             </span>
             <span className="ftr-email-icon">→</span>
           </motion.div>
