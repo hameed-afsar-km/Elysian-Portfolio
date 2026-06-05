@@ -1645,6 +1645,87 @@ body {
 }
 
 /* ================================================================ */
+/* ── TECH STACK CARD WALL (ts-*) ────────────────────────────────── */
+/* ================================================================ */
+.ts-section {
+  position: relative;
+  width: 100%;
+  padding: 7rem 2rem 8rem;
+  background: #080810;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 70, 85, 0.06);
+  border-bottom: 1px solid rgba(255, 70, 85, 0.06);
+}
+
+.ts-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(255, 70, 85, 0.02) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.ts-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.ts-eyebrow {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--val-red);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.ts-grid {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.ts-card {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.012);
+  cursor: default;
+  transition: background 0.25s, box-shadow 0.25s;
+  transform-style: preserve-3d;
+}
+
+.ts-card:hover {
+  background: rgba(255, 70, 85, 0.045);
+  box-shadow: 0 0 24px rgba(255, 70, 85, 0.08);
+}
+
+.ts-card-text {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(236, 232, 225, 0.35);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+
+@media (max-width: 600px) {
+  .ts-section { padding: 5rem 1rem 6rem; }
+  .ts-grid { gap: 0.5rem; }
+  .ts-card { padding: 0.4rem 0.8rem; }
+  .ts-card-text { font-size: 0.6rem; }
+}
+
+/* ================================================================ */
 /* ── RESUME SECTION (rs-*)  ──────────────────────────────────── */
 /* ================================================================ */
 .rs-section {
@@ -1981,10 +2062,20 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  background: transparent;
   border: 1px solid var(--val-red);
+}
+
+.rs-dl-btn-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: none;
   padding: 0;
   cursor: pointer;
+  color: inherit;
+  font: inherit;
 }
 
 .rs-dl-fill {
@@ -1994,6 +2085,7 @@ body {
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
 }
 
 .rs-dl-btn:hover .rs-dl-fill {
@@ -2103,6 +2195,163 @@ body {
 
 .rs-dl-again:hover { color: var(--val-red); }
 
+/* ─── Button group ─── */
+.rs-btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.rs-view-btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rs-view-btn-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.rs-view-fill {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.rs-view-btn:hover .rs-view-fill {
+  transform: scaleX(1);
+}
+
+.rs-view-btn .rs-dl-content {
+  justify-content: center;
+}
+
+.rs-view-btn .rs-dl-text {
+  font-size: 0.8rem;
+}
+
+/* ─── PDF Viewer Modal ─── */
+.rs-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+}
+
+.rs-modal {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 88vh;
+  background: rgba(14, 14, 28, 0.95);
+  border: 1px solid rgba(255, 70, 85, 0.25);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 30px 80px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(255, 70, 85, 0.06);
+}
+
+/* Modal corner accents */
+.rs-modal::before,
+.rs-modal::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(255, 70, 85, 0.5);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 11;
+}
+.rs-modal::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.rs-modal::after {
+  top: -1px;
+  right: -1px;
+  border-width: 2px 2px 0 0;
+}
+
+/* Bottom corners via pseudo-elements on a wrapper if needed — using extra elements in JSX instead */
+
+.rs-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 12;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 70, 85, 0.4);
+  background: rgba(8, 8, 16, 0.8);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  font-family: 'Droid Sans Mono', monospace;
+}
+
+.rs-modal-close:hover {
+  background: var(--val-red);
+  border-color: var(--val-red);
+  box-shadow: 0 0 20px rgba(255, 70, 85, 0.3);
+}
+
+.rs-modal-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Modal bottom corner accents */
+.rs-modal-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(255, 70, 85, 0.5);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 11;
+}
+.rs-modal-corner--bl {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 2px 2px;
+}
+.rs-modal-corner--br {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
 /* Responsive */
 @media (max-width: 960px) {
   .rs-inner {
@@ -2120,12 +2369,11 @@ body {
 /* ── FOOTER SECTION (ftr-*)  ─────────────────────────────────── */
 /* ================================================================ */
 .ftr-section {
-  --val-red: #00d4ff;
   position: relative;
   width: 100%;
   padding: 10rem 0 5rem;
-  background: #020207;
-  border-top: 1px solid rgba(0, 212, 255, 0.07);
+  background: #000;
+  border-top: 1px solid rgba(255, 70, 85, 0.07);
   overflow: hidden;
 }
 
@@ -2147,8 +2395,8 @@ body {
   font-size: clamp(4rem, 10vw, 11rem);
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(0, 212, 255, 0.04);
-  text-stroke: 1px rgba(0, 212, 255, 0.04);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
+  text-stroke: 1px rgba(255, 255, 255, 0.04);
   letter-spacing: -0.01em;
   animation: ftr-scroll 28s linear infinite;
   display: inline-block;
@@ -2183,9 +2431,9 @@ body {
 .ftr-cta-tag {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.7rem;
-  color: var(--val-red);
+  color: #fff;
   letter-spacing: 4px;
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0.35rem 0.9rem;
 }
 
@@ -2216,8 +2464,8 @@ body {
   font-size: clamp(5rem, 13vw, 12rem);
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 2px var(--val-red);
-  text-stroke: 2px var(--val-red);
+  -webkit-text-stroke: 2px #fff;
+  text-stroke: 2px #fff;
   letter-spacing: -0.04em;
   line-height: 0.9;
 }
@@ -2238,13 +2486,13 @@ body {
 }
 
 .ftr-email-btn:hover {
-  border-color: var(--val-red);
+  border-color: #fff;
 }
 
 .ftr-email-bg {
   position: absolute;
   inset: 0;
-  background: var(--val-red);
+  background: #fff;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2261,6 +2509,12 @@ body {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.85rem;
   letter-spacing: 1.5px;
+  transition: color 0.3s ease;
+}
+
+.ftr-email-btn:hover .ftr-email-text,
+.ftr-email-btn:hover .ftr-email-icon {
+  color: #000;
 }
 
 .ftr-email-icon {
@@ -2280,15 +2534,24 @@ body {
 .ftr-divider-line {
   flex: 1;
   height: 1px;
-  background: rgba(0, 212, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .ftr-divider-cross {
   width: 7px;
   height: 7px;
-  border: 1px solid rgba(0, 212, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   transform: rotate(45deg);
   flex-shrink: 0;
+  position: absolute;
+}
+
+.ftr-divider-cross--l {
+  left: -4px;
+}
+
+.ftr-divider-cross--r {
+  right: -4px;
 }
 
 /* ─── Bottom bar ─── */
@@ -2316,7 +2579,7 @@ body {
 .ftr-brand-role {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.6rem;
-  color: rgba(0, 212, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
   letter-spacing: 1px;
 }
 
@@ -2339,9 +2602,9 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--val-red);
+  background: #fff;
   animation: ftr-blink 1s steps(2) infinite;
-  box-shadow: 0 0 6px var(--val-red);
+  box-shadow: 0 0 6px #fff;
 }
 
 @keyframes ftr-blink {
@@ -2399,9 +2662,9 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: var(--val-red);
+  background: #fff;
   transform-origin: left;
-  box-shadow: 0 0 8px var(--val-red);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .ftr-social-label {
@@ -2413,14 +2676,14 @@ body {
   position: relative;
   z-index: 1;
   font-size: 0.75rem;
-  color: var(--val-red);
+  color: #fff;
 }
 
 /* Back to top */
 .ftr-top-btn {
   width: 42px;
   height: 42px;
-  border: 1px solid rgba(0, 212, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: transparent;
   display: flex;
   align-items: center;
@@ -2430,13 +2693,13 @@ body {
 }
 
 .ftr-top-btn:hover {
-  background: rgba(0, 212, 255, 0.08);
-  border-color: var(--val-red);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #fff;
 }
 
 .ftr-top-arrow {
   font-size: 1rem;
-  color: var(--val-red);
+  color: #fff;
   font-weight: bold;
 }
 

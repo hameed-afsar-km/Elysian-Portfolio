@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 const SOCIAL_LINKS = [
   { label: "GITHUB", href: "https://github.com/hameed-afsar-km" },
-  { label: "LINKEDIN", href: "https://linkedin.com" },
+  { label: "LINKEDIN", href: "https://linkedin.com/in/hameed-afsar-km" },
   { label: "EMAIL", href: "mailto:hameedafsar.km@gmail.com" },
 ];
 
@@ -34,8 +34,45 @@ function SocialLink({ label, href }: { label: string; href: string }) {
   );
 }
 
+const SCRAMBLE_CHARS = "!@#$%^&*<>?/+=";
+
+function ScrambleText({ text, active }: { text: string; active: boolean }) {
+  const [display, setDisplay] = useState(text);
+  const frameRef = useRef(0);
+
+  useEffect(() => {
+    if (!active) {
+      setDisplay(text);
+      return;
+    }
+
+    frameRef.current = 0;
+    const totalFrames = 12;
+
+    const timer = setInterval(() => {
+      frameRef.current++;
+      if (frameRef.current >= totalFrames) {
+        clearInterval(timer);
+        setDisplay(text);
+        return;
+      }
+      setDisplay(
+        text
+          .split("")
+          .map((c) => (c === " " ? " " : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]))
+          .join("")
+      );
+    }, 50);
+
+    return () => clearInterval(timer);
+  }, [active, text]);
+
+  return <span>{display}</span>;
+}
+
 export default function FooterSection() {
   const [timeStr, setTimeStr] = useState("");
+  const [scrambleHover, setScrambleHover] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   // Parallax for heading
@@ -94,9 +131,10 @@ export default function FooterSection() {
             </motion.h2>
           </div>
 
-          <motion.a
-            href="mailto:hameedafsar.km@gmail.com"
+          <motion.div
             className="ftr-email-btn"
+            onMouseEnter={() => setScrambleHover(true)}
+            onMouseLeave={() => setScrambleHover(false)}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -105,9 +143,11 @@ export default function FooterSection() {
             whileTap={{ scale: 0.98 }}
           >
             <span className="ftr-email-bg" />
-            <span className="ftr-email-text">hameedafsar.km@gmail.com</span>
-            <span className="ftr-email-icon">✉</span>
-          </motion.a>
+            <span className="ftr-email-text">
+              <ScrambleText text="BUILD SOMETHING GREAT" active={scrambleHover} />
+            </span>
+            <span className="ftr-email-icon">→</span>
+          </motion.div>
         </div>
 
         {/* ── Divider with crosshair ornaments ── */}

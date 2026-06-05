@@ -12,6 +12,7 @@ import { TerminalAbout } from "@/components/TerminalAbout";
 import TimelineSection from "@/components/TimelineSection";
 import ScrollScrubSection from "@/components/ScrollScrubSection";
 import VerticalTimeline from "@/components/VerticalTimeline";
+import TechStackMarquee from "@/components/TechStackMarquee";
 import ResumeSection from "@/components/ResumeSection";
 import FooterSection from "@/components/FooterSection";
 
@@ -222,6 +223,9 @@ export default function Home() {
 
       {/* Vertical Career Journey Section */}
       <VerticalTimeline />
+
+      {/* Tech Stack Infinite Marquee */}
+      <TechStackMarquee />
 
       {/* Projects Section — horizontal scroll in normal flow */}
       <TimelineSection />

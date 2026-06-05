@@ -9,6 +9,7 @@ export default function ResumeSection() {
   const [downloadState, setDownloadState] = useState<"idle" | "downloading" | "completed">("idle");
   const [progress, setProgress] = useState(0);
   const [activeSkill, setActiveSkill] = useState(0);
+  const [showViewer, setShowViewer] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Cycle through skill pills for animation
@@ -192,22 +193,29 @@ export default function ResumeSection() {
             <div className="rs-card-action" style={{ transform: "translateZ(30px)" }}>
               <AnimatePresence mode="wait">
                 {downloadState === "idle" && (
-                  <motion.button
-                    key="idle"
-                    className="rs-dl-btn"
-                    onClick={handleDownload}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <span className="rs-dl-fill" />
-                    <span className="rs-dl-content">
-                      <span className="rs-dl-arrow">↓</span>
-                      <span className="rs-dl-text">DOWNLOAD RESUME</span>
-                    </span>
-                  </motion.button>
+                  <div className="rs-btn-group">
+                    <button
+                      type="button"
+                      className="rs-view-btn"
+                      onClick={() => setShowViewer(true)}
+                    >
+                      <span className="rs-view-fill" />
+                      <span className="rs-dl-content">
+                        <span className="rs-dl-text">VIEW RESUME</span>
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="rs-dl-btn"
+                      onClick={handleDownload}
+                    >
+                      <span className="rs-dl-fill" />
+                      <span className="rs-dl-content">
+                        <span className="rs-dl-arrow">↓</span>
+                        <span className="rs-dl-text">DOWNLOAD</span>
+                      </span>
+                    </button>
+                  </div>
                 )}
 
                 {downloadState === "downloading" && (
@@ -231,20 +239,31 @@ export default function ResumeSection() {
                 {downloadState === "completed" && (
                   <motion.div
                     key="done"
-                    className="rs-dl-done"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
+                    className="rs-btn-group"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
                   >
-                    <motion.span
-                      className="rs-dl-check"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    >✓</motion.span>
-                    <span className="rs-dl-done-text">DOWNLOAD COMPLETE</span>
-                    <button className="rs-dl-again" onClick={() => setDownloadState("idle")}>
-                      AGAIN ↺
+                    <button
+                      type="button"
+                      className="rs-view-btn"
+                      onClick={() => setShowViewer(true)}
+                    >
+                      <span className="rs-view-fill" />
+                      <span className="rs-dl-content">
+                        <span className="rs-dl-text">VIEW RESUME</span>
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="rs-dl-btn"
+                      onClick={() => setDownloadState("idle")}
+                    >
+                      <span className="rs-dl-fill" />
+                      <span className="rs-dl-content">
+                        <span className="rs-dl-arrow">↓</span>
+                        <span className="rs-dl-text">DOWNLOAD</span>
+                      </span>
                     </button>
                   </motion.div>
                 )}
@@ -259,6 +278,37 @@ export default function ResumeSection() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* ── PDF Viewer Modal ── */}
+      <AnimatePresence>
+        {showViewer && (
+          <motion.div
+            className="rs-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowViewer(false)}
+          >
+            <motion.div
+              className="rs-modal"
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="rs-modal-close" onClick={() => setShowViewer(false)}>
+                ✕
+              </button>
+              <iframe
+                src="/Hameed_Afsar_Resume.pdf"
+                className="rs-modal-iframe"
+                title="Resume"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
