@@ -20,10 +20,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const scrollYProgress = useMotionValue(0);
 
-  useLenis(
-    useCallback((lenis: Lenis) => {
-      setScrolled(lenis.scroll > 20);
-      const p = lenis.limit > 0 ? lenis.scroll / lenis.limit : 0;
+  const lenis = useLenis(
+    useCallback((l: Lenis) => {
+      setScrolled(l.scroll > 20);
+      const p = l.limit > 0 ? l.scroll / l.limit : 0;
       scrollYProgress.set(p);
     }, [])
   );
@@ -32,8 +32,16 @@ export default function Navbar() {
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.32 ? "none" : "auto"));
 
   const handleLinkClick = (id: string, href: string, e: React.MouseEvent) => {
-    if (href === "/") e.preventDefault();
+    e.preventDefault();
     setActiveId(id);
+
+    if (href === "/") {
+      lenis?.scrollTo(0, { duration: 1.5 });
+    } else if (href === "#about") {
+      const vh = window.innerHeight;
+      const targetScroll = 0.25 * (3.2 * vh - vh);
+      lenis?.scrollTo(targetScroll, { duration: 1.5 });
+    }
   };
 
   const renderLink = (item: { id: string; label: string; href: string }) => (

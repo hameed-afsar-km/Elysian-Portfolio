@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from "react";
-
 const TEXT = "AI SYSTEMS • AI AGENTS • AUTOMATION • DIGITAL EXPERIENCES • ";
-const REPEATS = 5;
+const REPEATS = 20;
 const FULL_TEXT = TEXT.repeat(REPEATS);
 
 type CurvedMarqueeProps = {
@@ -11,31 +9,6 @@ type CurvedMarqueeProps = {
 };
 
 export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
-  const textPathRef = useRef<SVGTextPathElement>(null);
-
-  useEffect(() => {
-    const el = textPathRef.current;
-    if (!el) return;
-
-    let offset = ribbon === "a" ? -50 : 0;
-    const dir = ribbon === "a" ? 1 : -1;
-    let lastTime = performance.now();
-    let id: number;
-
-    const tick = (now: number) => {
-      const dt = now - lastTime;
-      lastTime = now;
-      offset += dir * 0.006 * dt;
-      if (offset < -50) offset += 50;
-      if (offset > 0) offset -= 50;
-      el.setAttribute("startOffset", `${offset}%`);
-      id = requestAnimationFrame(tick);
-    };
-
-    id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
-  }, [ribbon]);
-
   return (
     <div className="hero-marquee-wrap">
       <svg
@@ -61,7 +34,13 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
             <use href="#curve-b" stroke="var(--val-red)" strokeWidth="60" strokeLinecap="round" opacity="0.6" />
             <use href="#curve-b" stroke="var(--val-dark)" strokeWidth="56" strokeLinecap="round" />
             <text className="marquee-text text-b" fontSize="26" dominantBaseline="central">
-              <textPath ref={textPathRef} href="#curve-b" startOffset="0%">
+              <textPath href="#curve-b" startOffset="0%">
+                <animate
+                  attributeName="startOffset"
+                  values="0%;-50%"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
                 {FULL_TEXT}
               </textPath>
             </text>
@@ -72,7 +51,13 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
           <g className="marquee-group-a">
             <use href="#curve-a" stroke="var(--val-red)" strokeWidth="56" strokeLinecap="round" />
             <text className="marquee-text text-a" fontSize="26" dominantBaseline="central">
-              <textPath ref={textPathRef} href="#curve-a" startOffset="-50%">
+              <textPath href="#curve-a" startOffset="-50%">
+                <animate
+                  attributeName="startOffset"
+                  values="-50%;0%"
+                  dur="8s"
+                  repeatCount="indefinite"
+                />
                 {FULL_TEXT}
               </textPath>
             </text>

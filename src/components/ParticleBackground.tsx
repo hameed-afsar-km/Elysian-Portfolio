@@ -58,7 +58,7 @@ export default function ParticleBackground() {
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-        ctx.strokeStyle = "rgba(7, 7, 11, 0.18)";
+        ctx.strokeStyle = "rgba(7, 7, 11, 0.40)";
         ctx.lineWidth = 1;
 
         if (this.type === "circle") {

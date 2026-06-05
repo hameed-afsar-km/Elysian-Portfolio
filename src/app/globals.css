@@ -219,30 +219,62 @@ body {
   text-transform: uppercase;
   margin: 0 auto;
   color: var(--val-light);
+  pointer-events: auto;
 }
 
 .val-heading .word-wrap {
-  display: block;
+  display: inline-grid;
   margin: 0;
 }
 
-.val-heading .word-wrap span {
+.val-heading .word-half {
+  grid-row: 1;
+  grid-column: 1;
   display: block;
   transform: translateY(110%);
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
 }
 
-.val-heading .word-wrap:nth-child(1) span {
+@media (hover: hover) {
+  .val-heading .word-half {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .val-heading .word-top {
+    clip-path: inset(0 0 50% 0);
+  }
+
+  .val-heading .word-bottom {
+    clip-path: inset(50% 0 0 0);
+  }
+
+  .val-heading:hover .word-top {
+    transform: translateY(-28px);
+  }
+
+  .val-heading:hover .word-bottom {
+    transform: translateY(28px);
+  }
+}
+
+@media (hover: none) {
+  .val-heading .word-bottom {
+    display: none;
+  }
+}
+
+.val-heading .word-wrap:nth-child(1) .word-half {
   animation-delay: 2.9s;
 }
 
-.val-heading .word-wrap:nth-child(2) span {
+.val-heading .word-wrap:nth-child(2) .word-half {
   color: var(--val-dark);
   text-shadow: 0 0 40px rgba(118, 128, 121, 0.3);
   animation-delay: 3.1s;
 }
 
-.val-heading .word-wrap:nth-child(3) span {
+.val-heading .word-wrap:nth-child(3) .word-half {
   animation-delay: 3.3s;
 }
 

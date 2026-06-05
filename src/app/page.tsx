@@ -55,17 +55,26 @@ export default function Home() {
 
   // Hero Section transitions:
   // As scroll progress goes from 0 to 0.45, scale the Hero content from 1 to 10 and fade out.
-  const heroScale = useTransform(scrollYProgress, [0, 0.45], [1, 10]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]);
+  const rawHeroScale = useTransform(scrollYProgress, [0, 0.45], [1, 10]);
+  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]);
+  const heroScale = useSpring(rawHeroScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
+  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
   // Marquees: scale up and move apart as the hero zooms in
-  const marqueeScale = useTransform(scrollYProgress, [0, 0.35], [1, 3]);
-  const marqueeAY = useTransform(scrollYProgress, [0, 0.35], [0, -600]);
-  const marqueeBY = useTransform(scrollYProgress, [0, 0.35], [0, 600]);
-  const marqueeOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.35], [1, 3]);
+  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.35], [0, -600]);
+  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.35], [0, 600]);
+  const rawMarqueeOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const marqueeScale = useSpring(rawMarqueeScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
+  const marqueeAY = useSpring(rawMarqueeAY, { stiffness: 100, damping: 25, restDelta: 0.001 });
+  const marqueeBY = useSpring(rawMarqueeBY, { stiffness: 100, damping: 25, restDelta: 0.001 });
+  const marqueeOpacity = useSpring(rawMarqueeOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
   // Background particles: dim/fade opacity slightly as we enter the content zone
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
+  const rawBgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
+  const bgOpacity = useSpring(rawBgOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
+
+
 
   // About Me Section: appears once scroll passes 25%, stays visible
   const aboutDisplay = useTransform(scrollYProgress, (progress) =>
@@ -149,15 +158,25 @@ export default function Home() {
         >
           <main className="hero-container">
             <h1 className="val-heading">
-              <span className="word-wrap"><span>THINK</span></span>
-              <span className="word-wrap"><span>MAKE</span></span>
-              <span className="word-wrap"><span>REPEAT</span></span>
+              <span className="word-wrap">
+                <span className="word-half word-top">THINK</span>
+                <span className="word-half word-bottom">THINK</span>
+              </span>
+              <span className="word-wrap">
+                <span className="word-half word-top">MAKE</span>
+                <span className="word-half word-bottom">MAKE</span>
+              </span>
+              <span className="word-wrap">
+                <span className="word-half word-top">REPEAT</span>
+                <span className="word-half word-bottom">REPEAT</span>
+              </span>
             </h1>
           </main>
         </motion.div>
 
         {/* About Me Background — dark canvas, always 100% opacity when visible */}
         <motion.div
+          id="about"
           style={{ display: aboutDisplay }}
           className="absolute inset-0 w-full h-full"
         >
