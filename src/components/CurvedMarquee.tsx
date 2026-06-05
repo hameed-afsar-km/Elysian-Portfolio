@@ -16,7 +16,7 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
         className="hero-marquee-svg"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMid slice"
       >
         <defs>
           <path
@@ -49,6 +49,7 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
 
         {ribbon === "a" && (
           <g className="marquee-group-a">
+            <use href="#curve-a" stroke="white" strokeWidth="58" strokeLinecap="round" />
             <use href="#curve-a" stroke="var(--val-red)" strokeWidth="56" strokeLinecap="round" />
             <text className="marquee-text text-a" fontSize="26" dominantBaseline="central">
               <textPath href="#curve-a" startOffset="-50%">

@@ -283,7 +283,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    font-size: clamp(3rem, 12vw, 6rem);
+    font-size: clamp(4rem, 24vw, 10rem);
     width: auto;
   }
 }
@@ -501,6 +501,7 @@ body {
     bottom: 0;
     left: 0;
     margin: auto 0;
+    height: 200px;
     transform: rotate(-2deg);
   }
 }
