@@ -1,192 +1,263 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
+
+const SKILLS = ["Next.js", "TypeScript", "AI/ML", "React", "Node.js", "WebGPU", "Rust", "Python"];
 
 export default function ResumeSection() {
   const [downloadState, setDownloadState] = useState<"idle" | "downloading" | "completed">("idle");
   const [progress, setProgress] = useState(0);
+  const [activeSkill, setActiveSkill] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Mouse tilt coordinates for 3D card tilt effect
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  // Cycle through skill pills for animation
+  useEffect(() => {
+    const t = setInterval(() => setActiveSkill(p => (p + 1) % SKILLS.length), 1800);
+    return () => clearInterval(t);
+  }, []);
 
-  // Spring settings for smooth rotation tracking
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [10, -10]), { stiffness: 150, damping: 25 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-10, 10]), { stiffness: 150, damping: 25 });
+  // 3D tilt tracking
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 });
+  const glareX = useTransform(mx, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(my, [-0.5, 0.5], ["0%", "100%"]);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = event.clientX - rect.left - width / 2;
-    const mouseY = event.clientY - rect.top - height / 2;
-    
-    // Normalize coordinates between -0.5 and 0.5
-    x.set(mouseX / width);
-    y.set(mouseY / height);
+    const r = cardRef.current.getBoundingClientRect();
+    mx.set((e.clientX - r.left - r.width / 2) / r.width);
+    my.set((e.clientY - r.top - r.height / 2) / r.height);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const onMouseLeave = () => { mx.set(0); my.set(0); };
 
   const handleDownload = () => {
     if (downloadState !== "idle") return;
     setDownloadState("downloading");
     setProgress(0);
-
     let cur = 0;
-    const interval = setInterval(() => {
-      cur += Math.floor(Math.random() * 12) + 4;
+    const iv = setInterval(() => {
+      cur += Math.floor(Math.random() * 10) + 5;
       if (cur >= 100) {
         cur = 100;
-        clearInterval(interval);
+        clearInterval(iv);
         setTimeout(() => {
-          // Trigger file download
-          const link = document.createElement("a");
-          link.href = "/Hameed_Afsar_Resume.pdf";
-          link.download = "Hameed_Afsar_Resume.pdf";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          const a = document.createElement("a");
+          a.href = "/Hameed_Afsar_Resume.pdf";
+          a.download = "Hameed_Afsar_Resume.pdf";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
           setDownloadState("completed");
-        }, 300);
+        }, 400);
       }
       setProgress(cur);
-    }, 80);
+    }, 70);
   };
 
   return (
-    <section className="res-section" id="resume">
-      <div className="res-radial-glow" />
-      <div className="res-container">
-        
-        {/* Section Title */}
-        <div className="res-title-wrap">
-          <span className="res-sub-tag">// ARCHIVE SYSTEMS</span>
-          <h2 className="res-main-title">CURRICULUM VITAE</h2>
-          <div className="res-line-divider" />
-        </div>
+    <section className="rs-section" id="resume">
+      {/* Ambient background elements */}
+      <div className="rs-bg-grid" />
+      <div className="rs-bg-orb rs-bg-orb--1" />
+      <div className="rs-bg-orb rs-bg-orb--2" />
 
-        {/* Professional 3D Tilt Card */}
-        <div 
-          className="res-card-wrapper"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <motion.div 
-            ref={cardRef}
-            className="res-card"
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      <div className="rs-inner">
+        {/* Left column — editorial header */}
+        <div className="rs-left">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Ambient inner glow */}
-            <div className="res-card-glare" />
+            <span className="rs-eyebrow">CREDENTIALS</span>
+            <h2 className="rs-heading">
+              <span className="rs-heading-line">THE</span>
+              <span className="rs-heading-line rs-heading-line--outline">RÉSUMÉ</span>
+            </h2>
+            <p className="rs-blurb">
+              Full-stack engineering schematics, product design philosophy, AI systems architecture, and professional trajectory. All in one document.
+            </p>
+          </motion.div>
 
-            {/* Left: Vector Mock Resume Sheet */}
-            <div className="res-card-preview" style={{ transform: "translateZ(30px)" }}>
-              <div className="res-sheet">
-                <div className="res-sheet-header">
-                  <div className="res-sheet-avatar" />
-                  <div className="res-sheet-info">
-                    <div className="res-sheet-line res-sheet-line--name" />
-                    <div className="res-sheet-line res-sheet-line--title" />
-                  </div>
-                </div>
-                <div className="res-sheet-body">
-                  <div className="res-sheet-block">
-                    <div className="res-sheet-line res-sheet-line--heading" />
-                    <div className="res-sheet-line" />
-                    <div className="res-sheet-line res-sheet-line--short" />
-                  </div>
-                  <div className="res-sheet-block">
-                    <div className="res-sheet-line res-sheet-line--heading" />
-                    <div className="res-sheet-line" />
-                    <div className="res-sheet-line" />
-                    <div className="res-sheet-line res-sheet-line--short" />
-                  </div>
-                  <div className="res-sheet-block">
-                    <div className="res-sheet-line res-sheet-line--heading" />
-                    <div className="res-sheet-grid">
-                      <div className="res-sheet-chip" />
-                      <div className="res-sheet-chip" />
-                      <div className="res-sheet-chip" />
-                    </div>
-                  </div>
-                </div>
-                {/* Floating scan effect */}
-                <div className="res-sheet-scanner" />
+          {/* Animated skill pills */}
+          <motion.div
+            className="rs-skills"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            {SKILLS.map((s, i) => (
+              <motion.span
+                key={s}
+                className="rs-skill-pill"
+                animate={{
+                  background: activeSkill === i
+                    ? "rgba(255,70,85,0.15)"
+                    : "rgba(255,255,255,0.03)",
+                  borderColor: activeSkill === i
+                    ? "rgba(255,70,85,0.5)"
+                    : "rgba(255,255,255,0.06)",
+                  color: activeSkill === i ? "#ff4655" : "rgba(236,232,225,0.4)",
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                {s}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            className="rs-stats"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            {[["4+", "YRS EXP"], ["20+", "PROJECTS"], ["2026", "EDITION"]].map(([num, label]) => (
+              <div key={label} className="rs-stat">
+                <span className="rs-stat-num">{num}</span>
+                <span className="rs-stat-label">{label}</span>
               </div>
-            </div>
-
-            {/* Right: Modern Download Controls */}
-            <div className="res-card-details" style={{ transform: "translateZ(20px)" }}>
-              <div className="res-details-head">
-                <span className="res-doc-type">DOCUMENTATION // PDF PACK</span>
-                <h3 className="res-doc-title">Hameed_Afsar_Resume.pdf</h3>
-                <p className="res-doc-desc">
-                  Explore full engineering schematics, system architecture portfolios, toolchain proficiencies, and professional timelines. Compiled and verified for 2026.
-                </p>
-              </div>
-
-              {/* Data Specifications Grid */}
-              <div className="res-specs">
-                <div className="res-spec-item">
-                  <span className="res-spec-label">FILE SIZE</span>
-                  <span className="res-spec-value">542 KB</span>
-                </div>
-                <div className="res-spec-item">
-                  <span className="res-spec-label">FORMAT</span>
-                  <span className="res-spec-value">PDF (A4)</span>
-                </div>
-                <div className="res-spec-item">
-                  <span className="res-spec-label">COMPILATION</span>
-                  <span className="res-spec-value">RELEASE // V2.6</span>
-                </div>
-              </div>
-
-              {/* Interactive Download Controller */}
-              <div className="res-control-box">
-                {downloadState === "idle" && (
-                  <button className="res-download-btn" onClick={handleDownload}>
-                    <span className="res-btn-bg-glow" />
-                    <span className="res-btn-label">DOWNLOAD RESUME</span>
-                    <span className="res-btn-icon">↓</span>
-                  </button>
-                )}
-
-                {downloadState === "downloading" && (
-                  <div className="res-loader-container">
-                    <div className="res-loader-info">
-                      <span className="res-loader-status">COMPILING PACKAGE...</span>
-                      <span className="res-loader-percent">{progress}%</span>
-                    </div>
-                    <div className="res-loader-track">
-                      <div className="res-loader-fill" style={{ width: `${progress}%` }} />
-                    </div>
-                  </div>
-                )}
-
-                {downloadState === "completed" && (
-                  <div className="res-complete-container">
-                    <div className="res-complete-badge">
-                      <span className="res-complete-icon">✓</span>
-                      <span className="res-complete-label">VERIFIED DOWNLOAD COMPLETE</span>
-                    </div>
-                    <button className="res-reset-btn" onClick={() => setDownloadState("idle")}>
-                      DOWNLOAD AGAIN
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
+            ))}
           </motion.div>
         </div>
 
+        {/* Right column — 3D tilt card */}
+        <motion.div
+          className="rs-card-scene"
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+        >
+          <motion.div
+            ref={cardRef}
+            className="rs-card"
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          >
+            {/* Dynamic glare highlight */}
+            <motion.div
+              className="rs-glare"
+              style={{
+                background: `radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.08) 0%, transparent 60%)`,
+              }}
+            />
+
+            {/* Card header */}
+            <div className="rs-card-top" style={{ transform: "translateZ(25px)" }}>
+              <div className="rs-card-avatar">
+                <span className="rs-card-initials">HA</span>
+                <div className="rs-avatar-ring" />
+              </div>
+              <div className="rs-card-meta">
+                <div className="rs-card-name">HAMEED AFSAR KM</div>
+                <div className="rs-card-role">FULL STACK ENGINEER × PRODUCT DESIGNER</div>
+              </div>
+              <div className="rs-card-badge">
+                <span className="rs-badge-dot" />
+                <span className="rs-badge-text">AVAILABLE</span>
+              </div>
+            </div>
+
+            {/* Animated resume line preview */}
+            <div className="rs-card-preview" style={{ transform: "translateZ(15px)" }}>
+              {[1.0, 0.7, 0.9, 0.5, 0.8, 0.6, 0.75].map((w, i) => (
+                <motion.div
+                  key={i}
+                  className="rs-preview-line"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 * i, duration: 0.5, ease: "easeOut" }}
+                  style={{ width: `${w * 100}%`, originX: 0 }}
+                />
+              ))}
+              <div className="rs-preview-chips">
+                {["PDF", "A4", "2026", "V2.6"].map((t) => (
+                  <span key={t} className="rs-preview-chip">{t}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Download control area */}
+            <div className="rs-card-action" style={{ transform: "translateZ(30px)" }}>
+              <AnimatePresence mode="wait">
+                {downloadState === "idle" && (
+                  <motion.button
+                    key="idle"
+                    className="rs-dl-btn"
+                    onClick={handleDownload}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className="rs-dl-fill" />
+                    <span className="rs-dl-content">
+                      <span className="rs-dl-arrow">↓</span>
+                      <span className="rs-dl-text">DOWNLOAD RESUME</span>
+                    </span>
+                  </motion.button>
+                )}
+
+                {downloadState === "downloading" && (
+                  <motion.div
+                    key="loading"
+                    className="rs-dl-loading"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                  >
+                    <div className="rs-dl-bar-wrap">
+                      <motion.div className="rs-dl-bar" style={{ width: `${progress}%` }} />
+                    </div>
+                    <div className="rs-dl-bar-meta">
+                      <span>COMPILING</span>
+                      <span>{progress}%</span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {downloadState === "completed" && (
+                  <motion.div
+                    key="done"
+                    className="rs-dl-done"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <motion.span
+                      className="rs-dl-check"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    >✓</motion.span>
+                    <span className="rs-dl-done-text">DOWNLOAD COMPLETE</span>
+                    <button className="rs-dl-again" onClick={() => setDownloadState("idle")}>
+                      AGAIN ↺
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Corner accents */}
+            <span className="rs-corner rs-corner--tl" />
+            <span className="rs-corner rs-corner--tr" />
+            <span className="rs-corner rs-corner--bl" />
+            <span className="rs-corner rs-corner--br" />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

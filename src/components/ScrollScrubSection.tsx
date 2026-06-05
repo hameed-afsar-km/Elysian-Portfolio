@@ -82,10 +82,10 @@ export default function ScrollScrubSection() {
   });
 
   // ── Parallax entrance ──────────────────────────────
-  const rawEntranceY = useTransform(scrollYProgress, [0, 0.15], [250, 0]);
-  const rawEntranceOpacity = useTransform(scrollYProgress, [0, 0.10], [0, 1]);
-  const entranceY = useSpring(rawEntranceY, { stiffness: 120, damping: 30, restDelta: 0.001 });
-  const entranceOpacity = useSpring(rawEntranceOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
+  const rawEntranceY = useTransform(scrollYProgress, [0, 0.04], [100, 0]);
+  const rawEntranceOpacity = useTransform(scrollYProgress, [0, 0.02], [0, 1]);
+  const entranceY = useSpring(rawEntranceY, { stiffness: 250, damping: 25, restDelta: 0.001 });
+  const entranceOpacity = useSpring(rawEntranceOpacity, { stiffness: 300, damping: 25, restDelta: 0.001 });
 
   // ── Philosophy line triggers ─────────────────────────
   const triggers = [0.18, 0.38, 0.58, 0.78];
@@ -132,9 +132,6 @@ export default function ScrollScrubSection() {
             </div>
           )}
 
-          {/* Section tag */}
-          <div className="ss-section-tag">// SHOWREEL</div>
-
           {/* Philosophy lines (fallback when no frames) */}
           {!hasFrames && (
             <div className="ss-lines">
@@ -151,13 +148,6 @@ export default function ScrollScrubSection() {
             </div>
           )}
 
-          {/* Bottom label */}
-          <div className="ss-bottom-label">
-            <span className="ss-bottom-dot" />
-            <span className="ss-bottom-text">
-              {hasFrames ? "Scroll to scrub through the reel" : "The principle that drives every decision"}
-            </span>
-          </div>
         </motion.div>
       </div>
     </div>

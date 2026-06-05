@@ -12,7 +12,8 @@ import { TerminalAbout } from "@/components/TerminalAbout";
 import TimelineSection from "@/components/TimelineSection";
 import ScrollScrubSection from "@/components/ScrollScrubSection";
 import VerticalTimeline from "@/components/VerticalTimeline";
-import ResumeFooter from "@/components/ResumeFooter";
+import ResumeSection from "@/components/ResumeSection";
+import FooterSection from "@/components/FooterSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -225,8 +226,11 @@ export default function Home() {
       {/* Projects Section — horizontal scroll in normal flow */}
       <TimelineSection />
 
-      {/* Resume Retrieval Console & HUD Footer */}
-      <ResumeFooter />
+      {/* Resume Section — 3D interactive tilt sheet preview */}
+      <ResumeSection />
+
+      {/* Complete Footer Section — Outlined marquee + HUD status */}
+      <FooterSection />
     </div>
   );
 }

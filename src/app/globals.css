@@ -36,7 +36,7 @@ body {
   overflow-y: auto;
 }
 
-/* â”€â”€â”€ Loader â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Loader ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 @keyframes charEntrance {
   0% {
     opacity: 0;
@@ -183,7 +183,7 @@ body {
   }
 }
 
-/* â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Hero ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 @keyframes heroFadeIn {
   0% {
     opacity: 0;
@@ -218,7 +218,7 @@ body {
   pointer-events: none;
 }
 
-/* â”€â”€â”€ Typography â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Typography ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .val-heading {
   font-family: 'Droid 1997', sans-serif;
   width: 100vw;
@@ -316,7 +316,7 @@ body {
   }
 }
 
-/* â”€â”€â”€ HUD Floating Navbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ HUD Floating Navbar ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .navbar-name {
   font-family: 'Droid 1997', sans-serif;
   font-weight: 900;
@@ -466,7 +466,7 @@ body {
   }
 }
 
-/* â”€â”€â”€ Hero Curved Marquee â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Hero Curved Marquee ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .hero-marquee-wrap {
   position: absolute;
   top: 0;
@@ -522,7 +522,7 @@ body {
   }
 }
 
-/* â”€â”€â”€ About Me HUD Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ About Me HUD Section ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .about-section {
   position: relative;
   background-color: var(--val-dark);
@@ -697,7 +697,7 @@ body {
   border-color: var(--val-light);
 }
 
-/* â”€â”€â”€ Terminal About Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Terminal About Section ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .terminal-wrap {
   width: 100%;
   height: 100%;
@@ -866,9 +866,9 @@ body {
   }
 }
 
-/* â”€â”€â”€ Timeline Section v2 â€” Magazine Spreads â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Timeline Section v2 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Magazine Spreads ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 
-/* Sticky wrapper — stays fixed while its parent scrolls */
+/* Sticky wrapper Ã¢â‚¬â€ stays fixed while its parent scrolls */
 .tl2-sticky {
   position: sticky;
   top: 0;
@@ -887,7 +887,7 @@ body {
   overflow: hidden;
 }
 
-/* â”€â”€ Header — PROJECTS / THE WORK â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Header Ã¢â‚¬â€ PROJECTS / THE WORK ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-header {
   position: relative;
   z-index: 5;
@@ -926,7 +926,7 @@ body {
   box-shadow: 0 0 10px rgba(255, 70, 85, 0.4);
 }
 
-/* â”€â”€ Viewport clips the horizontal strip â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Viewport clips the horizontal strip ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-viewport {
   position: relative;
   flex: 1;
@@ -934,7 +934,7 @@ body {
   overflow: hidden;
 }
 
-/* â”€â”€ Strip: all slides in a row â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Strip: all slides in a row ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-strip {
   display: flex;
   flex-direction: row;
@@ -943,7 +943,7 @@ body {
   will-change: transform;
 }
 
-/* â”€â”€ Single slide â€” full viewport width â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Single slide ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â full viewport width ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-slide {
   position: relative;
   width: 100vw;
@@ -959,7 +959,7 @@ body {
   background-color: #070710;
 }
 
-/* â”€â”€ Giant watermark year â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Giant watermark year ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-watermark {
   position: absolute;
   right: -2vw;
@@ -976,7 +976,7 @@ body {
   white-space: nowrap;
 }
 
-/* â”€â”€ Diagonal red slash â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Diagonal red slash ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-slash {
   position: absolute;
   top: 0;
@@ -997,7 +997,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 70, 85, 0.25);
 }
 
-/* â”€â”€ Left column â€” meta â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Left column ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â meta ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-col-left {
   position: relative;
   z-index: 2;
@@ -1056,7 +1056,7 @@ body {
   box-shadow: 0 0 8px rgba(255, 70, 85, 0.4);
 }
 
-/* â”€â”€ Right column â€” content â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Right column ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â content ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-col-right {
   position: relative;
   z-index: 2;
@@ -1076,7 +1076,7 @@ body {
   text-transform: uppercase;
 }
 
-/* â”€â”€ Headline â€” the big text â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Headline ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â the big text ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-headline {
   display: flex;
   flex-direction: column;
@@ -1095,14 +1095,14 @@ body {
   display: block;
 }
 
-/* Second headline line â€” slightly inset with red shadow */
+/* Second headline line ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â slightly inset with red shadow */
 .tl2-headline-line:nth-child(2) {
   color: var(--val-light);
   text-shadow: 2px 2px 0 rgba(255, 70, 85, 0.2);
   margin-left: 0.06em;
 }
 
-/* â”€â”€ Horizontal rule â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Horizontal rule ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-rule {
   width: 48px;
   height: 2px;
@@ -1111,7 +1111,7 @@ body {
   flex-shrink: 0;
 }
 
-/* â”€â”€ Body text â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Body text ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-body {
   font-family: 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: clamp(0.78rem, 1.2vw, 0.92rem);
@@ -1121,7 +1121,7 @@ body {
   max-width: 420px;
 }
 
-/* â”€â”€ Tags â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Tags ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1147,7 +1147,7 @@ body {
   background: rgba(255, 70, 85, 0.1);
 }
 
-/* â”€â”€ Progress bar â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Progress bar ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .tl2-progress {
   position: relative;
   z-index: 3;
@@ -1191,7 +1191,7 @@ body {
   transition: color 0.3s ease;
 }
 
-/* â”€â”€ Responsive â”€â”€ */
+/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Responsive ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 @media (max-width: 768px) {
   .tl2-slide {
     grid-template-columns: 1fr;
@@ -1223,9 +1223,9 @@ body {
   }
 }
 
-/* ────────────────────────────────────────────────────────── */
-/* ── Scroll Scrub Kinetic Typography Section ─────────────── */
-/* ────────────────────────────────────────────────────────── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Scroll Scrub Kinetic Typography Section Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .ss-outer {
   position: relative;
   width: 100%;
@@ -1336,7 +1336,7 @@ body {
   text-transform: uppercase;
 }
 
-/* ─── Scroll Scrub Frame Display ─────────────────────── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Scroll Scrub Frame Display Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .ss-frame-wrap {
   position: absolute;
   inset: 0;
@@ -1354,9 +1354,9 @@ body {
   will-change: opacity;
 }
 
-/* ────────────────────────────────────────────────────────── */
-/* ── Vertical Timeline Section ───────────────────────────── */
-/* ────────────────────────────────────────────────────────── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Vertical Timeline Section Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 .vtl-section {
   position: relative;
   width: 100%;
@@ -1584,9 +1584,9 @@ body {
   width: 44%;
 }
 
-/* ────────────────────────────────────────────────────────── */
-/* ── Responsive timeline / scrub layouts ─────────────────── */
-/* ────────────────────────────────────────────────────────── */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬ Responsive timeline / scrub layouts Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
 @media (max-width: 900px) {
   .vtl-track {
     padding-left: 2rem;
@@ -1644,641 +1644,814 @@ body {
   }
 }
 
-/* ────────────────────────────────────────────────────────── */
-/* ── Resume Console & Footer ─────────────────────────────── */
-/* ────────────────────────────────────────────────────────── */
-.rf-section {
+/* ================================================================ */
+/* ── RESUME SECTION (rs-*)  ──────────────────────────────────── */
+/* ================================================================ */
+.rs-section {
   position: relative;
   width: 100%;
-  padding: 8rem 0 4rem;
-  background: #030308;
-  border-top: 1px solid rgba(255, 70, 85, 0.08);
+  padding: 10rem 0 8rem;
+  background: #03030a;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 70, 85, 0.08);
 }
 
-.rf-grid {
+.rs-bg-grid {
   position: absolute;
   inset: 0;
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 60px 60px;
   pointer-events: none;
-  z-index: 0;
 }
 
-.rf-glow {
+.rs-bg-orb {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70vw;
-  height: 35vw;
-  border-radius: 50% 50% 0 0;
-  background: radial-gradient(circle, rgba(255, 70, 85, 0.04) 0%, rgba(0,0,0,0) 70%);
-  filter: blur(50px);
+  border-radius: 50%;
+  filter: blur(100px);
   pointer-events: none;
-  z-index: 0;
+}
+.rs-bg-orb--1 {
+  width: 55vw;
+  height: 55vw;
+  top: -20%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(255,70,85,0.045) 0%, transparent 70%);
+}
+.rs-bg-orb--2 {
+  width: 40vw;
+  height: 40vw;
+  bottom: -15%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(255,70,85,0.025) 0%, transparent 70%);
 }
 
-.rf-container {
+.rs-inner {
   position: relative;
-  max-width: 72rem;
+  z-index: 1;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
-  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
 }
 
-.rf-header {
+/* ─── Left column ─── */
+.rs-left {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 3rem;
-  border-bottom: 1px solid rgba(255, 70, 85, 0.1);
-  padding-bottom: 1.2rem;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
-.rf-header-tag {
+.rs-eyebrow {
   font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--val-red);
+  letter-spacing: 4px;
+}
+
+.rs-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0.5rem 0 0;
+  line-height: 0.95;
+}
+
+.rs-heading-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.03em;
+  display: block;
+}
+
+.rs-heading-line--outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--val-red);
+  text-stroke: 2px var(--val-red);
+}
+
+.rs-blurb {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: rgba(236, 232, 225, 0.6);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 440px;
+}
+
+/* Skill pills */
+.rs-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.rs-skill-pill {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid;
+  letter-spacing: 0.5px;
+  transition: background 0.4s, border-color 0.4s, color 0.4s;
+}
+
+/* Stats row */
+.rs-stats {
+  display: flex;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 70, 85, 0.1);
+}
+
+.rs-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.rs-stat-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.rs-stat-label {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.35);
   letter-spacing: 2px;
 }
 
-.rf-header-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  font-weight: 900;
-  color: #fff;
-  margin: 0.4rem 0 0;
-  letter-spacing: -0.01em;
+/* ─── 3D Card ─── */
+.rs-card-scene {
+  perspective: 1000px;
 }
 
-.rf-status {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: rgba(255, 70, 85, 0.04);
-  border: 1px solid rgba(255, 70, 85, 0.12);
-  padding: 0.4rem 0.8rem;
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--val-red);
-}
-
-.rf-status-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--val-red);
-  border-radius: 50%;
-  animation: rf-pulse-red 1.5s infinite;
-  box-shadow: 0 0 8px var(--val-red);
-}
-
-@keyframes rf-pulse-red {
-  0% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 70, 85, 0.4); }
-  70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 6px rgba(255, 70, 85, 0); }
-  100% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 0 0 rgba(255, 70, 85, 0); }
-}
-
-.rf-console {
-  background: rgba(10, 10, 18, 0.75);
-  border: 1px solid rgba(255, 70, 85, 0.12);
-  backdrop-filter: blur(10px);
+.rs-card {
+  position: relative;
+  background: rgba(14, 14, 28, 0.7);
+  border: 1px solid rgba(255, 70, 85, 0.2);
+  backdrop-filter: blur(20px);
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(255, 70, 85, 0.04);
   overflow: hidden;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: none;
 }
 
-.rf-console-bar {
+.rs-card:hover {
+  border-color: rgba(255, 70, 85, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 30px 70px rgba(0, 0, 0, 0.7),
+    0 0 80px rgba(255, 70, 85, 0.07);
+}
+
+.rs-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  transition: background 0.1s;
+}
+
+/* Corner accents */
+.rs-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba(255, 70, 85, 0.45);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 6;
+}
+.rs-corner--tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.rs-corner--tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.rs-corner--bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.rs-corner--br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+/* Card header */
+.rs-card-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem 1.25rem;
-  background: rgba(255, 70, 85, 0.05);
-  border-bottom: 1px solid rgba(255, 70, 85, 0.1);
+  gap: 1.2rem;
 }
 
-.rf-dots {
-  display: flex;
-  gap: 6px;
+.rs-card-avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
 }
 
-.rf-dot {
-  width: 9px;
-  height: 9px;
+.rs-card-initials {
+  position: relative;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-}
-
-.rf-dot-red { background: #ff5f56; }
-.rf-dot-yellow { background: #ffbd2e; }
-.rf-dot-green { background: #27c93f; }
-
-.rf-console-title {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  background: var(--val-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #fff;
   letter-spacing: 1px;
 }
 
-.rf-console-meta {
+.rs-avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 70, 85, 0.35);
+  animation: rs-spin 10s linear infinite;
+}
+
+@keyframes rs-spin {
+  to { transform: rotate(360deg); }
+}
+
+.rs-card-meta {
+  flex: 1;
+}
+
+.rs-card-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.rs-card-role {
   font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 70, 85, 0.4);
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+  margin-top: 0.2rem;
 }
 
-.rf-console-content {
-  display: grid;
-  grid-template-columns: 1.1fr 1.9fr;
+.rs-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(39, 201, 63, 0.25);
+  background: rgba(39, 201, 63, 0.04);
 }
 
-.rf-meta-col {
-  padding: 2.5rem;
-  border-right: 1px solid rgba(255, 70, 85, 0.1);
+.rs-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #27c93f;
+  animation: rs-pulse 2s infinite;
+}
+
+@keyframes rs-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(39, 201, 63, 0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(39, 201, 63, 0); }
+}
+
+.rs-badge-text {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.6rem;
+  color: #27c93f;
+  letter-spacing: 1px;
+}
+
+/* Resume line preview */
+.rs-card-preview {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  background: rgba(0, 0, 0, 0.2);
+  gap: 0.55rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.rf-meta-item {
+.rs-preview-line {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+}
+
+.rs-preview-chips {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.rs-preview-chip {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 70, 85, 0.06);
+  border: 1px solid rgba(255, 70, 85, 0.15);
+  color: var(--val-red);
+  letter-spacing: 0.5px;
+}
+
+/* Download action area */
+.rs-card-action {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+.rs-dl-btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--val-red);
+  padding: 0;
+  cursor: pointer;
+}
+
+.rs-dl-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--val-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rs-dl-btn:hover .rs-dl-fill {
+  transform: scaleX(1);
+}
+
+.rs-dl-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  width: 100%;
+}
+
+.rs-dl-arrow {
+  font-size: 1.3rem;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.rs-dl-btn:hover .rs-dl-arrow {
+  transform: translateY(3px);
+}
+
+.rs-dl-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+/* Loading state */
+.rs-dl-loading {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.6rem;
+  width: 100%;
 }
 
-.rf-meta-label {
+.rs-dl-bar-wrap {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.rs-dl-bar {
+  height: 100%;
+  background: var(--val-red);
+  box-shadow: 0 0 12px var(--val-red);
+  transition: width 0.08s linear;
+}
+
+.rs-dl-bar-meta {
+  display: flex;
+  justify-content: space-between;
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.35);
-  letter-spacing: 1.5px;
-}
-
-.rf-meta-val {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  color: #ece8e1;
-  font-weight: 600;
-}
-
-.rf-meta-val--green {
-  color: #27c93f;
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.75rem;
-  text-shadow: 0 0 10px rgba(39, 201, 63, 0.35);
-}
-
-.rf-interact-col {
-  padding: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
-}
-
-.rf-state-box {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.rf-info-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  color: rgba(236, 232, 225, 0.75);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.rf-btn-download {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 1.2rem 2.2rem;
-  background: var(--val-red);
-  border: none;
-  color: #fff;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
-  box-shadow: 0 0 25px rgba(255, 70, 85, 0.35);
-}
-
-.rf-btn-download:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(255, 70, 85, 0.55);
-}
-
-.rf-btn-download:active {
-  transform: translateY(0);
-}
-
-.rf-btn-hazard {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.08) 12px,
-    transparent 12px,
-    transparent 24px
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.rf-btn-download:hover .rf-btn-hazard {
-  opacity: 1;
-  animation: rf-hazard-scroll 1s linear infinite;
-}
-
-@keyframes rf-hazard-scroll {
-  from { background-position: 0 0; }
-  to { background-position: 34px 0; }
-}
-
-.rf-btn-text {
-  position: relative;
-  z-index: 2;
-}
-
-.rf-btn-arrow {
-  position: relative;
-  z-index: 2;
-  font-size: 1.1rem;
-}
-
-.rf-log-screen {
-  background: #020204;
-  border: 1px solid rgba(255, 70, 85, 0.1);
-  padding: 1.2rem;
-  height: 150px;
-  overflow-y: auto;
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.75rem;
-  color: #27c93f;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
-}
-
-.rf-log-line {
-  line-height: 1.5;
-}
-
-.rf-log-prompt {
-  color: var(--val-red);
-  font-weight: 700;
-  margin-right: 0.3rem;
-}
-
-.rf-log-cursor-line {
-  display: flex;
-  align-items: center;
-}
-
-.rf-log-cursor {
-  display: inline-block;
-  width: 7px;
-  height: 12px;
-  background: #27c93f;
-  margin-left: 0.2rem;
-  animation: rf-blink 0.8s steps(2, start) infinite;
-}
-
-@keyframes rf-blink {
-  50% { opacity: 0; }
-}
-
-.rf-progress-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
-}
-
-.rf-progress-labels {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-}
-
-.rf-prog-txt {
-  color: rgba(255, 255, 255, 0.4);
   letter-spacing: 1px;
 }
 
-.rf-prog-pct {
-  color: var(--val-red);
-  font-weight: 700;
-}
-
-.rf-progress-bar-track {
-  width: 100%;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  overflow: hidden;
-}
-
-.rf-progress-bar-fill {
-  height: 100%;
-  background: var(--val-red);
-  box-shadow: 0 0 10px var(--val-red);
-}
-
-.rf-success-badge {
+/* Done state */
+.rs-dl-done {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 0.8rem;
+  gap: 1rem;
+  width: 100%;
 }
 
-.rf-success-icon {
-  width: 48px;
-  height: 48px;
+.rs-dl-check {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 2px solid #27c93f;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
   color: #27c93f;
+  font-size: 0.8rem;
   font-weight: bold;
-  box-shadow: 0 0 15px rgba(39, 201, 63, 0.3);
-  text-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
-  margin-bottom: 0.5rem;
+  box-shadow: 0 0 12px rgba(39, 201, 63, 0.3);
 }
 
-.rf-success-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: #fff;
+.rs-dl-done-text {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  color: #27c93f;
   letter-spacing: 1px;
+  flex: 1;
 }
 
-.rf-success-desc {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  color: rgba(236, 232, 225, 0.65);
-  line-height: 1.6;
-  max-width: 440px;
-  margin: 0;
-}
-
-.rf-btn-reset {
-  align-self: center;
+.rs-dl-again {
   background: transparent;
-  border: 1px dashed rgba(255, 70, 85, 0.25);
-  padding: 0.6rem 1.4rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 0.5rem;
-}
-
-.rf-btn-reset:hover {
-  border-color: var(--val-red);
-  background: rgba(255, 70, 85, 0.05);
-}
-
-.rf-btn-reset-text {
+  border: none;
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.65rem;
-  color: var(--val-red);
-  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+  letter-spacing: 0.5px;
 }
 
-/* Footer Section */
-.rf-footer {
-  margin-top: 10rem;
-  display: flex;
-  flex-direction: column;
+.rs-dl-again:hover { color: var(--val-red); }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .rs-inner {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+@media (max-width: 480px) {
+  .rs-section { padding: 6rem 0 5rem; }
+  .rs-stats { gap: 1.5rem; }
 }
 
-.rf-footer-rule {
+
+/* ================================================================ */
+/* ── FOOTER SECTION (ftr-*)  ─────────────────────────────────── */
+/* ================================================================ */
+.ftr-section {
+  --val-red: #00d4ff;
   position: relative;
   width: 100%;
-  height: 1px;
-  background: rgba(255, 70, 85, 0.12);
-  margin-bottom: 3rem;
+  padding: 10rem 0 5rem;
+  background: #020207;
+  border-top: 1px solid rgba(0, 212, 255, 0.07);
+  overflow: hidden;
 }
 
-.rf-rule-cross {
+/* Outlined marquee background */
+.ftr-marquee-wrap {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  width: 5px;
-  height: 5px;
-  background: var(--val-red);
+  top: 40%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
 }
 
-.rf-rule-cross--l { left: 0; }
-.rf-rule-cross--r { right: 0; }
-
-.rf-footer-cols {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr 1fr;
-  gap: 3rem;
+.ftr-marquee {
+  white-space: nowrap;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(4rem, 10vw, 11rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 212, 255, 0.04);
+  text-stroke: 1px rgba(0, 212, 255, 0.04);
+  letter-spacing: -0.01em;
+  animation: ftr-scroll 28s linear infinite;
+  display: inline-block;
 }
 
-.rf-footer-col {
+@keyframes ftr-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Inner container */
+.ftr-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
+  gap: 5rem;
 }
 
-.rf-footer-col--left {
-  align-items: flex-start;
-  gap: 0.3rem;
-}
-
-.rf-footer-col--center {
+/* ─── CTA Block ─── */
+.ftr-cta {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.ftr-cta-tag {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--val-red);
+  letter-spacing: 4px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 0.35rem 0.9rem;
+}
+
+.ftr-heading-wrap {
+  overflow: hidden;
+}
+
+.ftr-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.4rem;
+  margin: 0;
 }
 
-.rf-footer-col--right {
-  align-items: flex-end;
-  gap: 0.6rem;
-}
-
-.rf-brand-name {
+.ftr-heading-solid {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.15rem;
+  font-size: clamp(5rem, 13vw, 12rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.ftr-heading-outline {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(5rem, 13vw, 12rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--val-red);
+  text-stroke: 2px var(--val-red);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* Email button */
+.ftr-email-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: #fff;
+  padding: 1.25rem 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  margin-top: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.ftr-email-btn:hover {
+  border-color: var(--val-red);
+}
+
+.ftr-email-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--val-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+.ftr-email-btn:hover .ftr-email-bg {
+  transform: scaleX(1);
+}
+
+.ftr-email-text {
+  position: relative;
+  z-index: 1;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
+
+.ftr-email-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 1rem;
+}
+
+/* ─── Divider ─── */
+.ftr-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.ftr-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 212, 255, 0.12);
+}
+
+.ftr-divider-cross {
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── Bottom bar ─── */
+.ftr-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.ftr-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ftr-brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
   font-weight: 900;
   color: #fff;
   letter-spacing: 1px;
-  margin: 0;
 }
 
-.rf-brand-sub {
+.ftr-brand-role {
   font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 70, 85, 0.75);
+  font-size: 0.6rem;
+  color: rgba(0, 212, 255, 0.7);
   letter-spacing: 1px;
-  margin: 0;
 }
 
-.rf-copy {
+.ftr-copy {
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
-  color: rgba(236, 232, 225, 0.3);
-  margin: 0.6rem 0 0;
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 0.3rem;
 }
 
-.rf-hud-clock {
+/* Live clock */
+.ftr-clock-box {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
-.rf-clock-label {
+.ftr-clock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--val-red);
+  animation: ftr-blink 1s steps(2) infinite;
+  box-shadow: 0 0 6px var(--val-red);
+}
+
+@keyframes ftr-blink {
+  50% { opacity: 0; }
+}
+
+.ftr-clock-val {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.5px;
 }
 
-.rf-clock-val {
+/* Right column */
+.ftr-right-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+/* Social links */
+.ftr-socials {
+  display: flex;
+  gap: 0;
+}
+
+.ftr-social {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.8rem;
   font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  overflow: hidden;
+  transition: color 0.25s ease;
+  letter-spacing: 0.5px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ftr-social:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ftr-social:hover {
+  color: #fff;
+}
+
+.ftr-social-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--val-red);
+  transform-origin: left;
+  box-shadow: 0 0 8px var(--val-red);
+}
+
+.ftr-social-label {
+  position: relative;
+  z-index: 1;
+}
+
+.ftr-social-arrow {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  color: var(--val-red);
+}
+
+/* Back to top */
+.ftr-top-btn {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.ftr-top-btn:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: var(--val-red);
+}
+
+.ftr-top-arrow {
+  font-size: 1rem;
   color: var(--val-red);
   font-weight: bold;
 }
 
-.rf-hud-status {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.rf-status-label {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.35);
-}
-
-.rf-status-val {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  font-weight: 700;
-}
-
-.rf-status-val--green {
-  color: #27c93f;
-}
-
-.rf-social-title {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.35);
-  letter-spacing: 2px;
-  margin-bottom: 0.2rem;
-}
-
-.rf-social-links {
-  display: flex;
-  gap: 0.8rem;
-}
-
-.rf-social-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #ece8e1;
-}
-
-.rf-link-bracket {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.7rem;
-  color: rgba(255, 70, 85, 0.4);
-  transition: transform 0.2s cubic-bezier(0.2, 1, 0.2, 1), color 0.2s ease;
-}
-
-.rf-link-txt {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.7rem;
-  padding: 0 0.25rem;
-  letter-spacing: 0.5px;
-  transition: color 0.2s ease;
-}
-
-.rf-social-link:hover .rf-link-txt {
-  color: var(--val-red);
-  text-shadow: 0 0 8px rgba(255, 70, 85, 0.4);
-}
-
-.rf-social-link:hover .rf-link-bracket {
-  color: var(--val-red);
-}
-
-.rf-social-link:hover .rf-link-bracket:first-child {
-  transform: translateX(-3px);
-}
-
-.rf-social-link:hover .rf-link-bracket:last-child {
-  transform: translateX(3px);
-}
-
-/* Responsive console/footer */
+/* Responsive */
 @media (max-width: 768px) {
-  .rf-section {
-    padding: 6rem 0 3rem;
-  }
-  
-  .rf-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .rf-console-content {
+  .ftr-section { padding: 7rem 0 4rem; }
+  .ftr-bottom {
     grid-template-columns: 1fr;
-  }
-  
-  .rf-meta-col {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 70, 85, 0.1);
-    padding: 1.8rem;
-  }
-  
-  .rf-interact-col {
-    padding: 2rem 1.8rem;
-    min-height: auto;
-  }
-  
-  .rf-footer {
-    margin-top: 6rem;
-  }
-  
-  .rf-footer-cols {
-    grid-template-columns: 1fr;
-    gap: 2.2rem;
     text-align: center;
+    gap: 2.5rem;
   }
-  
-  .rf-footer-col {
-    align-items: center;
+  .ftr-right-col {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
   }
-  
-  .rf-footer-col--right {
-    align-items: center;
-  }
+  .ftr-clock-box { justify-content: center; }
 }
-
-
-
