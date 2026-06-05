@@ -32,7 +32,7 @@ const lines: TerminalLineData[] = [
 
 const promptPrefix = "visitor@portfolio:~$ ";
 
-function TerminalLine({ line, visible }: { line: TerminalLineData; visible: boolean }) {
+function TerminalLine({ line, visible, exiting }: { line: TerminalLineData; visible: boolean; exiting: boolean }) {
   const content = (() => {
     if (line.type === "empty") {
       return null;
@@ -77,9 +77,14 @@ function TerminalLine({ line, visible }: { line: TerminalLineData; visible: bool
     <div
       className={line.type === "empty" ? "terminal-empty-line" : "terminal-line"}
       style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(6px)",
-        transition: "opacity 0.35s ease, transform 0.35s ease",
+        opacity: visible ? (exiting ? 0 : 1) : 0,
+        transform: visible
+          ? exiting
+            ? "translateY(-12px) scale(0.95)"
+            : "translateY(0)"
+          : "translateY(6px)",
+        filter: visible && exiting ? "blur(4px)" : "none",
+        transition: "opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease",
       }}
     >
       {content}
@@ -87,11 +92,16 @@ function TerminalLine({ line, visible }: { line: TerminalLineData; visible: bool
   );
 }
 
-export function TerminalAbout({ progress }: { progress: MotionValue<number> }) {
+export function TerminalAbout({ progress, exitProgress }: { progress: MotionValue<number>; exitProgress: MotionValue<number> }) {
   const [visibleCount, setVisibleCount] = useState(0);
+  const [exitAmount, setExitAmount] = useState(0);
 
   useMotionValueEvent(progress, "change", (latest) => {
     setVisibleCount(Math.min(Math.floor(latest * lines.length), lines.length));
+  });
+
+  useMotionValueEvent(exitProgress, "change", (latest) => {
+    setExitAmount(latest);
   });
 
   return (
@@ -109,10 +119,14 @@ export function TerminalAbout({ progress }: { progress: MotionValue<number> }) {
           <div className="terminal-titlebar-spacer" />
         </div>
         <div className="terminal-body">
-          {lines.map((line, i) => (
-            <TerminalLine key={i} line={line} visible={i < visibleCount} />
-          ))}
-          {visibleCount >= lines.length && <span className="terminal-cursor">_</span>}
+          {lines.map((line, i) => {
+            const exitThreshold = (lines.length - i) / lines.length;
+            const exiting = exitAmount > exitThreshold;
+            return (
+              <TerminalLine key={i} line={line} visible={i < visibleCount} exiting={exiting} />
+            );
+          })}
+          {visibleCount >= lines.length && exitAmount < 0.5 && <span className="terminal-cursor">_</span>}
         </div>
       </div>
     </div>

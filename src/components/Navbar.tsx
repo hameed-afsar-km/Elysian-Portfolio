@@ -15,18 +15,12 @@ export default function Navbar() {
     }, [])
   );
 
-  const rawScale = useTransform(scrollYProgress, (p) => {
-    const t = Math.min(p / 0.18, 1);
-    return 1 + 19 * t * t * t;
-  });
-  const rawY = useTransform(scrollYProgress, (p) => {
-    const t = Math.min(p / 0.18, 1);
-    return -900 * t * t * t;
-  });
-  const rawOpacity = useTransform(scrollYProgress, [0, 0.12, 0.18], [1, 1, 0]);
-  const scale = useSpring(rawScale, { stiffness: 150, damping: 30, restDelta: 0.001 });
-  const y = useSpring(rawY, { stiffness: 200, damping: 35, restDelta: 0.001 });
-  const opacity = useSpring(rawOpacity, { stiffness: 180, damping: 35, restDelta: 0.001 });
+  const rawScale = useTransform(scrollYProgress, [0, 0.04], [1, 10]);
+  const rawY = useTransform(scrollYProgress, [0, 0.04], [0, -800]);
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.025, 0.04], [1, 1, 0]);
+  const scale = useSpring(rawScale, { stiffness: 200, damping: 30, restDelta: 0.001 });
+  const y = useSpring(rawY, { stiffness: 200, damping: 30, restDelta: 0.001 });
+  const opacity = useSpring(rawOpacity, { stiffness: 250, damping: 35, restDelta: 0.001 });
 
   return (
     <motion.div

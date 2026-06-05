@@ -10,6 +10,9 @@ import CurvedMarquee from "@/components/CurvedMarquee";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { TerminalAbout } from "@/components/TerminalAbout";
 import TimelineSection from "@/components/TimelineSection";
+import ScrollScrubSection from "@/components/ScrollScrubSection";
+import VerticalTimeline from "@/components/VerticalTimeline";
+import ResumeFooter from "@/components/ResumeFooter";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -40,25 +43,26 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Sync Lenis scroll to container-relative progress MotionValue
+  // Sync Lenis scroll to progress MotionValue (focused on first 300vh)
   useLenis(
     useCallback((lenis: Lenis) => {
       const el = containerRef.current;
       if (!el) return;
       const elTop = el.offsetTop;
-      const elHeight = el.offsetHeight;
       const vh = window.innerHeight;
-      const range = elHeight - vh;
+      const range = vh * 3; // Lock scroll-scrub range to exactly 300vh
       const p = range > 0 ? (lenis.scroll - elTop) / range : 0;
       scrollYProgress.set(Math.max(0, Math.min(1, p)));
     }, [])
   );
 
-  // ── Hero (0 → 0.20) ─────────────────────────────────────
-  const rawHeroScale = useTransform(scrollYProgress, [0, 0.20], [1, 10]);
-  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.15, 0.20], [1, 1, 0]);
-  const heroScale = useSpring(rawHeroScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
-  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
+  // ── Hero (0 → 0.15) ─────────────────────────────────────
+  const rawHeroScale = useTransform(scrollYProgress, [0, 0.15], [1, 10]);
+  const rawHeroY = useTransform(scrollYProgress, [0, 0.15], [0, -800]);
+  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.10, 0.15], [1, 1, 0]);
+  const heroScale = useSpring(rawHeroScale, { stiffness: 200, damping: 30, restDelta: 0.001 });
+  const heroY = useSpring(rawHeroY, { stiffness: 200, damping: 30, restDelta: 0.001 });
+  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 250, damping: 35, restDelta: 0.001 });
 
   // ── Marquees (0 → 0.18) ────────────────────────────────
   const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.18], [1, 3]);
@@ -74,29 +78,42 @@ export default function Home() {
   const rawBgOpacity = useTransform(scrollYProgress, [0, 0.20], [1, 0.15]);
   const bgOpacity = useSpring(rawBgOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
-  // ── About Me (0.15 → 0.42) ────────────────────────────
-  const aboutDisplay = useTransform(scrollYProgress, (p) =>
-    p < 0.15 ? "none" : "flex"
+  // ── Fixed viewport display toggles ─────────────────────
+  const fixedContainerDisplay = useTransform(scrollYProgress, (p) =>
+    p >= 1.0 ? "none" : "flex"
   );
-  // Hide card after parallax exit completes at 0.42
+
+  // ── About Me (0.15 → 1.0) ─────────────────────────────
+  const aboutDisplay = useTransform(scrollYProgress, (p) =>
+    (p < 0.15 || p >= 1.0) ? "none" : "flex"
+  );
+  // Hide card after parallax exit completes at 1.0
   const aboutCardDisplay = useTransform(scrollYProgress, (p) =>
-    p < 0.15 || p > 0.42 ? "none" : "flex"
+    (p < 0.15 || p >= 1.0) ? "none" : "flex"
   );
   // Slide in → hold while typing → parallax shrink + slide up out
   const rawAboutCardY = useTransform(
     scrollYProgress,
-    [0.15, 0.25, 0.34, 0.42],
-    [1200, 0, 0, -900]
+    [0.15, 0.30, 0.65, 1.0],
+    [1200, 0, 0, -1000]
   );
-  const rawAboutCardScale = useTransform(scrollYProgress, [0.34, 0.42], [1, 0.88]);
-  const aboutCardY = useSpring(rawAboutCardY, { stiffness: 200, damping: 35, restDelta: 1 });
-  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 160, damping: 32, restDelta: 0.001 });
+  const rawAboutCardScale = useTransform(scrollYProgress, [0.65, 1.0], [1, 0.88]);
+  const aboutCardY = useSpring(rawAboutCardY, { stiffness: 300, damping: 40, restDelta: 0.1 });
+  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 250, damping: 35, restDelta: 0.001 });
 
   // Terminal typing animation progress
-  const rawCardProgress = useTransform(scrollYProgress, [0.18, 0.32], [0, 1]);
+  const rawCardProgress = useTransform(scrollYProgress, [0.30, 0.60], [0, 1]);
   const cardProgress = useSpring(rawCardProgress, {
-    stiffness: 120,
+    stiffness: 150,
     damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Terminal exit animation progress (lines fade out as card exits)
+  const rawAboutExit = useTransform(scrollYProgress, [0.65, 0.95], [0, 1]);
+  const aboutExit = useSpring(rawAboutExit, {
+    stiffness: 300,
+    damping: 40,
     restDelta: 0.001,
   });
 
@@ -129,7 +146,10 @@ export default function Home() {
       </motion.div>
 
       {/* Fixed Viewport Container — stays in view regardless of scroll distance */}
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none">
+      <motion.div
+        style={{ display: fixedContainerDisplay }}
+        className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none z-[10]"
+      >
 
         {/* Curved Marquees — scale up and fly apart as hero zooms in */}
         <motion.div
@@ -147,7 +167,7 @@ export default function Home() {
 
         {/* Hero Section Wrapper */}
         <motion.div
-          style={{ scale: heroScale, opacity: heroOpacity }}
+          style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
           className="absolute inset-0 flex items-center justify-center"
         >
           <main className="hero-container">
@@ -186,18 +206,27 @@ export default function Home() {
         >
           <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8">
             <ContainerScroll progress={cardProgress}>
-              <TerminalAbout progress={cardProgress} />
+              <TerminalAbout progress={cardProgress} exitProgress={aboutExit} />
             </ContainerScroll>
           </div>
         </motion.div>
 
-      </div>
+      </motion.div>
 
       {/* Spacer for hero + about scroll range */}
       <div style={{ height: "300vh" }} />
 
-      {/* Timeline Section — horizontal scroll in normal flow */}
+      {/* Scroll Scrub Philosophy Section */}
+      <ScrollScrubSection />
+
+      {/* Vertical Career Journey Section */}
+      <VerticalTimeline />
+
+      {/* Projects Section — horizontal scroll in normal flow */}
       <TimelineSection />
+
+      {/* Resume Retrieval Console & HUD Footer */}
+      <ResumeFooter />
     </div>
   );
 }
