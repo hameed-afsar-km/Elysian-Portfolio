@@ -1,280 +1,323 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface TechItem {
-  name: string;
-  category: string;
-  level: number;
-}
+/* ── Data ── */
+interface TechItem { name: string; category: string; level: number }
 
 const TECH: TechItem[] = [
-  { name: "Next.js", category: "Frontend", level: 95 },
-  { name: "TypeScript", category: "Frontend", level: 92 },
-  { name: "React", category: "Frontend", level: 90 },
-  { name: "Three.js", category: "Frontend", level: 78 },
-  { name: "Framer Motion", category: "Frontend", level: 88 },
-  { name: "Tailwind CSS", category: "Frontend", level: 85 },
-  { name: "Vite", category: "Frontend", level: 82 },
-  { name: "Node.js", category: "Backend", level: 88 },
-  { name: "Python", category: "Backend", level: 85 },
-  { name: "Rust", category: "Backend", level: 70 },
-  { name: "Go", category: "Backend", level: 65 },
-  { name: "GraphQL", category: "Backend", level: 80 },
-  { name: "LangChain", category: "Backend", level: 75 },
+  { name: "React", category: "Frontend", level: 92 },
+  { name: "Next.js", category: "Frontend", level: 90 },
+  { name: "TypeScript", category: "Frontend", level: 88 },
+  { name: "Tailwind", category: "Frontend", level: 85 },
+  { name: "Framer Motion", category: "Frontend", level: 82 },
+  { name: "FastAPI", category: "Backend", level: 85 },
+  { name: "Node.js", category: "Backend", level: 85 },
+  { name: "Express", category: "Backend", level: 82 },
+  { name: "WebSockets", category: "Backend", level: 75 },
+  { name: "LangChain", category: "AI & Agents", level: 88 },
+  { name: "LangGraph", category: "AI & Agents", level: 82 },
+  { name: "RAG", category: "AI & Agents", level: 80 },
+  { name: "Ollama", category: "AI & Agents", level: 78 },
+  { name: "OpenAI", category: "AI & Agents", level: 85 },
   { name: "PostgreSQL", category: "Data", level: 82 },
   { name: "MongoDB", category: "Data", level: 78 },
-  { name: "Redis", category: "Data", level: 72 },
-  { name: "AI/ML", category: "Data", level: 80 },
-  { name: "Docker", category: "DevOps", level: 85 },
-  { name: "Kubernetes", category: "DevOps", level: 72 },
-  { name: "AWS", category: "DevOps", level: 80 },
-  { name: "Linux", category: "DevOps", level: 78 },
-  { name: "Git", category: "DevOps", level: 90 },
-  { name: "WebGPU", category: "Edge", level: 60 },
-  { name: "WebAssembly", category: "Edge", level: 55 },
+  { name: "Firebase", category: "Data", level: 75 },
+  { name: "Redis", category: "Data", level: 70 },
+  { name: "Git", category: "Tools", level: 90 },
+  { name: "GitHub", category: "Tools", level: 88 },
+  { name: "Vercel", category: "Tools", level: 82 },
+  { name: "Postman", category: "Tools", level: 78 },
+  { name: "Linux", category: "Tools", level: 75 },
 ];
 
-const CATEGORY_COLORS: Record<string, { hue: number; label: string }> = {
-  Frontend: { hue: 210, label: "Frontend" },
-  Backend: { hue: 140, label: "Backend" },
-  Data: { hue: 280, label: "Data" },
-  DevOps: { hue: 30, label: "DevOps" },
-  Edge: { hue: 350, label: "Edge" },
+const CAT_COLORS: Record<string, number> = {
+  Frontend: 210, Backend: 145, "AI & Agents": 320, Data: 260, Tools: 35,
 };
 
-function TechCard({ item, index, isHovered, onHover, onLeave }: {
-  item: TechItem;
-  index: number;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const [isLocalHovered, setIsLocalHovered] = useState(false);
-
-  const { hue } = CATEGORY_COLORS[item.category];
-  const active = isLocalHovered || isHovered;
-
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 300, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 300, damping: 20 });
-  const glowX = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
-  const glowY = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseEnter = () => {
-    setIsLocalHovered(true);
-    onHover();
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-    setIsLocalHovered(false);
-    onLeave();
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className="ts-card"
-      style={{
-        rotateX,
-        rotateY,
-        "--card-hue": hue,
-      } as React.CSSProperties}
-      initial={{ opacity: 0, y: 50, scale: 0.8 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ delay: index * 0.025, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      animate={{
-        borderColor: active
-          ? `hsla(${hue}, 70%, 55%, 0.5)`
-          : "rgba(255,255,255,0.06)",
-        boxShadow: active
-          ? `0 0 40px hsla(${hue}, 70%, 55%, 0.12), inset 0 0 30px hsla(${hue}, 70%, 55%, 0.03)`
-          : "0 0 0px transparent",
-        scale: active ? 1.08 : 1,
-      }}
-    >
-      {/* Glare overlay */}
-      <motion.div
-        className="ts-card-glare"
-        style={{
-          background: `radial-gradient(circle at ${glowX} ${glowY}, hsla(${hue}, 80%, 60%, 0.12), transparent 60%)`,
-        }}
-      />
-
-      {/* Proficiency bar */}
-      <motion.div
-        className="ts-card-bar"
-        style={{ backgroundColor: `hsla(${hue}, 70%, 55%, 0.25)` }}
-        animate={{ width: active ? `${item.level}%` : "0%" }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      />
-
-      {/* Category dot */}
-      <span
-        className="ts-card-dot"
-        style={{ backgroundColor: `hsla(${hue}, 70%, 55%, 0.8)` }}
-      />
-
-      <motion.span
-        className="ts-card-text"
-        animate={{
-          color: active
-            ? `hsla(${hue}, 60%, 75%, 1)`
-            : "rgba(236, 232, 225, 0.35)",
-        }}
-      >
-        {item.name}
-      </motion.span>
-    </motion.div>
-  );
+/* ── Wave item ── */
+interface WaveItem {
+  x: number; y: number; scale: number; glow: number; hue: number;
+  name: string; level: number; category: string; index: number;
 }
 
+/* ── Main ── */
 export default function TechStackMarquee() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [filter, setFilter] = useState<string | null>(null);
+  const [wave, setWave] = useState<WaveItem[]>([]);
+  const dims = useRef({ w: 800, h: 400 });
 
-  const handleSectionMouse = (e: React.MouseEvent) => {
+  // Categorize items for clustering
+  const catOrder = useMemo(() => ["Frontend", "Backend", "AI & Agents", "Data", "Tools"], []);
+
+  // Build items with cluster positions
+  const layout = useMemo(() => {
+    const groups: Record<string, TechItem[]> = {};
+    TECH.forEach(t => {
+      if (!groups[t.category]) groups[t.category] = [];
+      groups[t.category].push(t);
+    });
+
+    const items: Array<{ item: TechItem; clusterX: number; row: number }> = [];
+    let cursor = 0.05;
+    for (const cat of catOrder) {
+      const g = groups[cat] || [];
+      const span = g.length * 0.035;
+      g.forEach((t, i) => {
+        items.push({
+          item: t,
+          clusterX: cursor + (i / Math.max(g.length - 1, 1)) * span,
+          row: catOrder.indexOf(cat) % 2 === 0 ? 0 : 1,
+        });
+      });
+      cursor += span + 0.04;
+    }
+    return items;
+  }, [catOrder]);
+
+  // Wave animation loop
+  useEffect(() => {
+    let raf: number;
+    let time = 0;
+    const ampBase = 80;
+    const freqBase = 2.2;
+
+    const tick = () => {
+      time += 0.025;
+      const mx = mouse.x;
+      const my = mouse.y;
+
+      // Amplitude: base 80 + mouseY control (40-140)
+      const amp = 40 + my * 100;
+      // Phase shift from mouseX (0 to 2π)
+      const phaseOff = mx * Math.PI * 2;
+
+      const result: WaveItem[] = layout.map(({ item, clusterX, row }) => {
+        const visible = filter === null || filter === item.category;
+        const isHovered = hovered === item.name;
+        const hue = CAT_COLORS[item.category] || 0;
+        const rowOff = row * Math.PI;
+        const speed = 1.0 + row * 0.3;
+
+        // Center Y per row
+        const cy = row === 0 ? 150 : 310;
+
+        // Wave Y
+        const wavePhase = clusterX * freqBase * Math.PI * 2 + time * speed + phaseOff + rowOff;
+        const waveY = Math.sin(wavePhase) * amp * (1 - my * 0.3);
+
+        // Scale + glow from wave position
+        const normalized = (Math.sin(wavePhase) + 1) / 2; // 0 to 1
+        const s = isHovered ? 1.5 : 0.6 + normalized * 0.5;
+        const glow = isHovered ? 1 : 0.3 + normalized * 0.5;
+
+        // X position spans the section
+        const x = clusterX * dims.current.w;
+        const y = cy + waveY;
+
+        return {
+          x, y, scale: s, glow, hue,
+          name: item.name, level: item.level,
+          category: item.category, index: item.name.charCodeAt(0),
+          visible,
+        };
+      });
+
+      setWave(result);
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [mouse, hovered, filter, layout]);
+
+  // Track mouse
+  const handleMouse = useCallback((e: React.MouseEvent) => {
     const el = sectionRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    });
-  };
+    dims.current = { w: rect.width, h: rect.height };
+    setMouse({ x: (e.clientX - rect.left) / rect.width, y: (e.clientY - rect.top) / rect.height });
+  }, []);
 
-  const categories = useMemo(() => {
-    const cats = new Map<string, TechItem[]>();
-    TECH.forEach((t) => {
-      if (!cats.has(t.category)) cats.set(t.category, []);
-      cats.get(t.category)!.push(t);
-    });
-    return Array.from(cats.entries());
+  // Burst state
+  const [bursts, setBursts] = useState<Array<{ id: number; x: number; y: number; hue: number }>>([]);
+  const burstId = useRef(0);
+
+  const handleClick = useCallback((wx: number, wy: number, hue: number) => {
+    const id = ++burstId.current;
+    setBursts(prev => [...prev, { id, x: wx, y: wy, hue }]);
+    setTimeout(() => setBursts(prev => prev.filter(b => b.id !== id)), 900);
   }, []);
 
   return (
     <section
       ref={sectionRef}
       className="ts-section"
-      onMouseMove={handleSectionMouse}
+      onMouseMove={handleMouse}
+      onMouseLeave={() => setMouse({ x: 0.5, y: 0.5 })}
     >
-      {/* Interactive orbs that follow mouse */}
+      {/* Background gradient orbs */}
       <motion.div
-        className="ts-orb ts-orb--1"
+        className="ts-aurora"
         animate={{
-          x: [`${mousePos.x - 20}%`, `${mousePos.x + 10}%`, `${mousePos.x - 20}%`],
-          y: [`${mousePos.y - 10}%`, `${mousePos.y + 5}%`, `${mousePos.y - 10}%`],
+          background: [
+            `radial-gradient(ellipse 60% 50% at ${30 + mouse.x * 10}% ${30 + mouse.y * 10}%, hsla(210, 70%, 50%, 0.04), transparent)`,
+            `radial-gradient(ellipse 60% 50% at ${70 - mouse.x * 10}% ${60 + mouse.y * 10}%, hsla(320, 70%, 50%, 0.03), transparent)`,
+          ],
         }}
-        transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="ts-orb ts-orb--2"
-        animate={{
-          x: [`${100 - mousePos.x - 15}%`, `${100 - mousePos.x + 5}%`, `${100 - mousePos.x - 15}%`],
-          y: [`${100 - mousePos.y - 5}%`, `${100 - mousePos.y + 10}%`, `${100 - mousePos.y - 5}%`],
-        }}
-        transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+        transition={{ duration: 1.5 }}
       />
 
-      {/* Mouse spotlight */}
-      <motion.div
-        className="ts-spotlight"
-        animate={{
-          left: `${mousePos.x}%`,
-          top: `${mousePos.y}%`,
-        }}
-        transition={{ type: "spring", stiffness: 100, damping: 25, mass: 0.5 }}
-      />
-
+      {/* Header */}
       <div className="ts-header">
-        <motion.span
-          className="ts-eyebrow"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <motion.span className="ts-eyebrow" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
           // TECH STACK
         </motion.span>
-        <motion.div
-          className="ts-underline"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        />
+        <motion.div className="ts-underline" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }} />
+        <motion.p className="ts-hint" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.5 }}>
+          move mouse to shape the wave &bull; hover to reveal &bull; click to burst
+        </motion.p>
       </div>
 
-      {/* Category tabs */}
-      <motion.div
-        className="ts-categories"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        {categories.map(([cat, items]) => {
-          const { hue } = CATEGORY_COLORS[cat];
-          const isActive = hoveredCategory === null || hoveredCategory === cat;
-          return (
-            <motion.button
-              key={cat}
-              className="ts-cat-btn"
-              style={{
-                borderColor: isActive
-                  ? `hsla(${hue}, 70%, 55%, 0.3)`
-                  : "rgba(255,255,255,0.06)",
-                color: isActive
-                  ? `hsla(${hue}, 60%, 75%, 1)`
-                  : "rgba(236, 232, 225, 0.25)",
-              }}
-              onMouseEnter={() => setHoveredCategory(cat)}
-              onMouseLeave={() => setHoveredCategory(null)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span
-                className="ts-cat-dot"
-                style={{ backgroundColor: `hsla(${hue}, 70%, 55%, 0.8)` }}
-              />
-              {cat}
-              <span className="ts-cat-count">{items.length}</span>
-            </motion.button>
-          );
-        })}
+      {/* Filters */}
+      <motion.div className="ts-categories" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }}>
+        <motion.button className="ts-cat-btn" style={{ borderColor: filter === null ? "rgba(255,70,85,0.4)" : "rgba(255,255,255,0.06)", color: filter === null ? "var(--val-red)" : "rgba(236,232,225,0.35)" }} onClick={() => setFilter(null)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          ALL
+        </motion.button>
+        {Object.entries(CAT_COLORS).map(([cat, hue]) => (
+          <motion.button key={cat} className="ts-cat-btn" style={{ borderColor: filter === cat ? `hsla(${hue}, 70%, 55%, 0.4)` : "rgba(255,255,255,0.06)", color: filter === cat ? `hsla(${hue}, 60%, 75%, 1)` : "rgba(236,232,225,0.25)" }} onClick={() => setFilter(filter === cat ? null : cat)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <span className="ts-cat-dot" style={{ backgroundColor: `hsla(${hue}, 70%, 55%, 0.8)` }} />
+            {cat}
+          </motion.button>
+        ))}
       </motion.div>
 
-      {/* Tech grid */}
-      <div className="ts-grid">
-        {TECH.map((item, i) => (
-          <TechCard
-            key={item.name}
-            item={item}
-            index={i}
-            isHovered={hoveredCategory !== null && hoveredCategory === item.category}
-            onHover={() => setHoveredCategory(item.category)}
-            onLeave={() => setHoveredCategory(null)}
-          />
-        ))}
+      {/* Wave stage */}
+      <div className="ts-wave-stage">
+        {wave.map((w) => {
+          const isHovered = hovered === w.name;
+          const visible = filter === null || filter === w.category;
+          return (
+            <motion.div
+              key={w.name}
+              className="ts-wave-item"
+              style={{
+                x: w.x,
+                y: w.y,
+                scale: w.scale * (visible ? 1 : 0.3),
+                opacity: visible ? 1 : 0,
+                zIndex: isHovered ? 100 : Math.round(w.y),
+                "--whue": w.hue,
+              } as React.CSSProperties}
+              transition={{ type: "spring", stiffness: 120, damping: 18, mass: 0.8 }}
+              onMouseEnter={() => setHovered(w.name)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => handleClick(w.x, w.y, w.hue)}
+            >
+              {/* Glow orb */}
+              <motion.div
+                className="ts-wave-orb"
+                style={{
+                  backgroundColor: `hsla(${w.hue}, 70%, 55%, ${0.06 + w.glow * 0.1})`,
+                  boxShadow: `0 0 ${20 + w.glow * 30}px hsla(${w.hue}, 70%, 55%, ${0.08 + w.glow * 0.12})`,
+                }}
+                animate={{
+                  scale: isHovered ? 1.8 : 1,
+                }}
+                transition={{ duration: 0.3 }}
+              />
+
+              {/* Core dot */}
+              <motion.div
+                className="ts-wave-core"
+                style={{
+                  backgroundColor: `hsla(${w.hue}, 80%, 60%, ${0.4 + w.glow * 0.5})`,
+                  boxShadow: `0 0 ${6 + w.glow * 14}px hsla(${w.hue}, 80%, 60%, ${0.15 + w.glow * 0.4})`,
+                }}
+                animate={{
+                  scale: isHovered ? 1.6 : 1,
+                }}
+              >
+                <span className="ts-wave-catdot" style={{ backgroundColor: `hsla(${w.hue}, 80%, 60%, 1)` }} />
+              </motion.div>
+
+              {/* Label */}
+              <motion.span
+                className="ts-wave-label"
+                animate={{
+                  opacity: isHovered ? 1 : 0.3 + w.glow * 0.3,
+                  color: isHovered ? `hsla(${w.hue}, 60%, 85%, 1)` : `hsla(${w.hue}, 40%, 60%, 0.5)`,
+                  y: isHovered ? -6 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {w.name}
+              </motion.span>
+
+              {/* Level badge */}
+              <AnimatePresence>
+                {isHovered && (
+                  <motion.span
+                    className="ts-wave-level"
+                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.8 }}
+                    style={{ color: `hsla(${w.hue}, 80%, 70%, 1)` }}
+                  >
+                    {w.level}%
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
+
+        {/* Burst particles */}
+        <AnimatePresence>
+          {bursts.map(b => (
+            <ParticleBurst key={b.id} {...b} />
+          ))}
+        </AnimatePresence>
       </div>
     </section>
+  );
+}
+
+/* ── Burst ── */
+function ParticleBurst({ x, y, hue }: { x: number; y: number; hue: number }) {
+  const dots = useMemo(() =>
+    Array.from({ length: 8 }, (_, i) => ({
+      angle: (Math.PI * 2 * i) / 8,
+      dist: 30 + Math.random() * 50,
+      size: 1.5 + Math.random() * 2.5,
+    })), []);
+
+  return (
+    <>
+      {dots.map((d, i) => (
+        <motion.div
+          key={i}
+          className="ts-wave-burst"
+          style={{
+            width: d.size, height: d.size,
+            backgroundColor: `hsla(${hue}, 80%, 65%, 0.9)`,
+            boxShadow: `0 0 ${d.size * 3}px hsla(${hue}, 80%, 65%, 0.3)`,
+          }}
+          initial={{ x, y, opacity: 1, scale: 1 }}
+          animate={{
+            x: x + Math.cos(d.angle) * d.dist,
+            y: y + Math.sin(d.angle) * d.dist,
+            opacity: 0, scale: 0,
+          }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 + Math.random() * 0.3, ease: "easeOut" }}
+        />
+      ))}
+    </>
   );
 }
