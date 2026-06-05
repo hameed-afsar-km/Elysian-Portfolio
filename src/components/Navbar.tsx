@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useState, useCallback } from "react";
+import { useTransform, motion, useMotionValue } from "framer-motion";
+import type Lenis from "lenis";
+import { useLenis } from "lenis/react";
 
 const LEFT_ITEMS = [
   { id: "home", label: "Home", href: "/" },
@@ -16,14 +18,16 @@ const RIGHT_ITEMS = [
 export default function Navbar() {
   const [activeId, setActiveId] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const scrollYProgress = useMotionValue(0);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useLenis(
+    useCallback((lenis: Lenis) => {
+      setScrolled(lenis.scroll > 20);
+      const p = lenis.limit > 0 ? lenis.scroll / lenis.limit : 0;
+      scrollYProgress.set(p);
+    }, [])
+  );
 
-  const { scrollYProgress } = useScroll();
   const navY = useTransform(scrollYProgress, [0.25, 0.32], [0, -120]);
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.32 ? "none" : "auto"));
 

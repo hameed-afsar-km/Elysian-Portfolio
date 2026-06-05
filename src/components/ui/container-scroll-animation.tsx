@@ -1,6 +1,6 @@
 "use client";
-import React, { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import React from "react";
+import { useTransform, motion, MotionValue } from "framer-motion";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -9,14 +9,9 @@ export const ContainerScroll = ({
 }: {
   titleComponent?: string | React.ReactNode;
   children: React.ReactNode;
-  progress?: MotionValue<number>;
+  progress: MotionValue<number>;
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: localScrollY } = useScroll({
-    target: containerRef,
-  });
-  
-  const scrollYProgress = progress || localScrollY;
+  const scrollYProgress = progress;
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
@@ -39,10 +34,7 @@ export const ContainerScroll = ({
   const translate = useTransform(scrollYProgress, [0, 1], [120, 0]);
 
   return (
-    <div
-      className="h-[60rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20"
-      ref={containerRef}
-    >
+    <div className="h-[60rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20">
       <div
         className="py-10 md:py-40 w-full relative"
         style={{

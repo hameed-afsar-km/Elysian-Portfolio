@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { ReactLenis } from "lenis/react";
 
 export const metadata: Metadata = {
   title: "Afsar | Portfolio",
@@ -21,8 +22,10 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Barlow+Condensed:wght@700;800;900&display=swap"
         />
-        <Navbar />
-        {children}
+        <ReactLenis root>
+          <Navbar />
+          {children}
+        </ReactLenis>
       </body>
     </html>
   );

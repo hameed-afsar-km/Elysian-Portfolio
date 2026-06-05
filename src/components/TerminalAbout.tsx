@@ -11,22 +11,23 @@ interface TerminalLineData {
 }
 
 const lines: TerminalLineData[] = [
-  { text: "visitor@portfolio:~$ initialize", type: "command" },
-  { text: "", type: "empty" },
-  { text: "Loading ideas...", type: "loading" },
-  { text: "Loading projects...", type: "loading" },
-  { text: "Loading ambition...", type: "loading" },
-  { text: "", type: "empty" },
-  { text: "Ready.", type: "success" },
   { text: "visitor@portfolio:~$ whoami", type: "command" },
-  { text: "Hameed Afsar K M", type: "output" },
   { text: "", type: "empty" },
-  { text: "AI Engineer", type: "output" },
-  { text: "Builder", type: "output" },
+  { text: "Hameed Afsar KM", type: "output" },
   { text: "", type: "empty" },
-  { text: "Currently creating intelligent systems,", type: "output" },
+  { text: "visitor@portfolio:~$ about", type: "command" },
   { text: "", type: "empty" },
-  { text: "digital products, and ambitious ideas.", type: "output" },
+  { text: "Started with curiosity.", type: "output" },
+  { text: "Stayed for the challenge.", type: "output" },
+  { text: "", type: "empty" },
+  { text: "Now building products,", type: "output" },
+  { text: "systems, and experiences.", type: "output" },
+  { text: "", type: "empty" },
+  { text: "visitor@portfolio:~$ focus", type: "command" },
+  { text: "", type: "empty" },
+  { text: "AI \u2022 Automation \u2022 Startups", type: "output" },
+  { text: "", type: "empty" },
+  { text: "visitor@portfolio:~$ ", type: "command" },
 ];
 
 const promptPrefix = "visitor@portfolio:~$ ";

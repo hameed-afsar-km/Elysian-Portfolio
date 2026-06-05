@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { useTransform, motion, useMotionValue, useSpring, MotionValue } from "framer-motion";
+import type Lenis from "lenis";
+import { useLenis } from "lenis/react";
 import ParticleBackground from "@/components/ParticleBackground";
 import ParticleBackgroundMono from "@/components/ParticleBackgroundMono";
 import CurvedMarquee from "@/components/CurvedMarquee";
@@ -11,16 +13,24 @@ import { TerminalAbout } from "@/components/TerminalAbout";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useLenis();
 
-  // Lock body scroll while loader is active to prevent early scrolling
+  // Scroll progress driven by Lenis (container-relative 0-1)
+  const scrollYProgress = useMotionValue(0);
+
+  // Lock body scroll while loader is active; pause/resume Lenis accordingly
   useEffect(() => {
-    if (loading) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-      document.body.style.overflowX = "hidden";
+    if (lenisRef) {
+      if (loading) {
+        lenisRef.stop();
+        document.body.style.overflow = "hidden";
+      } else {
+        lenisRef.start();
+        document.body.style.overflow = "auto";
+        document.body.style.overflowX = "hidden";
+      }
     }
-  }, [loading]);
+  }, [loading, lenisRef]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,10 +39,19 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  // Sync Lenis scroll to container-relative progress MotionValue
+  useLenis(
+    useCallback((lenis: Lenis) => {
+      const el = containerRef.current;
+      if (!el) return;
+      const elTop = el.offsetTop;
+      const elHeight = el.offsetHeight;
+      const vh = window.innerHeight;
+      const range = elHeight - vh;
+      const p = range > 0 ? (lenis.scroll - elTop) / range : 0;
+      scrollYProgress.set(Math.max(0, Math.min(1, p)));
+    }, [])
+  );
 
   // Hero Section transitions:
   // As scroll progress goes from 0 to 0.45, scale the Hero content from 1 to 10 and fade out.
@@ -52,18 +71,20 @@ export default function Home() {
   const aboutDisplay = useTransform(scrollYProgress, (progress) =>
     progress < 0.25 ? "none" : "flex"
   );
-  // Card slides up from below the viewport
-  const aboutCardY = useTransform(scrollYProgress, (v) => {
-    if (v <= 0.25) return 1200;
-    if (v >= 0.45) return 0;
-    return 1200 - (v - 0.25) / 0.20 * 1200;
+  // Card slides up from below the viewport — spring-smoothed for fluid feel
+  const rawAboutCardY = useTransform(scrollYProgress, [0.25, 0.45], [1200, 0]);
+  const aboutCardY = useSpring(rawAboutCardY, {
+    stiffness: 200,
+    damping: 35,
+    restDelta: 1,
   });
 
   // Map the master scroll [0.25, 0.98] to [0, 1] for the Card Scroll Animation inside ContainerScroll
-  const cardProgress = useTransform(scrollYProgress, (v) => {
-    if (v <= 0.25) return 0;
-    if (v >= 0.98) return 1;
-    return (v - 0.25) / 0.73;
+  const rawCardProgress = useTransform(scrollYProgress, [0.25, 0.98], [0, 1]);
+  const cardProgress = useSpring(rawCardProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
   });
 
   return (
