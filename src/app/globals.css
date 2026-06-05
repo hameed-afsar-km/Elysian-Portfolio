@@ -75,22 +75,6 @@ body {
   }
 }
 
-@keyframes loaderFadeOut {
-  0% {
-    opacity: 1;
-  }
-
-  99% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
 .loader-screen {
   position: fixed;
   inset: 0;
@@ -98,7 +82,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: loaderFadeOut 0.01s forwards 3.3s;
   overflow: hidden;
   pointer-events: none;
 }
@@ -167,6 +150,14 @@ body {
   animation-delay: calc(0.2s + var(--char-idx) * 0.08s);
 }
 
+@media (max-width: 768px) {
+  .loader-text {
+    font-size: clamp(3rem, 15vw, 10rem);
+    letter-spacing: clamp(4px, 2vw, 12px);
+    gap: clamp(1px, 1vw, 4px);
+  }
+}
+
 /* ─── Hero ───────────────────────────────────────────────── */
 @keyframes heroFadeIn {
   0% {
@@ -199,8 +190,6 @@ body {
   padding-bottom: 4vh;
   position: relative;
   z-index: 10;
-  opacity: 0;
-  animation: heroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 2.7s;
   pointer-events: none;
 }
 
@@ -220,6 +209,12 @@ body {
   margin: 0 auto;
   color: var(--val-light);
   pointer-events: auto;
+}
+
+@media (min-width: 769px) {
+  .val-heading {
+    font-size: clamp(3rem, 12vw, 20rem);
+  }
 }
 
 .val-heading .word-wrap {
