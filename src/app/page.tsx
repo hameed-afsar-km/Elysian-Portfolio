@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useTransform, motion, useMotionValue, useSpring, MotionValue } from "framer-motion";
+import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 import ParticleBackground from "@/components/ParticleBackground";
@@ -9,13 +9,14 @@ import ParticleBackgroundMono from "@/components/ParticleBackgroundMono";
 import CurvedMarquee from "@/components/CurvedMarquee";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { TerminalAbout } from "@/components/TerminalAbout";
+import TimelineSection from "@/components/TimelineSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const lenisRef = useLenis();
 
-  // Scroll progress driven by Lenis (container-relative 0-1)
+  // Scroll progress driven by Lenis (container-relative 0–1)
   const scrollYProgress = useMotionValue(0);
 
   // Lock body scroll while loader is active; pause/resume Lenis accordingly
@@ -53,53 +54,67 @@ export default function Home() {
     }, [])
   );
 
-  // Hero Section transitions:
-  // As scroll progress goes from 0 to 0.45, scale the Hero content from 1 to 10 and fade out.
-  const rawHeroScale = useTransform(scrollYProgress, [0, 0.45], [1, 10]);
-  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]);
+  // ── Hero (0 → 0.20) ─────────────────────────────────────
+  const rawHeroScale = useTransform(scrollYProgress, [0, 0.20], [1, 10]);
+  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.15, 0.20], [1, 1, 0]);
   const heroScale = useSpring(rawHeroScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
   const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
-  // Marquees: scale up and move apart as the hero zooms in
-  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.35], [1, 3]);
-  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.35], [0, -600]);
-  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.35], [0, 600]);
-  const rawMarqueeOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  // ── Marquees (0 → 0.18) ────────────────────────────────
+  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.18], [1, 3]);
+  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.18], [0, -600]);
+  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.18], [0, 600]);
+  const rawMarqueeOpacity = useTransform(scrollYProgress, [0, 0.14], [1, 0]);
   const marqueeScale = useSpring(rawMarqueeScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
   const marqueeAY = useSpring(rawMarqueeAY, { stiffness: 100, damping: 25, restDelta: 0.001 });
   const marqueeBY = useSpring(rawMarqueeBY, { stiffness: 100, damping: 25, restDelta: 0.001 });
   const marqueeOpacity = useSpring(rawMarqueeOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
-  // Background particles: dim/fade opacity slightly as we enter the content zone
-  const rawBgOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0.15]);
+  // ── Background opacity (0 → 0.20) ──────────────────────
+  const rawBgOpacity = useTransform(scrollYProgress, [0, 0.20], [1, 0.15]);
   const bgOpacity = useSpring(rawBgOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
 
-
-
-  // About Me Section: appears once scroll passes 25%, stays visible
-  const aboutDisplay = useTransform(scrollYProgress, (progress) =>
-    progress < 0.25 ? "none" : "flex"
+  // ── About Me (0.15 → 0.42) ────────────────────────────
+  const aboutDisplay = useTransform(scrollYProgress, (p) =>
+    p < 0.15 ? "none" : "flex"
   );
-  // Card slides up from below the viewport — spring-smoothed for fluid feel
-  const rawAboutCardY = useTransform(scrollYProgress, [0.25, 0.45], [1200, 0]);
-  const aboutCardY = useSpring(rawAboutCardY, {
-    stiffness: 200,
-    damping: 35,
-    restDelta: 1,
-  });
+  // Hide card after parallax exit completes at 0.42
+  const aboutCardDisplay = useTransform(scrollYProgress, (p) =>
+    p < 0.15 || p > 0.42 ? "none" : "flex"
+  );
+  // Slide in → hold while typing → parallax shrink + slide up out
+  const rawAboutCardY = useTransform(
+    scrollYProgress,
+    [0.15, 0.25, 0.34, 0.42],
+    [1200, 0, 0, -900]
+  );
+  const rawAboutCardScale = useTransform(scrollYProgress, [0.34, 0.42], [1, 0.88]);
+  const aboutCardY = useSpring(rawAboutCardY, { stiffness: 200, damping: 35, restDelta: 1 });
+  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 160, damping: 32, restDelta: 0.001 });
 
-  // Map the master scroll [0.25, 0.98] to [0, 1] for the Card Scroll Animation inside ContainerScroll
-  const rawCardProgress = useTransform(scrollYProgress, [0.25, 0.98], [0, 1]);
+  // Terminal typing animation progress
+  const rawCardProgress = useTransform(scrollYProgress, [0.18, 0.32], [0, 1]);
   const cardProgress = useSpring(rawCardProgress, {
     stiffness: 120,
     damping: 30,
     restDelta: 0.001,
   });
 
+  // ── Timeline (0.40 → 0.82) ────────────────────────────
+  const timelineDisplay = useTransform(scrollYProgress, (p) =>
+    p < 0.40 || p > 0.82 ? "none" : "flex"
+  );
+  // Parallax entry: drift in from slightly below while scaling down to natural size
+  const rawTimelineScale = useTransform(scrollYProgress, [0.40, 0.47], [1.06, 1]);
+  const rawTimelineY = useTransform(scrollYProgress, [0.40, 0.47], [70, 0]);
+  const timelineScale = useSpring(rawTimelineScale, { stiffness: 160, damping: 32, restDelta: 0.001 });
+  const timelineY = useSpring(rawTimelineY, { stiffness: 160, damping: 32, restDelta: 0.5 });
+
   return (
-    <div ref={containerRef} className="relative w-full h-[320vh] bg-transparent">
+    <div ref={containerRef} data-scroll-container className="relative w-full h-[700vh] bg-transparent">
       {/* Loader screen */}
       <div className="loader-screen">
+        <div className="loader-bg" />
         <div className="loader-stripes">
           {Array.from({ length: 7 }, (_, i) => (
             <div key={i} className="loader-stripe" />
@@ -125,24 +140,16 @@ export default function Home() {
 
       {/* Fixed Viewport Container — stays in view regardless of scroll distance */}
       <div className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none">
-        
-        {/* Curved Marquees - scale up and move apart as hero zooms in */}
+
+        {/* Curved Marquees — scale up and fly apart as hero zooms in */}
         <motion.div
-          style={{
-            scale: marqueeScale,
-            y: marqueeBY,
-            opacity: marqueeOpacity,
-          }}
+          style={{ scale: marqueeScale, y: marqueeBY, opacity: marqueeOpacity }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]"
         >
           <CurvedMarquee ribbon="b" />
         </motion.div>
         <motion.div
-          style={{
-            scale: marqueeScale,
-            y: marqueeAY,
-            opacity: marqueeOpacity,
-          }}
+          style={{ scale: marqueeScale, y: marqueeAY, opacity: marqueeOpacity }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[6]"
         >
           <CurvedMarquee ribbon="a" />
@@ -150,31 +157,25 @@ export default function Home() {
 
         {/* Hero Section Wrapper */}
         <motion.div
-          style={{
-            scale: heroScale,
-            opacity: heroOpacity,
-          }}
+          style={{ scale: heroScale, opacity: heroOpacity }}
           className="absolute inset-0 flex items-center justify-center"
         >
           <main className="hero-container">
             <h1 className="val-heading">
               <span className="word-wrap">
-                <span className="word-half word-top">THINK</span>
-                <span className="word-half word-bottom">THINK</span>
+                <span className="word-half">THINK</span>
               </span>
               <span className="word-wrap">
-                <span className="word-half word-top">MAKE</span>
-                <span className="word-half word-bottom">MAKE</span>
+                <span className="word-half">MAKE</span>
               </span>
               <span className="word-wrap">
-                <span className="word-half word-top">REPEAT</span>
-                <span className="word-half word-bottom">REPEAT</span>
+                <span className="word-half">REPEAT</span>
               </span>
             </h1>
           </main>
         </motion.div>
 
-        {/* About Me Background — dark canvas, always 100% opacity when visible */}
+        {/* About Me Background — dark canvas */}
         <motion.div
           id="about"
           style={{ display: aboutDisplay }}
@@ -183,11 +184,12 @@ export default function Home() {
           <ParticleBackgroundMono />
         </motion.div>
 
-        {/* About Me Card — slides up from below viewport */}
+        {/* About Me Card — parallax: shrinks + slides up as timeline takes over */}
         <motion.div
           style={{
-            display: aboutDisplay,
+            display: aboutCardDisplay,
             y: aboutCardY,
+            scale: aboutCardScale,
             pointerEvents: "auto",
           }}
           className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
@@ -197,6 +199,18 @@ export default function Home() {
               <TerminalAbout progress={cardProgress} />
             </ContainerScroll>
           </div>
+        </motion.div>
+
+        {/* Timeline Section — parallax entry: grows in from behind the About card */}
+        <motion.div
+          style={{
+            display: timelineDisplay,
+            scale: timelineScale,
+            y: timelineY,
+          }}
+          className="absolute inset-0 w-full h-full overflow-hidden"
+        >
+          <TimelineSection scrollYProgress={scrollYProgress} start={0.42} end={0.80} />
         </motion.div>
 
       </div>

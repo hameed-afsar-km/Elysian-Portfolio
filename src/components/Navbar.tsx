@@ -1,76 +1,39 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useTransform, motion, useMotionValue } from "framer-motion";
+import { useCallback } from "react";
+import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 
-const LEFT_ITEMS = [
-  { id: "home", label: "Home", href: "/" },
-  { id: "about", label: "About", href: "#about" },
-];
-
-const RIGHT_ITEMS = [
-  { id: "work", label: "Work", href: "#work" },
-  { id: "contact", label: "Contact", href: "#contact" },
-];
-
 export default function Navbar() {
-  const [activeId, setActiveId] = useState("home");
-  const [scrolled, setScrolled] = useState(false);
   const scrollYProgress = useMotionValue(0);
 
-  const lenis = useLenis(
+  useLenis(
     useCallback((l: Lenis) => {
-      setScrolled(l.scroll > 20);
       const p = l.limit > 0 ? l.scroll / l.limit : 0;
-      scrollYProgress.set(p);
+      scrollYProgress.set(Math.max(0, Math.min(1, p)));
     }, [])
   );
 
-  const navY = useTransform(scrollYProgress, [0.25, 0.32], [0, -120]);
-  const navPointerEvents = useTransform(scrollYProgress, (v) => (v >= 0.32 ? "none" : "auto"));
-
-  const handleLinkClick = (id: string, href: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    setActiveId(id);
-
-    if (href === "/") {
-      lenis?.scrollTo(0, { duration: 1.5 });
-    } else if (href === "#about") {
-      const vh = window.innerHeight;
-      const targetScroll = 0.25 * (3.2 * vh - vh);
-      lenis?.scrollTo(targetScroll, { duration: 1.5 });
-    }
-  };
-
-  const renderLink = (item: { id: string; label: string; href: string }) => (
-    <a
-      key={item.id}
-      href={item.href}
-      className={`hud-link-item ${activeId === item.id ? "active" : ""}`}
-      onClick={(e) => handleLinkClick(item.id, item.href, e)}
-    >
-      <span className="hud-link-label">{item.label}</span>
-    </a>
-  );
+  const rawScale = useTransform(scrollYProgress, (p) => {
+    const t = Math.min(p / 0.18, 1);
+    return 1 + 19 * t * t * t;
+  });
+  const rawY = useTransform(scrollYProgress, (p) => {
+    const t = Math.min(p / 0.18, 1);
+    return -900 * t * t * t;
+  });
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.12, 0.18], [1, 1, 0]);
+  const scale = useSpring(rawScale, { stiffness: 150, damping: 30, restDelta: 0.001 });
+  const y = useSpring(rawY, { stiffness: 200, damping: 35, restDelta: 0.001 });
+  const opacity = useSpring(rawOpacity, { stiffness: 180, damping: 35, restDelta: 0.001 });
 
   return (
-    <motion.nav
-      style={{ x: "-50%", y: navY, pointerEvents: navPointerEvents }}
-      className={`hud-nav-wrap ${scrolled ? "scrolled" : ""}`}>
-      <div className="hud-nav-container">
-        <div className="hud-section hud-section-left">
-          {LEFT_ITEMS.map(renderLink)}
-        </div>
-        <div className="hud-section hud-section-center">
-          <span className="hud-brand-prefix">//</span>
-          <span className="hud-brand-text">AFSAR</span>
-        </div>
-        <div className="hud-section hud-section-right">
-          {RIGHT_ITEMS.map(renderLink)}
-        </div>
-      </div>
-    </motion.nav>
+    <motion.div
+      style={{ y, scale, opacity }}
+      className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9999]"
+    >
+      <h1 className="navbar-name">HAMEED AFSAR K M</h1>
+    </motion.div>
   );
 }
