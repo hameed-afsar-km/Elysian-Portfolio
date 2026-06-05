@@ -25,7 +25,7 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
     const tick = (now: number) => {
       const dt = now - lastTime;
       lastTime = now;
-      offset += dir * 0.012 * dt;
+      offset += dir * 0.006 * dt;
       if (offset < -50) offset += 50;
       if (offset > 0) offset -= 50;
       el.setAttribute("startOffset", `${offset}%`);
