@@ -31,9 +31,9 @@ export default function Navbar() {
   return (
     <motion.div
       style={{ y, scale, opacity }}
-      className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9999]"
+      className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9997]"
     >
-      <h1 className="navbar-name">HAMEED AFSAR K M</h1>
+      <h1 className="navbar-name">HAMEED AFSAR KM</h1>
     </motion.div>
   );
 }

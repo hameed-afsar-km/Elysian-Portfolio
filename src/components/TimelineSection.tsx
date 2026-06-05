@@ -1,15 +1,9 @@
 "use client";
 
-import { useTransform, motion, MotionValue, useSpring } from "framer-motion";
-
-interface TimelineSectionProps {
-  scrollYProgress: MotionValue<number>;
-  start?: number;
-  end?: number;
-}
-
-const DEFAULT_START = 0.42;
-const DEFAULT_END   = 0.80;
+import { useCallback, useRef } from "react";
+import { useTransform, motion, MotionValue, useSpring, useMotionValue } from "framer-motion";
+import { useLenis } from "lenis/react";
+import type Lenis from "lenis";
 
 const entries = [
   {
@@ -66,48 +60,52 @@ const entries = [
 
 const CARD_COUNT = entries.length;
 
-export default function TimelineSection({
-  scrollYProgress,
-  start = DEFAULT_START,
-  end = DEFAULT_END,
-}: TimelineSectionProps) {
-  // Map scroll → translateX: 0vw (first card) → -(n-1)*100vw (last card)
+export default function TimelineSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const localProgress = useMotionValue(0);
+
+  useLenis(
+    useCallback(() => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const sectionHeight = el.offsetHeight;
+      const scrollRange = sectionHeight - vh;
+      const scrolled = -rect.top;
+      const p = scrollRange > 0 ? Math.max(0, Math.min(1, scrolled / scrollRange)) : 0;
+      localProgress.set(p);
+    }, [])
+  );
+
   const rawX = useTransform(
-    scrollYProgress,
-    [start, end],
+    localProgress,
+    [0, 1],
     ["0vw", `-${(CARD_COUNT - 1) * 100}vw`]
   );
-  // Smooth it out
+
   const translateX = useSpring(rawX as unknown as MotionValue<number>, {
     stiffness: 80,
     damping: 22,
     restDelta: 0.5,
   });
 
-  // Current card index (0–4) for progress indicator
-  const currentFloat = useTransform(scrollYProgress, [start, end], [0, CARD_COUNT - 1]);
-
-  // Section-level fade in/out
-  const sectionOpacity = useTransform(
-    scrollYProgress,
-    [start, start + 0.03, end - 0.02, end],
-    [0, 1, 1, 0]
-  );
+  const currentFloat = useTransform(localProgress, [0, 1], [0, CARD_COUNT - 1]);
 
   return (
-    <motion.div className="tl2-section" style={{ opacity: sectionOpacity }}>
-      {/* Horizontal strip */}
-      <div className="tl2-viewport">
-        <motion.div className="tl2-strip" style={{ x: translateX }}>
-          {entries.map((entry, i) => (
-            <Slide key={i} entry={entry} index={i} />
-          ))}
-        </motion.div>
-      </div>
+    <div ref={sectionRef} className="relative" style={{ height: `${CARD_COUNT * 100}vh` }}>
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col" style={{ backgroundColor: "#05050d" }}>
+        <div className="tl2-viewport">
+          <motion.div className="tl2-strip" style={{ x: translateX }}>
+            {entries.map((entry, i) => (
+              <Slide key={i} entry={entry} index={i} />
+            ))}
+          </motion.div>
+        </div>
 
-      {/* Bottom progress bar */}
-      <ProgressBar current={currentFloat} total={CARD_COUNT} />
-    </motion.div>
+        <ProgressBar current={currentFloat} total={CARD_COUNT} />
+      </div>
+    </div>
   );
 }
 
@@ -123,15 +121,12 @@ function Slide({
 
   return (
     <div className={`tl2-slide ${isRight ? "tl2-slide--right" : ""}`}>
-      {/* Giant watermark year */}
       <div className="tl2-watermark" aria-hidden="true">
         {entry.year}
       </div>
 
-      {/* Diagonal red slash */}
       <div className="tl2-slash" />
 
-      {/* LEFT COLUMN — meta info */}
       <div className="tl2-col-left">
         <div className="tl2-index-wrap">
           <span className="tl2-index">{entry.index}</span>
@@ -142,7 +137,6 @@ function Slide({
         <div className="tl2-vert-line" />
       </div>
 
-      {/* RIGHT COLUMN — content */}
       <div className="tl2-col-right">
         <span className="tl2-sub">{entry.sub}</span>
 
@@ -174,7 +168,6 @@ function ProgressBar({
   current: MotionValue<number>;
   total: number;
 }) {
-  // Width of filled bar as percentage
   const fillWidth = useTransform(current, [0, total - 1], ["0%", "100%"]);
 
   return (

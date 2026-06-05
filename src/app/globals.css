@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @font-face {
   font-family: 'Droid 1997';
@@ -36,7 +36,7 @@ body {
   overflow-y: auto;
 }
 
-/* ─── Loader ───────────────────────────────────────────── */
+/* â”€â”€â”€ Loader â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @keyframes charEntrance {
   0% {
     opacity: 0;
@@ -183,7 +183,7 @@ body {
   }
 }
 
-/* ─── Hero ───────────────────────────────────────────────── */
+/* â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @keyframes heroFadeIn {
   0% {
     opacity: 0;
@@ -218,7 +218,7 @@ body {
   pointer-events: none;
 }
 
-/* ─── Typography ─────────────────────────────────────────── */
+/* â”€â”€â”€ Typography â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .val-heading {
   font-family: 'Droid 1997', sans-serif;
   width: 100vw;
@@ -316,7 +316,7 @@ body {
   }
 }
 
-/* ─── HUD Floating Navbar ─────────────────────────────────── */
+/* â”€â”€â”€ HUD Floating Navbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .navbar-name {
   font-family: 'Droid 1997', sans-serif;
   font-weight: 900;
@@ -466,7 +466,7 @@ body {
   }
 }
 
-/* ─── Hero Curved Marquee ────────────────────────────────── */
+/* â”€â”€â”€ Hero Curved Marquee â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .hero-marquee-wrap {
   position: absolute;
   top: 0;
@@ -522,7 +522,7 @@ body {
   }
 }
 
-/* ─── About Me HUD Section ──────────────────────────────── */
+/* â”€â”€â”€ About Me HUD Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .about-section {
   position: relative;
   background-color: var(--val-dark);
@@ -697,7 +697,7 @@ body {
   border-color: var(--val-light);
 }
 
-/* ─── Terminal About Section ──────────────────────────────── */
+/* â”€â”€â”€ Terminal About Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .terminal-wrap {
   width: 100%;
   height: 100%;
@@ -866,7 +866,7 @@ body {
   }
 }
 
-/* ─── Timeline Section v2 — Magazine Spreads ─────────────── */
+/* â”€â”€â”€ Timeline Section v2 â€” Magazine Spreads â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 /* Full-screen wrapper */
 .tl2-section {
@@ -879,7 +879,7 @@ body {
   overflow: hidden;
 }
 
-/* ── Viewport clips the horizontal strip ── */
+/* â”€â”€ Viewport clips the horizontal strip â”€â”€ */
 .tl2-viewport {
   position: relative;
   flex: 1;
@@ -887,7 +887,7 @@ body {
   overflow: hidden;
 }
 
-/* ── Strip: all slides in a row ── */
+/* â”€â”€ Strip: all slides in a row â”€â”€ */
 .tl2-strip {
   display: flex;
   flex-direction: row;
@@ -896,7 +896,7 @@ body {
   will-change: transform;
 }
 
-/* ── Single slide — full viewport width ── */
+/* â”€â”€ Single slide â€” full viewport width â”€â”€ */
 .tl2-slide {
   position: relative;
   width: 100vw;
@@ -912,7 +912,7 @@ body {
   background-color: #070710;
 }
 
-/* ── Giant watermark year ── */
+/* â”€â”€ Giant watermark year â”€â”€ */
 .tl2-watermark {
   position: absolute;
   right: -2vw;
@@ -929,7 +929,7 @@ body {
   white-space: nowrap;
 }
 
-/* ── Diagonal red slash ── */
+/* â”€â”€ Diagonal red slash â”€â”€ */
 .tl2-slash {
   position: absolute;
   top: 0;
@@ -950,7 +950,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 70, 85, 0.25);
 }
 
-/* ── Left column — meta ── */
+/* â”€â”€ Left column â€” meta â”€â”€ */
 .tl2-col-left {
   position: relative;
   z-index: 2;
@@ -1009,7 +1009,7 @@ body {
   box-shadow: 0 0 8px rgba(255, 70, 85, 0.4);
 }
 
-/* ── Right column — content ── */
+/* â”€â”€ Right column â€” content â”€â”€ */
 .tl2-col-right {
   position: relative;
   z-index: 2;
@@ -1029,7 +1029,7 @@ body {
   text-transform: uppercase;
 }
 
-/* ── Headline — the big text ── */
+/* â”€â”€ Headline â€” the big text â”€â”€ */
 .tl2-headline {
   display: flex;
   flex-direction: column;
@@ -1048,14 +1048,14 @@ body {
   display: block;
 }
 
-/* Second headline line — slightly inset with red shadow */
+/* Second headline line â€” slightly inset with red shadow */
 .tl2-headline-line:nth-child(2) {
   color: var(--val-light);
   text-shadow: 2px 2px 0 rgba(255, 70, 85, 0.2);
   margin-left: 0.06em;
 }
 
-/* ── Horizontal rule ── */
+/* â”€â”€ Horizontal rule â”€â”€ */
 .tl2-rule {
   width: 48px;
   height: 2px;
@@ -1064,7 +1064,7 @@ body {
   flex-shrink: 0;
 }
 
-/* ── Body text ── */
+/* â”€â”€ Body text â”€â”€ */
 .tl2-body {
   font-family: 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: clamp(0.78rem, 1.2vw, 0.92rem);
@@ -1074,7 +1074,7 @@ body {
   max-width: 420px;
 }
 
-/* ── Tags ── */
+/* â”€â”€ Tags â”€â”€ */
 .tl2-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1100,7 +1100,7 @@ body {
   background: rgba(255, 70, 85, 0.1);
 }
 
-/* ── Progress bar ── */
+/* â”€â”€ Progress bar â”€â”€ */
 .tl2-progress {
   position: relative;
   z-index: 3;
@@ -1144,7 +1144,7 @@ body {
   transition: color 0.3s ease;
 }
 
-/* ── Responsive ── */
+/* â”€â”€ Responsive â”€â”€ */
 @media (max-width: 768px) {
   .tl2-slide {
     grid-template-columns: 1fr;
@@ -1176,330 +1176,3 @@ body {
   }
 }
 
-
-/* Outer wrapper — full screen, dark background with subtle noise texture */
-.tl-section {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: #06060f;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Subtle grid overlay */
-.tl-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 70, 85, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 70, 85, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Radial glow from top center */
-.tl-section::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 60%;
-  background: radial-gradient(ellipse at center, rgba(255, 70, 85, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Header ── */
-.tl-header {
-  position: relative;
-  z-index: 2;
-  padding: 3rem 4rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.tl-header-tag {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--val-red);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.tl-header-title {
-  font-family: 'Droid 1997', sans-serif;
-  font-size: clamp(2rem, 6vw, 5rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--val-light);
-  margin: 0;
-  line-height: 1;
-}
-
-.tl-header-line {
-  width: 60px;
-  height: 2px;
-  background: var(--val-red);
-  box-shadow: 0 0 12px rgba(255, 70, 85, 0.6);
-  margin-top: 0.5rem;
-}
-
-/* ── Horizontal Track ── */
-.tl-track-viewport {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 1rem 0 0;
-}
-
-.tl-track {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0;
-  /* Width = card count × card width. Cards are 340px wide with 40px gap on each side */
-  padding: 0 calc(50vw - 170px);
-  will-change: transform;
-}
-
-/* ── Card Wrapper ── */
-.tl-card-wrap {
-  flex-shrink: 0;
-  width: 340px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
-  gap: 1.2rem;
-}
-
-/* ── Year Badge ── */
-.tl-year-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.tl-year-number {
-  font-family: 'Droid 1997', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 900;
-  color: var(--val-red);
-  letter-spacing: 0.04em;
-  line-height: 1;
-  text-shadow: 0 0 30px rgba(255, 70, 85, 0.45);
-}
-
-.tl-year-era {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--val-gray);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-
-/* ── Card ── */
-.tl-card {
-  position: relative;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 70, 85, 0.15);
-  border-radius: 4px;
-  padding: 1.8rem 1.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  cursor: default;
-}
-
-.tl-card:hover {
-  border-color: rgba(255, 70, 85, 0.4);
-  background: rgba(255, 70, 85, 0.04);
-  box-shadow: 0 0 40px rgba(255, 70, 85, 0.08), inset 0 0 20px rgba(255, 70, 85, 0.03);
-}
-
-/* HUD corner brackets */
-.tl-corner {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: rgba(255, 70, 85, 0.5);
-  border-style: solid;
-}
-
-.tl-corner--tl { top: 6px; left: 6px; border-width: 1.5px 0 0 1.5px; }
-.tl-corner--tr { top: 6px; right: 6px; border-width: 1.5px 1.5px 0 0; }
-.tl-corner--bl { bottom: 6px; left: 6px; border-width: 0 0 1.5px 1.5px; }
-.tl-corner--br { bottom: 6px; right: 6px; border-width: 0 1.5px 1.5px 0; }
-
-/* Card index counter */
-.tl-card-index {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.62rem;
-  color: rgba(255, 70, 85, 0.5);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* Card title */
-.tl-card-title {
-  font-family: 'Droid 1997', sans-serif;
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--val-light);
-  margin: 0;
-  line-height: 1.2;
-}
-
-/* Thin red divider */
-.tl-card-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--val-red) 0%, transparent 100%);
-  opacity: 0.4;
-}
-
-/* Card body text */
-.tl-card-body {
-  font-family: 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 0.82rem;
-  line-height: 1.65;
-  color: var(--val-gray);
-  margin: 0;
-}
-
-/* Tag chips */
-.tl-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.25rem;
-}
-
-.tl-tag {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.62rem;
-  padding: 0.25rem 0.6rem;
-  border: 1px solid rgba(255, 70, 85, 0.25);
-  border-radius: 2px;
-  color: rgba(236, 232, 225, 0.6);
-  background: rgba(255, 70, 85, 0.05);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.25s ease;
-}
-
-.tl-tag:hover {
-  border-color: var(--val-red);
-  color: var(--val-light);
-  background: rgba(255, 70, 85, 0.12);
-}
-
-/* ── Rail (bottom connector bar) ── */
-.tl-rail {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 24px;
-  margin-top: 1rem;
-  flex-shrink: 0;
-}
-
-.tl-rail-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(255, 70, 85, 0.3) 10%,
-    rgba(255, 70, 85, 0.3) 90%,
-    transparent 100%
-  );
-  transform: translateY(-50%);
-}
-
-.tl-rail-node {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--val-red);
-  box-shadow: 0 0 10px rgba(255, 70, 85, 0.7);
-}
-
-/* ── Scroll hint ── */
-.tl-scroll-hint {
-  position: relative;
-  z-index: 2;
-  padding: 1rem 4rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-shrink: 0;
-}
-
-.tl-scroll-hint-text {
-  font-family: 'Droid Sans Mono', monospace;
-  font-size: 0.6rem;
-  color: rgba(118, 128, 121, 0.5);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.tl-scroll-hint-arrows {
-  display: flex;
-  gap: 0.15rem;
-}
-
-@keyframes tlArrowPulse {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.55; }
-}
-
-.tl-scroll-hint-arrows span {
-  font-size: 0.7rem;
-  color: var(--val-red);
-  animation: tlArrowPulse 1.4s ease-in-out infinite;
-}
-
-.tl-scroll-hint-arrows span:nth-child(1) { animation-delay: 0s; }
-.tl-scroll-hint-arrows span:nth-child(2) { animation-delay: 0.2s; }
-.tl-scroll-hint-arrows span:nth-child(3) { animation-delay: 0.4s; }
-
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  .tl-header {
-    padding: 2rem 1.5rem 1rem;
-  }
-
-  .tl-card-wrap {
-    width: 280px;
-    padding: 0 12px;
-  }
-
-  .tl-track {
-    padding: 0 calc(50vw - 140px);
-  }
-
-  .tl-scroll-hint {
-    padding: 0.75rem 1.5rem 1rem;
-  }
-}

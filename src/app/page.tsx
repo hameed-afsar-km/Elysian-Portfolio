@@ -100,18 +100,8 @@ export default function Home() {
     restDelta: 0.001,
   });
 
-  // ── Timeline (0.40 → 0.82) ────────────────────────────
-  const timelineDisplay = useTransform(scrollYProgress, (p) =>
-    p < 0.40 || p > 0.82 ? "none" : "flex"
-  );
-  // Parallax entry: drift in from slightly below while scaling down to natural size
-  const rawTimelineScale = useTransform(scrollYProgress, [0.40, 0.47], [1.06, 1]);
-  const rawTimelineY = useTransform(scrollYProgress, [0.40, 0.47], [70, 0]);
-  const timelineScale = useSpring(rawTimelineScale, { stiffness: 160, damping: 32, restDelta: 0.001 });
-  const timelineY = useSpring(rawTimelineY, { stiffness: 160, damping: 32, restDelta: 0.5 });
-
   return (
-    <div ref={containerRef} data-scroll-container className="relative w-full h-[700vh] bg-transparent">
+    <div ref={containerRef} data-scroll-container className="relative w-full bg-transparent">
       {/* Loader screen */}
       <div className="loader-screen">
         <div className="loader-bg" />
@@ -201,19 +191,13 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Timeline Section — parallax entry: grows in from behind the About card */}
-        <motion.div
-          style={{
-            display: timelineDisplay,
-            scale: timelineScale,
-            y: timelineY,
-          }}
-          className="absolute inset-0 w-full h-full overflow-hidden"
-        >
-          <TimelineSection scrollYProgress={scrollYProgress} start={0.42} end={0.80} />
-        </motion.div>
-
       </div>
+
+      {/* Spacer for hero + about scroll range */}
+      <div style={{ height: "300vh" }} />
+
+      {/* Timeline Section — horizontal scroll in normal flow */}
+      <TimelineSection />
     </div>
   );
 }
