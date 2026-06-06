@@ -271,141 +271,173 @@ export default function TechStackMarquee() {
           </div>
         </header>
 
-        <main className="relative min-h-0" style={{ perspective: "1200px" }}>
-          {/* Center Frame — 3D perspective tilt on hover */}
-          <div
-            ref={frameRef}
-            onPointerMove={handleFramePointer}
-            onPointerLeave={handleFrameLeave}
-            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_40px_rgba(255,70,85,0.12)] sm:p-7"
-            style={{
-              transform: "perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
-              transition: "transform 0.12s ease-out",
-              transformStyle: "preserve-3d",
-              borderColor: selColor,
-              boxShadow: `0 0 50px ${selColor}22, 0 0 100px ${selColor}11`,
-            }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedTech.name}
-                initial={{ opacity: 0, y: 16, rotate: -2 }}
-                animate={{ opacity: 1, y: 0, rotate: 0 }}
-                exit={{ opacity: 0, y: -14, rotate: 2 }}
-                transition={{ duration: 0.24 }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <div
-                  className="mb-5 flex items-start justify-between gap-4"
-                  style={{ transform: "translateZ(36px)" }}
+        <main className="relative min-h-0 sm:overflow-visible overflow-y-auto">
+          {/* ── Desktop: center frame + scattered cards (hidden on mobile) ── */}
+          <div className="hidden sm:relative sm:block h-full" style={{ perspective: "1200px" }}>
+            {/* Center Frame — 3D perspective tilt on hover */}
+            <div
+              ref={frameRef}
+              onPointerMove={handleFramePointer}
+              onPointerLeave={handleFrameLeave}
+              className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_40px_rgba(255,70,85,0.12)] sm:p-7"
+              style={{
+                transform: "perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
+                transition: "transform 0.12s ease-out",
+                transformStyle: "preserve-3d",
+                borderColor: selColor,
+                boxShadow: `0 0 50px ${selColor}22, 0 0 100px ${selColor}11`,
+              }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedTech.name}
+                  initial={{ opacity: 0, y: 16, rotate: -2 }}
+                  animate={{ opacity: 1, y: 0, rotate: 0 }}
+                  exit={{ opacity: 0, y: -14, rotate: 2 }}
+                  transition={{ duration: 0.24 }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
-                  <span className="font-mono text-[0.6rem] uppercase tracking-[2px] text-[#ff4655]">
-                    {isPinned ? "Pinned sticker" : "Live sticker"}
-                  </span>
-                  <span
-                    className="border-2 px-2 py-1 font-mono text-[0.62rem] text-black"
-                    style={{
-                      borderColor: selColor,
-                      background: selColor,
-                    }}
+                  <div
+                    className="mb-5 flex items-start justify-between gap-4"
+                    style={{ transform: "translateZ(36px)" }}
                   >
-                    {selectedTech.level}%
-                  </span>
-                </div>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-[2px] text-[#ff4655]">
+                      {isPinned ? "Pinned sticker" : "Live sticker"}
+                    </span>
+                    <span
+                      className="border-2 px-2 py-1 font-mono text-[0.62rem] text-black"
+                      style={{
+                        borderColor: selColor,
+                        background: selColor,
+                      }}
+                    >
+                      {selectedTech.level}%
+                    </span>
+                  </div>
 
-                <h3
-                  className="m-0 w-full whitespace-nowrap font-['Outfit',sans-serif] text-[clamp(2.4rem,8vw,4.8rem)] font-black leading-[0.88] text-[#ece8e1]"
-                  style={{ transform: "translateZ(48px)" }}
-                >
-                  {selectedTech.name}
-                </h3>
+                  <h3
+                    className="m-0 w-full whitespace-nowrap font-['Outfit',sans-serif] text-[clamp(2.4rem,8vw,4.8rem)] font-black leading-[0.88] text-[#ece8e1]"
+                    style={{ transform: "translateZ(48px)" }}
+                  >
+                    {selectedTech.name}
+                  </h3>
 
-                <p
-                  className="mt-3 font-mono text-[0.72rem] uppercase tracking-[1px]"
-                  style={{ color: selColor, transform: "translateZ(28px)" }}
-                >
-                  {selectedTech.category} / {selectedTech.mode}
-                </p>
+                  <p
+                    className="mt-3 font-mono text-[0.72rem] uppercase tracking-[1px]"
+                    style={{ color: selColor, transform: "translateZ(28px)" }}
+                  >
+                    {selectedTech.category} / {selectedTech.mode}
+                  </p>
 
-                <p
-                  className="mt-5 w-full whitespace-nowrap text-[0.95rem] leading-7 text-[#a09888]"
-                  style={{ transform: "translateZ(16px)" }}
-                >
-                  {selectedTech.note}
-                </p>
+                  <p
+                    className="mt-5 w-full whitespace-nowrap text-[0.95rem] leading-7 text-[#a09888]"
+                    style={{ transform: "translateZ(16px)" }}
+                  >
+                    {selectedTech.note}
+                  </p>
 
-                <div
-                  className="mt-6 h-3 border-2 bg-[#1a1a2e] p-[2px]"
-                  style={{ borderColor: selColor, transform: "translateZ(8px)" }}
-                >
-                  <motion.span
-                    className="block h-full"
-                    style={{ background: selColor }}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${selectedTech.level}%` }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                </div>
-              </motion.div>
+                  <div
+                    className="mt-6 h-3 border-2 bg-[#1a1a2e] p-[2px]"
+                    style={{ borderColor: selColor, transform: "translateZ(8px)" }}
+                  >
+                    <motion.span
+                      className="block h-full"
+                      style={{ background: selColor }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${selectedTech.level}%` }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Scattered sticker cards — each with individual 3D tilt */}
+            <AnimatePresence mode="popLayout">
+              {visibleTech.map((tech, index) => {
+                const placement = PLACEMENTS[index % PLACEMENTS.length];
+                const active = selectedTech.name === tech.name;
+                const color = CATEGORY_COLORS[tech.category];
+
+                return (
+                  <motion.button
+                    key={tech.name}
+                    type="button"
+                    className="absolute z-10 cursor-pointer"
+                    style={{ left: `${placement.x}%`, top: `${placement.y}%`, perspective: "600px" }}
+                    layout
+                    initial={{ opacity: 0, scale: 0.6, rotate: placement.r + 18 }}
+                    animate={{
+                      opacity: active ? 1 : 0.82,
+                      scale: active ? 1.08 : 1,
+                      rotate: placement.r,
+                      y: active ? -8 : [0, -3, 0],
+                    }}
+                    exit={{ opacity: 0, scale: 0.6, rotate: placement.r - 16 }}
+                    transition={{
+                      layout: { type: "spring", stiffness: 220, damping: 24 },
+                      y: { repeat: active ? 0 : Infinity, duration: 3 + (index % 4) * 0.4, ease: "easeInOut" },
+                      opacity: { duration: 0.2 },
+                      scale: { type: "spring", stiffness: 220, damping: 18 },
+                    }}
+                    whileHover={{ scale: 1.15, rotate: 0, y: -12, zIndex: 40 }}
+                    whileTap={{ scale: 0.96 }}
+                    onMouseEnter={() => setSelectedName(tech.name)}
+                    onFocus={() => setSelectedName(tech.name)}
+                    onClick={() => {
+                      setSelectedName(tech.name);
+                      setIsPinned((value) => !value || selectedTech.name !== tech.name);
+                    }}
+                    aria-pressed={active}
+                  >
+                    <Card3DInner color={color} active={active}>
+                      <span
+                        className="block truncate text-[0.7rem] font-bold"
+                        style={{ transform: "translateZ(14px)", display: "block" }}
+                      >
+                        {tech.name}
+                      </span>
+                      <span
+                        className="mt-1 block truncate text-[0.52rem] uppercase tracking-[1px] opacity-70"
+                        style={{ transform: "translateZ(8px)", display: "block" }}
+                      >
+                        {tech.mode}
+                      </span>
+                    </Card3DInner>
+                  </motion.button>
+                );
+              })}
             </AnimatePresence>
           </div>
 
-          {/* Scattered sticker cards — each with individual 3D tilt */}
-          <AnimatePresence mode="popLayout">
-            {visibleTech.map((tech, index) => {
-              const placement = PLACEMENTS[index % PLACEMENTS.length];
-              const active = selectedTech.name === tech.name;
-              const color = CATEGORY_COLORS[tech.category];
-
-              return (
-                <motion.button
-                  key={tech.name}
-                  type="button"
-                  className="absolute z-10 cursor-pointer"
-                  style={{ left: `${placement.x}%`, top: `${placement.y}%`, perspective: "600px" }}
-                  layout
-                  initial={{ opacity: 0, scale: 0.6, rotate: placement.r + 18 }}
-                  animate={{
-                    opacity: active ? 1 : 0.82,
-                    scale: active ? 1.08 : 1,
-                    rotate: placement.r,
-                    y: active ? -8 : [0, -3, 0],
-                  }}
-                  exit={{ opacity: 0, scale: 0.6, rotate: placement.r - 16 }}
-                  transition={{
-                    layout: { type: "spring", stiffness: 220, damping: 24 },
-                    y: { repeat: active ? 0 : Infinity, duration: 3 + (index % 4) * 0.4, ease: "easeInOut" },
-                    opacity: { duration: 0.2 },
-                    scale: { type: "spring", stiffness: 220, damping: 18 },
-                  }}
-                  whileHover={{ scale: 1.15, rotate: 0, y: -12, zIndex: 40 }}
-                  whileTap={{ scale: 0.96 }}
-                  onMouseEnter={() => setSelectedName(tech.name)}
-                  onFocus={() => setSelectedName(tech.name)}
-                  onClick={() => {
-                    setSelectedName(tech.name);
-                    setIsPinned((value) => !value || selectedTech.name !== tech.name);
-                  }}
-                  aria-pressed={active}
-                >
-                  <Card3DInner color={color} active={active}>
+          {/* ── Mobile: bento grid (square cards, no center frame) ── */}
+          <div className="sm:hidden h-full overflow-y-auto p-1">
+            <div className="flex flex-wrap justify-center gap-1 pb-4">
+              {visibleTech.map((tech) => {
+                const color = CATEGORY_COLORS[tech.category];
+                return (
+                  <div
+                    key={tech.name}
+                    className="flex items-center justify-center border text-center"
+                    style={{
+                      width: "calc(25% - 0.1875rem)",
+                      aspectRatio: "1 / 1",
+                      borderColor: color,
+                      background: "#0a0a14",
+                    }}
+                    onClick={() => setSelectedName(tech.name)}
+                  >
                     <span
-                      className="block truncate text-[0.7rem] font-bold"
-                      style={{ transform: "translateZ(14px)", display: "block" }}
+                      className="block font-mono text-[0.65rem] font-bold leading-none px-0.5"
+                      style={{ color }}
                     >
                       {tech.name}
                     </span>
-                    <span
-                      className="mt-1 block truncate text-[0.52rem] uppercase tracking-[1px] opacity-70"
-                      style={{ transform: "translateZ(8px)", display: "block" }}
-                    >
-                      {tech.mode}
-                    </span>
-                  </Card3DInner>
-                </motion.button>
-              );
-            })}
-          </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </main>
       </motion.div>
     </section>

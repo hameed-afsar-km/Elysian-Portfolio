@@ -5,7 +5,7 @@ import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 
-const NAME = "HAMEED AFSAR KM";
+const WORDS = ["HAMEED", "AFSAR", "KM"];
 
 export default function Navbar() {
   const scrollYProgress = useMotionValue(0);
@@ -30,21 +30,31 @@ export default function Navbar() {
       className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9997]"
     >
       <h1 className="navbar-name">
-        {NAME.split("").map((char, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, y: -24, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{
-              delay: 4 + i * 0.035,
-              duration: 0.45,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className={char === " " ? "" : "inline-block"}
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
+        {(() => {
+          let charIdx = 0;
+          return WORDS.map((word, wi) => (
+            <span key={wi} className="navbar-word">
+              {word.split("").map((char, ci) => {
+                const idx = charIdx++;
+                return (
+                  <motion.span
+                    key={ci}
+                    initial={{ opacity: 0, y: -24, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      delay: 3 + idx * 0.035,
+                      duration: 0.45,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="inline-block"
+                  >
+                    {char}
+                  </motion.span>
+                );
+              })}
+            </span>
+          ));
+        })()}
       </h1>
     </motion.div>
   );

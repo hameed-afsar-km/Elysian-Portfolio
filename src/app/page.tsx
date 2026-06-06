@@ -140,6 +140,7 @@ export default function Home() {
             </span>
           ))}
         </h1>
+        <p className="loader-hint md:hidden">use desktop view<br />for a better experience</p>
       </div>
 
       {/* Particle Background */}
