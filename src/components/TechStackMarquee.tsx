@@ -48,12 +48,14 @@ const CATEGORY_COLORS: Record<string, string> = {
 const CATEGORIES = ["All", ...Object.keys(CATEGORY_COLORS)];
 
 const PLACEMENTS = [
-  { x: 6, y: 24, r: -8 }, { x: 19, y: 18, r: 6 }, { x: 35, y: 22, r: -3 }, { x: 58, y: 16, r: 9 },
-  { x: 77, y: 24, r: -6 }, { x: 8, y: 44, r: 5 }, { x: 24, y: 38, r: -10 }, { x: 72, y: 43, r: 7 },
-  { x: 84, y: 52, r: -4 }, { x: 12, y: 66, r: -6 }, { x: 31, y: 60, r: 8 }, { x: 52, y: 67, r: -7 },
-  { x: 76, y: 70, r: 5 }, { x: 4, y: 82, r: 9 }, { x: 22, y: 78, r: -4 }, { x: 43, y: 84, r: 6 },
-  { x: 63, y: 82, r: -9 }, { x: 85, y: 78, r: 4 }, { x: 45, y: 12, r: -8 }, { x: 88, y: 34, r: 10 },
-  { x: 2, y: 57, r: 4 }, { x: 65, y: 55, r: -3 }, { x: 38, y: 43, r: 7 },
+  { x: 5, y: 5, r: -4 },    { x: 17, y: 3, r: 6 },   { x: 29, y: 7, r: -3 },
+  { x: 41, y: 4, r: 5 },    { x: 53, y: 6, r: -6 },  { x: 65, y: 3, r: 4 },
+  { x: 77, y: 7, r: -5 },   { x: 79, y: 18, r: 7 },  { x: 79, y: 31, r: -4 },
+  { x: 80, y: 44, r: 6 },   { x: 79, y: 57, r: -5 }, { x: 79, y: 72, r: 5 },
+  { x: 77, y: 87, r: -6 },  { x: 65, y: 89, r: 7 },  { x: 53, y: 86, r: -4 },
+  { x: 41, y: 90, r: 6 },   { x: 29, y: 87, r: -5 }, { x: 17, y: 89, r: 7 },
+  { x: 5, y: 87, r: -6 },   { x: 4, y: 72, r: 5 },   { x: 4, y: 57, r: -7 },
+  { x: 3, y: 44, r: 6 },    { x: 3, y: 31, r: -5 },  { x: 3, y: 18, r: 7 },
 ];
 
 export default function TechStackMarquee() {
@@ -77,7 +79,7 @@ export default function TechStackMarquee() {
       CATEGORIES.map((item) => ({
         name: item,
         count: item === "All" ? TECH.length : TECH.filter((tech) => tech.category === item).length,
-        color: item === "All" ? "#1f1f1f" : CATEGORY_COLORS[item],
+        color: item === "All" ? "#ff4655" : CATEGORY_COLORS[item],
       })),
     []
   );
@@ -125,7 +127,7 @@ export default function TechStackMarquee() {
         }}
       />
 
-      <div className="relative z-10 grid h-full grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6">
+      <div className="relative z-10 mx-auto grid h-full w-full max-w-[1400px] grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6">
         <header className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <span className="block font-mono text-[0.64rem] uppercase tracking-[4px] text-[#ff4655]">
@@ -162,7 +164,7 @@ export default function TechStackMarquee() {
 
         <main className="relative min-h-0">
           <motion.div
-            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,800px)] -translate-x-1/2 -translate-y-1/2 border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_30px_rgba(255,70,85,0.08)] sm:p-7 overflow-hidden"
+            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,620px)] -translate-x-1/2 -translate-y-1/2 border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_30px_rgba(255,70,85,0.08)] sm:p-7 overflow-hidden"
             style={{
               rotateX: "var(--tilt-x, 0deg)",
               rotateY: "var(--tilt-y, 0deg)",
