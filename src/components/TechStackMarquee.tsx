@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 interface TechItem {
   name: string;
@@ -57,11 +57,13 @@ const PLACEMENTS = [
   { x: 5, y: 87, r: -6 },   { x: 4, y: 72, r: 5 },   { x: 4, y: 57, r: -7 },
   { x: 3, y: 44, r: 6 },    { x: 3, y: 31, r: -5 },  { x: 3, y: 18, r: 7 },
 ];
-
+const CARD_TILT_RANGE = 14;
+const FRAME_TILT_RANGE = 22;
 
 export default function TechStackMarquee() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState("All");
   const [selectedName, setSelectedName] = useState("React");
   const [isPinned, setIsPinned] = useState(false);
@@ -151,6 +153,16 @@ export default function TechStackMarquee() {
     };
   }, []);
 
+  // Parallax slide-up on scroll
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const rawParallaxY = useTransform(scrollYProgress, [0, 0.5, 1], [320, 0, -240]);
+  const rawParallaxOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.4, 1, 1, 0.4]);
+  const parallaxY = useSpring(rawParallaxY, { stiffness: 180, damping: 28, restDelta: 0.001 });
+  const parallaxOpacity = useSpring(rawParallaxOpacity, { stiffness: 200, damping: 30, restDelta: 0.001 });
+
   const visibleTech = useMemo(
     () => TECH.filter((tech) => category === "All" || tech.category === category),
     [category]
@@ -189,20 +201,31 @@ export default function TechStackMarquee() {
     if (first) setSelectedName(first.name);
   }, []);
 
-  const handlePointerMove = useCallback((event: React.PointerEvent<HTMLElement>) => {
-    const rect = sectionRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const px = (event.clientX - rect.left) / rect.width - 0.5;
-    const py = (event.clientY - rect.top) / rect.height - 0.5;
-    sectionRef.current?.style.setProperty("--tilt-x", `${py * -8}deg`);
-    sectionRef.current?.style.setProperty("--tilt-y", `${px * 8}deg`);
+  const activeColor = CATEGORY_COLORS[selectedTech.category];
+  const selColor = activeColor ?? "#ff4655";
+
+  // Frame 3D tilt
+  const handleFramePointer = useCallback((e: React.PointerEvent) => {
+    const el = frameRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    el.style.setProperty("--rx", `${(py - 0.5) * -FRAME_TILT_RANGE}deg`);
+    el.style.setProperty("--ry", `${(px - 0.5) * FRAME_TILT_RANGE}deg`);
+  }, []);
+
+  const handleFrameLeave = useCallback(() => {
+    const el = frameRef.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
   }, []);
 
   return (
     <section
       ref={sectionRef}
       className="relative h-screen w-screen overflow-hidden bg-[#12080a] text-[#ece8e1]"
-      onPointerMove={handlePointerMove}
       style={{ backgroundImage: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,70,85,0.08), transparent)" }}
     >
       <canvas
@@ -210,14 +233,17 @@ export default function TechStackMarquee() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{ width: "100%", height: "100%" }}
       />
-      <div className="relative z-10 mx-auto grid h-full w-full max-w-[1400px] grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6">
+      <motion.div
+        className="relative z-10 mx-auto grid h-full w-full max-w-[1400px] grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6"
+        style={{ y: parallaxY, opacity: parallaxOpacity }}
+      >
         <header className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <span className="block font-mono text-[0.64rem] uppercase tracking-[4px] text-[#ff4655]">
               {"// TECH STACK"}
             </span>
             <h2 className="mt-1 font-['Droid_1997','Outfit',sans-serif] text-[clamp(2.5rem,6vw,6.5rem)] font-black uppercase leading-[0.86] tracking-normal text-[#ece8e1]">
-              Sticker Desk
+              STACKED
             </h2>
           </div>
 
@@ -245,16 +271,20 @@ export default function TechStackMarquee() {
           </div>
         </header>
 
-        <main className="relative min-h-0">
-          <motion.div
-            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_30px_rgba(255,70,85,0.08)] sm:p-7 overflow-hidden"
+        <main className="relative min-h-0" style={{ perspective: "1200px" }}>
+          {/* Center Frame — 3D perspective tilt on hover */}
+          <div
+            ref={frameRef}
+            onPointerMove={handleFramePointer}
+            onPointerLeave={handleFrameLeave}
+            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_40px_rgba(255,70,85,0.12)] sm:p-7"
             style={{
-              rotateX: "var(--tilt-x, 0deg)",
-              rotateY: "var(--tilt-y, 0deg)",
+              transform: "perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
+              transition: "transform 0.12s ease-out",
               transformStyle: "preserve-3d",
-              borderColor: CATEGORY_COLORS[selectedTech.category],
+              borderColor: selColor,
+              boxShadow: `0 0 50px ${selColor}22, 0 0 100px ${selColor}11`,
             }}
-            transition={{ type: "spring", stiffness: 160, damping: 18 }}
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -263,38 +293,54 @@ export default function TechStackMarquee() {
                 animate={{ opacity: 1, y: 0, rotate: 0 }}
                 exit={{ opacity: 0, y: -14, rotate: 2 }}
                 transition={{ duration: 0.24 }}
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="mb-5 flex items-start justify-between gap-4">
+                <div
+                  className="mb-5 flex items-start justify-between gap-4"
+                  style={{ transform: "translateZ(36px)" }}
+                >
                   <span className="font-mono text-[0.6rem] uppercase tracking-[2px] text-[#ff4655]">
                     {isPinned ? "Pinned sticker" : "Live sticker"}
                   </span>
                   <span
                     className="border-2 px-2 py-1 font-mono text-[0.62rem] text-black"
                     style={{
-                      borderColor: CATEGORY_COLORS[selectedTech.category],
-                      background: CATEGORY_COLORS[selectedTech.category],
+                      borderColor: selColor,
+                      background: selColor,
                     }}
                   >
                     {selectedTech.level}%
                   </span>
                 </div>
-                <h3 className="m-0 w-full whitespace-nowrap font-['Outfit',sans-serif] text-[clamp(2.4rem,8vw,4.8rem)] font-black leading-[0.88] text-[#ece8e1]">
+
+                <h3
+                  className="m-0 w-full whitespace-nowrap font-['Outfit',sans-serif] text-[clamp(2.4rem,8vw,4.8rem)] font-black leading-[0.88] text-[#ece8e1]"
+                  style={{ transform: "translateZ(48px)" }}
+                >
                   {selectedTech.name}
                 </h3>
+
                 <p
                   className="mt-3 font-mono text-[0.72rem] uppercase tracking-[1px]"
-                  style={{ color: CATEGORY_COLORS[selectedTech.category] }}
+                  style={{ color: selColor, transform: "translateZ(28px)" }}
                 >
                   {selectedTech.category} / {selectedTech.mode}
                 </p>
-                <p className="mt-5 w-full whitespace-nowrap text-[0.95rem] leading-7 text-[#a09888]">{selectedTech.note}</p>
+
+                <p
+                  className="mt-5 w-full whitespace-nowrap text-[0.95rem] leading-7 text-[#a09888]"
+                  style={{ transform: "translateZ(16px)" }}
+                >
+                  {selectedTech.note}
+                </p>
+
                 <div
                   className="mt-6 h-3 border-2 bg-[#1a1a2e] p-[2px]"
-                  style={{ borderColor: CATEGORY_COLORS[selectedTech.category] }}
+                  style={{ borderColor: selColor, transform: "translateZ(8px)" }}
                 >
                   <motion.span
                     className="block h-full"
-                    style={{ background: CATEGORY_COLORS[selectedTech.category] }}
+                    style={{ background: selColor }}
                     initial={{ width: 0 }}
                     animate={{ width: `${selectedTech.level}%` }}
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -302,8 +348,9 @@ export default function TechStackMarquee() {
                 </div>
               </motion.div>
             </AnimatePresence>
-          </motion.div>
+          </div>
 
+          {/* Scattered sticker cards — each with individual 3D tilt */}
           <AnimatePresence mode="popLayout">
             {visibleTech.map((tech, index) => {
               const placement = PLACEMENTS[index % PLACEMENTS.length];
@@ -314,14 +361,8 @@ export default function TechStackMarquee() {
                 <motion.button
                   key={tech.name}
                   type="button"
-                  className="absolute z-10 min-w-[116px] border-2 px-3 py-2 text-left font-mono shadow-[4px_4px_0_rgba(0,0,0,0.4)]"
-                  style={{
-                    left: `${placement.x}%`,
-                    top: `${placement.y}%`,
-                    background: "#0a0a14",
-                    borderColor: color,
-                    color: color,
-                  }}
+                  className="absolute z-10 cursor-pointer"
+                  style={{ left: `${placement.x}%`, top: `${placement.y}%`, perspective: "600px" }}
                   layout
                   initial={{ opacity: 0, scale: 0.6, rotate: placement.r + 18 }}
                   animate={{
@@ -347,14 +388,77 @@ export default function TechStackMarquee() {
                   }}
                   aria-pressed={active}
                 >
-                  <span className="block truncate text-[0.7rem] font-bold">{tech.name}</span>
-                  <span className="mt-1 block truncate text-[0.52rem] uppercase tracking-[1px] opacity-70">{tech.mode}</span>
+                  <Card3DInner color={color} active={active}>
+                    <span
+                      className="block truncate text-[0.7rem] font-bold"
+                      style={{ transform: "translateZ(14px)", display: "block" }}
+                    >
+                      {tech.name}
+                    </span>
+                    <span
+                      className="mt-1 block truncate text-[0.52rem] uppercase tracking-[1px] opacity-70"
+                      style={{ transform: "translateZ(8px)", display: "block" }}
+                    >
+                      {tech.mode}
+                    </span>
+                  </Card3DInner>
                 </motion.button>
               );
             })}
           </AnimatePresence>
         </main>
-      </div>
+      </motion.div>
     </section>
+  );
+}
+
+function Card3DInner({
+  color,
+  active,
+  children,
+}: {
+  color: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const handleMove = useCallback((e: React.MouseEvent) => {
+    const el = innerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rx = (y - 0.5) * -CARD_TILT_RANGE;
+    const ry = (x - 0.5) * CARD_TILT_RANGE;
+    el.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.06,1.06,1.06)`;
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    const el = innerRef.current;
+    if (!el) return;
+    el.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
+  }, []);
+
+  return (
+    <div
+      ref={innerRef}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className="min-w-[116px] border-2 px-3 py-2 text-left font-mono"
+      style={{
+        background: "#0a0a14",
+        borderColor: color,
+        color: color,
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+        transition: "transform 0.08s ease-out",
+        boxShadow: active
+          ? `0 8px 30px ${color}33, 4px 4px 0 rgba(0,0,0,0.4)`
+          : "4px 4px 0 rgba(0,0,0,0.4)",
+      }}
+    >
+      {children}
+    </div>
   );
 }

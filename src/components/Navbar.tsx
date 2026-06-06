@@ -5,6 +5,8 @@ import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 
+const NAME = "HAMEED AFSAR KM";
+
 export default function Navbar() {
   const scrollYProgress = useMotionValue(0);
 
@@ -27,7 +29,23 @@ export default function Navbar() {
       style={{ y, scale, opacity }}
       className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9997]"
     >
-      <h1 className="navbar-name">HAMEED AFSAR KM</h1>
+      <h1 className="navbar-name">
+        {NAME.split("").map((char, i) => (
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, y: -24, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              delay: 4 + i * 0.035,
+              duration: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className={char === " " ? "" : "inline-block"}
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        ))}
+      </h1>
     </motion.div>
   );
 }

@@ -5,6 +5,16 @@ import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from
 
 const SKILLS = ["Next.js", "TypeScript", "AI/ML", "React", "Node.js", "WebGPU", "Rust", "Python"];
 
+const TERMINAL_LINES = [
+  { tag: "AI/ML",    tagColor: "#FF8BD2", text: "Architected AI pipelines processing 500K+ daily requests" },
+  { tag: "PRODUCT",  tagColor: "#6EC8FF", text: "Built a design system adopted across 12 products" },
+  { tag: "LEAD",     tagColor: "#68D391", text: "Led a full-stack team — shipped in under 8 weeks" },
+  { tag: "PERF",     tagColor: "#FFC766", text: "Optimized Core Web Vitals to the 98th percentile" },
+  { tag: "INFRA",    tagColor: "#B39DFF", text: "Real-time analytics engine for 10K+ concurrent users" },
+  { tag: "DEPLOY",   tagColor: "#FF8BD2", text: "80% faster deployment cycles via automated pipelines" },
+  { tag: "AGENTS",   tagColor: "#6EC8FF", text: "Multi-agent LLM orchestration for enterprise workflows" },
+];
+
 export default function ResumeSection() {
   const [downloadState, setDownloadState] = useState<"idle" | "downloading" | "completed">("idle");
   const [progress, setProgress] = useState(0);
@@ -169,24 +179,13 @@ export default function ResumeSection() {
               </div>
             </div>
 
-            {/* Animated resume line preview */}
+            {/* Terminal-style typewriter output */}
             <div className="rs-card-preview" style={{ transform: "translateZ(15px)" }}>
-              {[1.0, 0.7, 0.9, 0.5, 0.8, 0.6, 0.75].map((w, i) => (
-                <motion.div
-                  key={i}
-                  className="rs-preview-line"
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * i, duration: 0.5, ease: "easeOut" }}
-                  style={{ width: `${w * 100}%`, originX: 0 }}
-                />
-              ))}
-              <div className="rs-preview-chips">
-                {["PDF", "A4", "2026", "V2.6"].map((t) => (
-                  <span key={t} className="rs-preview-chip">{t}</span>
-                ))}
+              <div className="rs-tw-prompt-line">
+                <span className="rs-tw-prompt">visitor@resume:~$</span>
+                <span className="rs-tw-command">cat achievements.log</span>
               </div>
+              <TypewriterLines />
             </div>
 
             {/* Download control area */}
@@ -312,5 +311,74 @@ export default function ResumeSection() {
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+function TypewriterLines() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [started, setStarted] = useState(false);
+  const [visible, setVisible] = useState<typeof TERMINAL_LINES>([]);
+  const [lineIdx, setLineIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || started) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    if (lineIdx >= TERMINAL_LINES.length) { setDone(true); return; }
+
+    const line = TERMINAL_LINES[lineIdx];
+    const speed = 25 + Math.random() * 35;
+    const nextLineDelay = charIdx === 0 ? 300 : 0;
+
+    const t = setTimeout(() => {
+      if (charIdx < line.text.length) {
+        setCharIdx((c) => c + 1);
+      } else {
+        setVisible((prev) => [...prev, line]);
+        setLineIdx((i) => i + 1);
+        setCharIdx(0);
+      }
+    }, speed + nextLineDelay);
+
+    return () => clearTimeout(t);
+  }, [started, lineIdx, charIdx]);
+
+  const activeLine = TERMINAL_LINES[lineIdx];
+
+  return (
+    <div ref={ref} className="rs-typewriter-wrap">
+      {visible.map((line, i) => (
+        <div key={i} className="rs-tw-line">
+          <span className="rs-tw-tag" style={{ color: line.tagColor }}>[{line.tag}]</span>
+          <span className="rs-tw-text">{line.text}</span>
+        </div>
+      ))}
+      {started && !done && activeLine && (
+        <div className="rs-tw-line">
+          <span className="rs-tw-tag" style={{ color: activeLine.tagColor }}>[{activeLine.tag}]</span>
+          <span className="rs-tw-text">
+            {activeLine.text.slice(0, charIdx)}
+            <span className="rs-tw-blink">▊</span>
+          </span>
+        </div>
+      )}
+      {done && (
+        <div className="rs-tw-line">
+          <span className="rs-tw-prompt">visitor@resume:~$</span>
+          <span className="rs-tw-blink">▊</span>
+        </div>
+      )}
+    </div>
   );
 }

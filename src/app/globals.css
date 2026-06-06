@@ -2105,7 +2105,17 @@ body {
   letter-spacing: 2px;
 }
 
-/* ─── 3D Card ─── */
+/* ─── 3D Card with Rotating Light Beam Border ─── */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes lightbeam-spin {
+  from { --beam-angle: 0deg; }
+  to   { --beam-angle: 360deg; }
+}
+
 .rs-card-scene {
   perspective: 1000px;
 }
@@ -2113,7 +2123,6 @@ body {
 .rs-card {
   position: relative;
   background: rgba(14, 14, 28, 0.7);
-  border: 1px solid rgba(255, 70, 85, 0.2);
   backdrop-filter: blur(20px);
   padding: 2.5rem;
   display: flex;
@@ -2124,12 +2133,41 @@ body {
     0 25px 60px rgba(0, 0, 0, 0.6),
     0 0 60px rgba(255, 70, 85, 0.04);
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: none;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.rs-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0%,
+    #ff4655 25%,
+    #ff8a66 45%,
+    #ff4655 65%,
+    transparent 85%,
+    transparent 100%
+  );
+  animation: lightbeam-spin 3s linear infinite;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.rs-card:hover::before {
+  animation-duration: 1.5s;
 }
 
 .rs-card:hover {
-  border-color: rgba(255, 70, 85, 0.4);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04),
     0 30px 70px rgba(0, 0, 0, 0.7),
@@ -2251,36 +2289,77 @@ body {
   letter-spacing: 1px;
 }
 
-/* Resume line preview */
+/* Resume card preview — terminal typewriter */
 .rs-card-preview {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.rs-preview-line {
-  height: 5px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 3px;
-}
-
-.rs-preview-chips {
-  display: flex;
   gap: 0.5rem;
-  margin-top: 0.4rem;
+  padding: 1.2rem 1.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  min-height: 9rem;
 }
 
-.rs-preview-chip {
+.rs-tw-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.68rem;
+  color: rgba(236, 232, 225, 0.7);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  margin-bottom: 0.15rem;
+}
+
+.rs-tw-prompt {
+  color: #ff4655;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rs-tw-command {
+  color: rgba(236, 232, 225, 0.6);
+}
+
+.rs-typewriter-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.68rem;
+  line-height: 1.7;
+  color: rgba(236, 232, 225, 0.85);
+  min-height: 8rem;
+}
+
+.rs-tw-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.rs-tw-tag {
+  flex-shrink: 0;
+  font-weight: 700;
   font-size: 0.6rem;
-  padding: 0.2rem 0.5rem;
-  background: rgba(255, 70, 85, 0.06);
-  border: 1px solid rgba(255, 70, 85, 0.15);
-  color: var(--val-red);
   letter-spacing: 0.5px;
+  min-width: 4.5em;
+}
+
+.rs-tw-text {
+  white-space: pre-wrap;
+}
+
+.rs-tw-blink {
+  color: #ff4655;
+  animation: rs-blink 0.7s step-end infinite;
+  font-weight: 700;
+  margin-left: 1px;
+}
+
+@keyframes rs-blink {
+  50% { opacity: 0; }
 }
 
 /* Download action area */
