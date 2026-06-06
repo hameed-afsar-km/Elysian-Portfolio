@@ -58,11 +58,98 @@ const PLACEMENTS = [
   { x: 3, y: 44, r: 6 },    { x: 3, y: 31, r: -5 },  { x: 3, y: 18, r: 7 },
 ];
 
+
 export default function TechStackMarquee() {
   const sectionRef = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [category, setCategory] = useState("All");
   const [selectedName, setSelectedName] = useState("React");
   const [isPinned, setIsPinned] = useState(false);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let W = (canvas.width = window.innerWidth);
+    let H = (canvas.height = window.innerHeight);
+    let animId: number;
+    let isVisible = true;
+    let time = 0;
+    const mouse = { x: W / 2, y: H / 2, mx: 0, my: 0 };
+
+    function drawMandala() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, W, H);
+
+      mouse.mx += (mouse.x - mouse.mx) * 0.05;
+      mouse.my += (mouse.y - mouse.my) * 0.05;
+
+      const cx = W / 2 + (mouse.mx - W / 2) * 0.08;
+      const cy = H / 2 + (mouse.my - H / 2) * 0.08;
+      const maxR = Math.min(W, H) * 0.45;
+      const mDist = Math.sqrt((mouse.mx - W / 2) ** 2 + (mouse.my - H / 2) ** 2) / Math.max(W, H) * 2;
+
+      for (let ring = 0; ring < 8; ring++) {
+        const points = 6 + ring * 2;
+        const baseR = maxR * (0.15 + ring * 0.11);
+        const wave = Math.sin(time * 0.008 + ring * 0.7 + mDist * 2) * (0.15 + mDist * 0.1) + 1;
+        const speedMult = 1 + mDist * 2;
+
+        ctx.beginPath();
+        for (let i = 0; i <= points; i++) {
+          const angle = (i / points) * Math.PI * 2 + time * (0.002 + ring * 0.0005) * speedMult;
+          const r = baseR * wave + Math.sin(angle * 3 + time * 0.01 + ring + mDist * 3) * baseR * (0.12 + mDist * 0.06);
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = `rgba(255,70,85,${0.15 + ring * 0.04 + mDist * 0.1})`;
+        ctx.lineWidth = (1 + ring * 0.15) * (1 + mDist * 0.3);
+        ctx.shadowColor = "#ff4655";
+        ctx.shadowBlur = (5 + ring * 2) * (1 + mDist);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      for (let i = 0; i < 60; i++) {
+        const angle = (i / 60) * Math.PI * 2 + time * 0.003 * (1 + mDist);
+        const r = maxR * (0.3 + Math.sin(angle * 5 + time * 0.007 + mDist * 4) * 0.2 + 0.3);
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.5 + mDist, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,70,85,${0.3 + Math.sin(angle * 3 + time * 0.01) * 0.2 + mDist * 0.3})`;
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      if (!ctx) return;
+      if (!isVisible) { animId = requestAnimationFrame(animate); return; }
+      time++;
+      drawMandala();
+      animId = requestAnimationFrame(animate);
+    }
+
+    const onResize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    const onMouse = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    const obs = new IntersectionObserver(([e]) => { isVisible = e.isIntersecting; }, { threshold: 0 });
+
+    window.addEventListener("resize", onResize);
+    window.addEventListener("mousemove", onMouse);
+    obs.observe(canvas);
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      obs.disconnect();
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMouse);
+    };
+  }, []);
 
   const visibleTech = useMemo(
     () => TECH.filter((tech) => category === "All" || tech.category === category),
@@ -114,19 +201,15 @@ export default function TechStackMarquee() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-screen overflow-hidden bg-[#0a0a14] text-[#ece8e1]"
+      className="relative h-screen w-screen overflow-hidden bg-[#12080a] text-[#ece8e1]"
       onPointerMove={handlePointerMove}
+      style={{ backgroundImage: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,70,85,0.08), transparent)" }}
     >
-      <div className="ts-animated-bg" />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 20%, rgba(255,70,85,0.12), transparent 24rem), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)",
-          backgroundSize: "auto, 34px 34px, 34px 34px",
-        }}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ width: "100%", height: "100%" }}
       />
-
       <div className="relative z-10 mx-auto grid h-full w-full max-w-[1400px] grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6">
         <header className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
@@ -164,7 +247,7 @@ export default function TechStackMarquee() {
 
         <main className="relative min-h-0">
           <motion.div
-            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,620px)] -translate-x-1/2 -translate-y-1/2 border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_30px_rgba(255,70,85,0.08)] sm:p-7 overflow-hidden"
+            className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_30px_rgba(255,70,85,0.08)] sm:p-7 overflow-hidden"
             style={{
               rotateX: "var(--tilt-x, 0deg)",
               rotateY: "var(--tilt-y, 0deg)",

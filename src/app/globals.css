@@ -70,6 +70,7 @@ body {
   100% { opacity: 0; }
 }
 
+
 @keyframes loaderGradient {
   0% { background-position: 0% 0%, 100% 100%; }
   25% { background-position: 100% 0%, 0% 100%; }
@@ -90,17 +91,7 @@ body {
   animation: loaderGradient 6s ease-in-out infinite, loaderFadeOut 0.6s ease forwards 2.3s;
 }
 
-.ts-animated-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-color: #0a0a14;
-  background-image:
-    radial-gradient(ellipse 100% 80% at 50% 50%, #ff4655 0%, #0a0a14 50%),
-    radial-gradient(ellipse 80% 100% at 50% 50%, #cc2233 0%, #0a0a14 50%);
-  background-size: 300% 300%;
-  animation: loaderGradient 6s ease-in-out infinite;
-}
+
 
 @keyframes stripeFall {
   0% {
