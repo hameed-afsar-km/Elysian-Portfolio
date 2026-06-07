@@ -2752,8 +2752,9 @@ body {
   position: relative;
   width: 100%;
   padding: 10rem 0 5rem;
-  background: #000;
-  border-top: 1px solid rgba(255, 70, 85, 0.07);
+  background: #0a0a0a;
+  border-top: 1px solid #2a2a2a;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.03);
   overflow: hidden;
 }
 
@@ -2815,6 +2816,12 @@ body {
   letter-spacing: 4px;
   border: 1px solid rgba(255, 70, 85, 0.3);
   padding: 0.35rem 0.9rem;
+  animation: ftrCtaPulse 2s ease-in-out infinite;
+}
+
+@keyframes ftrCtaPulse {
+  0%, 100% { text-shadow: 0 0 4px rgba(255, 70, 85, 0.3); }
+  50% { text-shadow: 0 0 20px rgba(255, 70, 85, 0.7), 0 0 40px rgba(255, 70, 85, 0.3); }
 }
 
 .ftr-heading-wrap {
@@ -2855,17 +2862,20 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
+  justify-content: center;
   text-decoration: none;
   color: #fff;
-  padding: 1.25rem 2.5rem;
+  width: 56px;
+  height: 56px;
   border: 1px solid rgba(255, 70, 85, 0.25);
   overflow: hidden;
   margin-top: 1rem;
-  transition: border-color 0.3s ease;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+  cursor: pointer;
 }
 
 .ftr-email-btn:hover {
+  width: 320px;
   border-color: var(--val-red);
 }
 
@@ -2889,18 +2899,126 @@ body {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.85rem;
   letter-spacing: 1.5px;
-  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  transition: max-width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  color: #fff;
 }
 
-.ftr-email-btn:hover .ftr-email-text,
-.ftr-email-btn:hover .ftr-email-icon {
-  color: #fff;
+.ftr-email-btn:hover .ftr-email-text {
+  max-width: 300px;
+  margin-right: 0.8rem;
 }
 
 .ftr-email-icon {
   position: relative;
   z-index: 1;
   font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.ftr-actions {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── Contact Modal ─── */
+.ftr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ftr-modal {
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.ftr-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ftr-modal-close:hover {
+  color: var(--val-red);
+}
+
+.ftr-modal-title {
+  font-family: 'Droid 1997', sans-serif;
+  font-size: 1.5rem;
+  color: var(--val-light);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.ftr-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ftr-modal-input {
+  background: #121212;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: var(--val-light);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ftr-modal-input:focus {
+  border-color: var(--val-red);
+}
+
+.ftr-modal-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ftr-modal-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.ftr-modal-submit {
+  background: var(--val-red);
+  border: none;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: 'Droid 1997', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ftr-modal-submit:hover {
+  opacity: 0.85;
 }
 
 /* ─── Divider ─── */
@@ -2963,6 +3081,10 @@ body {
   letter-spacing: 1px;
 }
 
+.ftr-role-x {
+  color: var(--val-red);
+}
+
 .ftr-copy {
   font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
@@ -3020,7 +3142,7 @@ body {
   padding: 0.5rem 0.8rem;
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   overflow: hidden;
   transition: color 0.25s ease;

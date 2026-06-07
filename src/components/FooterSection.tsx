@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import ParticleBackgroundMono from "@/components/ParticleBackgroundMono";
 
 const SOCIAL_LINKS = [
   { label: "GITHUB", href: "https://github.com/hameed-afsar-km" },
-  { label: "LINKEDIN", href: "https://linkedin.com/in/hameed-afsar-km" },
-  { label: "EMAIL", href: "mailto:hameedafsar.km@gmail.com" },
+  { label: "LINKEDIN", href: "https://linkedin.com/in/hameedafsar-km" },
+  { label: "EMAIL", href: "mailto:hameedafsar2006@gmail.com" },
+  { label: "PHONE", href: "tel:+919489475038" },
 ];
 
 function SocialLink({ label, href }: { label: string; href: string }) {
   return (
     <motion.a
       href={href}
-      target={href.startsWith("mailto") ? undefined : "_blank"}
+      target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"}
       rel="noopener noreferrer"
       className="ftr-social"
       whileHover="hover"
@@ -34,9 +36,8 @@ function SocialLink({ label, href }: { label: string; href: string }) {
   );
 }
 
-function TypewriterText({ text, active }: { text: string; active: boolean }) {
+function HoverTypewriter({ text, active }: { text: string; active: boolean }) {
   const [display, setDisplay] = useState("");
-  const [cursorVis, setCursorVis] = useState(true);
 
   useEffect(() => {
     if (!active) {
@@ -49,30 +50,127 @@ function TypewriterText({ text, active }: { text: string; active: boolean }) {
       i++;
       setDisplay(text.slice(0, i));
       if (i >= text.length) clearInterval(timer);
-    }, 60);
+    }, 50);
 
     return () => clearInterval(timer);
   }, [active, text]);
 
+  return <span>{display}</span>;
+}
+
+const CHARS = "!@#$%^&*()_+-=[]{}|;':\",./<>?~`ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function ScrambleText({ texts, interval = 50, active = true }: { texts: string[]; interval?: number; active?: boolean }) {
+  const [display, setDisplay] = useState(texts[0]);
+  const textIdxRef = useRef(0);
+  const phaseRef = useRef<"scramble" | "resolve" | "pause">("scramble");
+  const idxRef = useRef(0);
+
   useEffect(() => {
-    const blink = setInterval(() => setCursorVis((v) => !v), 500);
-    return () => clearInterval(blink);
-  }, []);
+    if (!active) {
+      setDisplay(texts[0]);
+      return;
+    }
+
+    const target = texts[textIdxRef.current % texts.length];
+
+    const timer = setInterval(() => {
+      const phase = phaseRef.current;
+
+      if (phase === "scramble") {
+        idxRef.current++;
+        if (idxRef.current >= 15) {
+          phaseRef.current = "resolve";
+          idxRef.current = 0;
+        }
+        setDisplay(
+          target
+            .split("")
+            .map((ch) =>
+              Math.random() > 0.3
+                ? CHARS[Math.floor(Math.random() * CHARS.length)]
+                : ch
+            )
+            .join("")
+        );
+      } else if (phase === "resolve") {
+        idxRef.current++;
+        const progress = Math.min(idxRef.current / target.length, 1);
+        const resolved = Math.floor(progress * target.length);
+        setDisplay(
+          target
+            .split("")
+            .map((ch, i) =>
+              i < resolved ? ch : CHARS[Math.floor(Math.random() * CHARS.length)]
+            )
+            .join("")
+        );
+        if (idxRef.current >= target.length) {
+          phaseRef.current = "pause";
+          idxRef.current = 0;
+        }
+      } else {
+        idxRef.current++;
+        setDisplay(target);
+        if (idxRef.current >= 40) {
+          textIdxRef.current++;
+          phaseRef.current = "scramble";
+          idxRef.current = 0;
+        }
+      }
+    }, interval);
+    return () => clearInterval(timer);
+  }, [texts, interval, active]);
+
+  return <span>{display}</span>;
+}
+
+function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const data = new FormData(form);
+    const name = data.get("name") as string;
+    const email = data.get("email") as string;
+    const message = data.get("message") as string;
+    window.location.href = `mailto:hameedafsar2006@gmail.com?subject=Portfolio Contact from ${name}&body=${encodeURIComponent(message)}\n\nFrom: ${name} (${email})`;
+    onClose();
+  };
+
+  if (!open) return null;
 
   return (
-    <span>
-      {display}
-      {active && display.length < text.length && (
-        <span style={{ opacity: cursorVis ? 1 : 0 }}>|</span>
-      )}
-    </span>
+    <div className="ftr-modal-overlay" onClick={onClose}>
+      <div className="ftr-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="ftr-modal-close" onClick={onClose}>×</button>
+        <h3 className="ftr-modal-title">SAY HELLO</h3>
+        <form onSubmit={handleSubmit} className="ftr-modal-form">
+          <input name="name" type="text" placeholder="Your Name" required className="ftr-modal-input" />
+          <input name="email" type="email" placeholder="Your Email" required className="ftr-modal-input" />
+          <textarea name="message" placeholder="Your Message" required rows={5} className="ftr-modal-input ftr-modal-textarea" />
+          <button type="submit" className="ftr-modal-submit">SEND MESSAGE</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
 export default function FooterSection() {
   const [timeStr, setTimeStr] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
   const [scrambleHover, setScrambleHover] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const ctaRef = useRef<HTMLSpanElement>(null);
+  const ctaInView = useInView(ctaRef, { once: true });
 
   // Parallax for heading
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
@@ -96,6 +194,11 @@ export default function FooterSection() {
 
   return (
     <section ref={sectionRef} className="ftr-section" id="contact">
+      {/* Particle background matching terminal/about section */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <ParticleBackgroundMono />
+      </div>
+
       {/* Giant outlined marquee backdrop */}
       <div className="ftr-marquee-wrap" aria-hidden>
         <div className="ftr-marquee">
@@ -107,13 +210,14 @@ export default function FooterSection() {
         {/* ── CTA Block ── */}
         <div className="ftr-cta">
           <motion.span
+            ref={ctaRef}
             className="ftr-cta-tag"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            OPEN TO OPPORTUNITIES
+            <ScrambleText texts={["OPEN TO OPPORTUNITIES", "AVAILABLE FOR WORK", "LET'S COLLABORATE", "HIRE ME"]} interval={40} active={ctaInView} />
           </motion.span>
 
           <div className="ftr-heading-wrap" style={{ overflow: "hidden" }}>
@@ -130,24 +234,29 @@ export default function FooterSection() {
             </motion.h2>
           </div>
 
-          <motion.div
-            className="ftr-email-btn"
-            onMouseEnter={() => setScrambleHover(true)}
-            onMouseLeave={() => setScrambleHover(false)}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="ftr-email-bg" />
-            <span className="ftr-email-text">
-              <TypewriterText text="BUILD SOMETHING GREAT" active={scrambleHover} />
-            </span>
-            <span className="ftr-email-icon">→</span>
-          </motion.div>
+          <div className="ftr-actions">
+            <motion.div
+              className="ftr-email-btn"
+              onClick={() => setContactOpen(true)}
+              onMouseEnter={() => setScrambleHover(true)}
+              onMouseLeave={() => setScrambleHover(false)}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span className="ftr-email-bg" />
+              <span className="ftr-email-text">
+                <HoverTypewriter text="BUILD SOMETHING GREAT" active={scrambleHover} />
+              </span>
+              <span className="ftr-email-icon">→</span>
+            </motion.div>
+          </div>
         </div>
+
+        <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
 
         {/* ── Divider with crosshair ornaments ── */}
         <div className="ftr-divider">
@@ -167,7 +276,7 @@ export default function FooterSection() {
             transition={{ duration: 0.6 }}
           >
             <span className="ftr-brand-name">HAMEED AFSAR KM</span>
-            <span className="ftr-brand-role">ENGINEER × DESIGNER × BUILDER</span>
+            <span className="ftr-brand-role">ENGINEER <span className="ftr-role-x">×</span> DESIGNER <span className="ftr-role-x">×</span> BUILDER</span>
             <span className="ftr-copy">
               © {new Date().getFullYear()} — ALL RIGHTS RESERVED
             </span>
