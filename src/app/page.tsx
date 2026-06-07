@@ -14,6 +14,7 @@ import ScrollScrubSection from "@/components/ScrollScrubSection";
 import VerticalTimeline from "@/components/VerticalTimeline";
 import TechStackMarquee from "@/components/TechStackMarquee";
 import ResumeSection from "@/components/ResumeSection";
+import AiTwinSection from "@/components/AiTwinSection";
 import FooterSection from "@/components/FooterSection";
 
 export default function Home() {
@@ -233,6 +234,9 @@ export default function Home() {
 
       {/* Resume Section — 3D interactive tilt sheet preview */}
       <ResumeSection />
+
+      {/* AI Twin Section — interactive chat experience */}
+      <AiTwinSection />
 
       {/* Complete Footer Section — Outlined marquee + HUD status */}
       <FooterSection />

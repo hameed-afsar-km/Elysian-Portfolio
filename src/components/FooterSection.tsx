@@ -126,6 +126,8 @@ function ScrambleText({ texts, interval = 50, active = true }: { texts: string[]
 }
 
 function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [result, setResult] = useState("");
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -135,15 +137,26 @@ function ContactModal({ open, onClose }: { open: boolean; onClose: () => void })
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setResult("Sending...");
     const form = e.target as HTMLFormElement;
-    const data = new FormData(form);
-    const name = data.get("name") as string;
-    const email = data.get("email") as string;
-    const message = data.get("message") as string;
-    window.location.href = `mailto:hameedafsar2006@gmail.com?subject=Portfolio Contact from ${name}&body=${encodeURIComponent(message)}\n\nFrom: ${name} (${email})`;
-    onClose();
+    const formData = new FormData(form);
+    formData.append("access_key", "a1b91d65-c5d3-4bcb-b718-c2e5a0757f47");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      form.reset();
+      setTimeout(() => { setResult(""); onClose(); }, 2000);
+    } else {
+      setResult("Error. Please try again.");
+    }
   };
 
   if (!open) return null;
@@ -152,12 +165,22 @@ function ContactModal({ open, onClose }: { open: boolean; onClose: () => void })
     <div className="ftr-modal-overlay" onClick={onClose}>
       <div className="ftr-modal" onClick={(e) => e.stopPropagation()}>
         <button className="ftr-modal-close" onClick={onClose}>×</button>
-        <h3 className="ftr-modal-title">SAY <span className="ftr-modal-title-white">HELLO</span></h3>
+        <h3 className="ftr-modal-title">
+          {'SAY'.split('').map((char, i) => (
+            <span key={i} className="ftr-title-char" style={{ animationDelay: `${i * 0.08}s` }}>{char}</span>
+          ))}{' '}
+          <span className="ftr-modal-title-white">
+            {'HELLO'.split('').map((char, i) => (
+              <span key={i} className="ftr-title-char" style={{ animationDelay: `${(i + 4) * 0.08}s` }}>{char}</span>
+            ))}
+          </span>
+        </h3>
         <form onSubmit={handleSubmit} className="ftr-modal-form">
           <input name="name" type="text" placeholder="Your Name" required className="ftr-modal-input" />
           <input name="email" type="email" placeholder="Your Email" required className="ftr-modal-input" />
           <textarea name="message" placeholder="Your Message" required rows={5} className="ftr-modal-input ftr-modal-textarea" />
-          <button type="submit" className="ftr-modal-submit"><span className="ftr-modal-submit-text">SEND MESSAGE</span></button>
+          <button type="submit" className="ftr-modal-submit"><span>SEND MESSAGE</span></button>
+          {result && <span className="ftr-modal-result">{result}</span>}
         </form>
       </div>
     </div>
