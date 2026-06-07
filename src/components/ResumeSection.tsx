@@ -3,16 +3,16 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 
-const SKILLS = ["Next.js", "TypeScript", "AI/ML", "React", "Node.js", "WebGPU", "Rust", "Python"];
+const SKILLS = ["Next.js", "React", "TypeScript", "Python", "Supabase", "RAG", "Multi-Agent AI", "LangGraph"];
 
 const TERMINAL_LINES = [
-  { tag: "AI/ML",    tagColor: "#FF8BD2", text: "Architected AI pipelines processing 500K+ daily requests" },
-  { tag: "PRODUCT",  tagColor: "#6EC8FF", text: "Built a design system adopted across 12 products" },
-  { tag: "LEAD",     tagColor: "#68D391", text: "Led a full-stack team — shipped in under 8 weeks" },
-  { tag: "PERF",     tagColor: "#FFC766", text: "Optimized Core Web Vitals to the 98th percentile" },
-  { tag: "INFRA",    tagColor: "#B39DFF", text: "Real-time analytics engine for 10K+ concurrent users" },
-  { tag: "DEPLOY",   tagColor: "#FF8BD2", text: "80% faster deployment cycles via automated pipelines" },
-  { tag: "AGENTS",   tagColor: "#6EC8FF", text: "Multi-agent LLM orchestration for enterprise workflows" },
+  { tag: "AI/ML",    tagColor: "#FF8BD2", text: "Built production-ready RAG and LLM powered applications." },
+  { tag: "PRODUCT",  tagColor: "#6EC8FF", text: "Designed full stack products with modern UX and scalability." },
+  { tag: "LEAD",     tagColor: "#68D391", text: "Led AI-driven product ideas from concept to deployment." },
+  { tag: "PERF",     tagColor: "#FFC766", text: "Optimized applications for speed, responsiveness and SEO." },
+  { tag: "INFRA",    tagColor: "#B39DFF", text: "Integrated databases, APIs and cloud deployment pipelines." },
+  { tag: "DEPLOY",   tagColor: "#FF8BD2", text: "Shipped multiple full stack and AI applications to production." },
+  { tag: "AGENTS",   tagColor: "#6EC8FF", text: "Building autonomous multi-agent systems and intelligent workflows." },
 ];
 
 export default function ResumeSection() {
@@ -171,11 +171,11 @@ export default function ResumeSection() {
               </div>
               <div className="rs-card-meta">
                 <div className="rs-card-name">HAMEED AFSAR KM</div>
-                <div className="rs-card-role">FULL STACK ENGINEER × PRODUCT DESIGNER</div>
+                <div className="rs-card-role">AI ENGINEER & FULL STACK DEVELOPER</div>
               </div>
               <div className="rs-card-badge">
                 <span className="rs-badge-dot" />
-                <span className="rs-badge-text">AVAILABLE</span>
+                <span className="rs-badge-text">BUILDING AGENTIC AI PRODUCTS</span>
               </div>
             </div>
 

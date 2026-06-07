@@ -12,29 +12,29 @@ interface TechItem {
 }
 
 const TECH: TechItem[] = [
-  { name: "React", category: "Frontend", level: 92, mode: "Interface", note: "Component systems, state, motion-rich UI." },
-  { name: "Next.js", category: "Frontend", level: 90, mode: "Framework", note: "App routing, rendering strategy, deployment flow." },
-  { name: "TypeScript", category: "Frontend", level: 88, mode: "Safety", note: "Typed contracts for scalable product code." },
-  { name: "Tailwind", category: "Frontend", level: 85, mode: "Styling", note: "Fast, consistent responsive UI composition." },
-  { name: "Framer Motion", category: "Frontend", level: 82, mode: "Motion", note: "Microinteractions, transitions, scroll choreography." },
-  { name: "FastAPI", category: "Backend", level: 85, mode: "API", note: "Typed Python services and quick backend prototypes." },
-  { name: "Node.js", category: "Backend", level: 85, mode: "Runtime", note: "Server logic, tooling, realtime glue." },
-  { name: "Express", category: "Backend", level: 82, mode: "Routing", note: "Lean REST APIs and middleware pipelines." },
-  { name: "WebSockets", category: "Backend", level: 75, mode: "Realtime", note: "Live updates, rooms, presence, event streams." },
-  { name: "LangChain", category: "AI & Agents", level: 88, mode: "Orchestration", note: "LLM workflows, tools, memory, retrieval." },
-  { name: "LangGraph", category: "AI & Agents", level: 82, mode: "Agents", note: "Stateful agent graphs and controllable loops." },
-  { name: "RAG", category: "AI & Agents", level: 80, mode: "Retrieval", note: "Grounded answers from custom knowledge sources." },
-  { name: "Ollama", category: "AI & Agents", level: 78, mode: "Local AI", note: "Local model experiments and private prototypes." },
-  { name: "OpenAI", category: "AI & Agents", level: 85, mode: "Models", note: "Practical AI features with structured outputs." },
-  { name: "PostgreSQL", category: "Data", level: 82, mode: "Relational", note: "Schemas, joins, queries, reliable storage." },
-  { name: "MongoDB", category: "Data", level: 78, mode: "Document", note: "Flexible data models and quick iteration." },
-  { name: "Firebase", category: "Data", level: 75, mode: "Platform", note: "Auth, realtime data, fast product scaffolds." },
-  { name: "Redis", category: "Data", level: 70, mode: "Cache", note: "Caching, queues, ephemeral app state." },
-  { name: "Git", category: "Tools", level: 90, mode: "Versioning", note: "Branching, diffs, recovery, clean history." },
-  { name: "GitHub", category: "Tools", level: 88, mode: "Collaboration", note: "PR flow, issues, CI touchpoints." },
-  { name: "Vercel", category: "Tools", level: 82, mode: "Deploy", note: "Preview deployments and frontend hosting." },
-  { name: "Postman", category: "Tools", level: 78, mode: "Testing", note: "API collections, checks, request debugging." },
-  { name: "Linux", category: "Tools", level: 75, mode: "System", note: "Shell workflows, servers, environment setup." },
+  // Frontend
+  { name: "React", category: "Frontend", level: 92, mode: "Interactive UI", note: "Build modern component-driven interfaces." },
+  { name: "Next.js", category: "Frontend", level: 90, mode: "Production Apps", note: "Develop fast SSR and App Router applications." },
+  { name: "TypeScript", category: "Frontend", level: 84, mode: "Type Safe", note: "Write scalable maintainable frontend code." },
+  { name: "Tailwind CSS", category: "Frontend", level: 95, mode: "Rapid UI", note: "Create responsive modern interfaces quickly." },
+  // Backend
+  { name: "Node.js", category: "Backend", level: 82, mode: "Runtime", note: "Develop backend services and APIs." },
+  { name: "Express", category: "Backend", level: 80, mode: "REST APIs", note: "Build lightweight server applications." },
+  { name: "Supabase", category: "Backend", level: 88, mode: "BaaS", note: "Authentication, database and realtime features." },
+  { name: "PostgreSQL", category: "Backend", level: 76, mode: "Relational DB", note: "Design structured application databases." },
+  // AI & Agents
+  { name: "LangGraph", category: "AI & Agents", level: 82, mode: "Agent Workflows", note: "Build graph-based autonomous AI systems." },
+  { name: "LangChain", category: "AI & Agents", level: 86, mode: "LLM Apps", note: "Develop retrieval and AI pipelines." },
+  { name: "RAG", category: "AI & Agents", level: 90, mode: "Knowledge AI", note: "Build retrieval augmented generation systems." },
+  { name: "Multi-Agent AI", category: "AI & Agents", level: 88, mode: "Orchestration", note: "Coordinate specialized AI agents together." },
+  // Data
+  { name: "Vector DB", category: "Data", level: 82, mode: "Embeddings", note: "Store semantic search vectors." },
+  { name: "Embeddings", category: "Data", level: 89, mode: "Semantic AI", note: "Generate contextual knowledge vectors." },
+  // Tools
+  { name: "Git", category: "Tools", level: 90, mode: "Versioning", note: "Manage collaborative development." },
+  { name: "Vercel", category: "Tools", level: 94, mode: "Deployment", note: "Deploy full stack applications." },
+  { name: "Docker", category: "Tools", level: 68, mode: "Containers", note: "Containerize development environments." },
+  { name: "Figma", category: "Tools", level: 84, mode: "UI Design", note: "Prototype and design interfaces." },
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {

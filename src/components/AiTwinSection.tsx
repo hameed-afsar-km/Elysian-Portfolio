@@ -2,69 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-/* ─── Suggested prompts ─── */
-const SUGGESTED_PROMPTS = [
-  "Tell me about yourself",
-  "What is afsGPT?",
-  "How do you build AI products?",
-  "What technologies do you use?",
-  "Show me your best projects",
-  "What's your design philosophy?",
-  "How would you build my startup?",
-  "Explain RAG in simple terms",
-  "What are you currently building?",
-  "Career journey",
-];
-
-/* ─── AI response map ─── */
-interface ResponseEntry {
-  text: string;
-  followUp?: string;
-}
-
-const RESPONSES: Record<string, ResponseEntry> = {
-  "tell me about yourself": {
-    text: "I'm Hameed Afsar KM — a full-stack engineer and product designer who started coding out of pure curiosity and never looked back. I've spent the last few years shipping products, building AI systems, and thinking deeply about how software should feel. I believe the best products sit at the intersection of engineering excellence and thoughtful design. Right now I'm focused on AI-powered tools, automation pipelines, and experiences that leave a mark.",
-  },
-  "what is afsgpt": {
-    text: "afsGPT is the brain behind this AI Twin — it's a custom knowledge system I built that knows everything about my projects, tech stack, design philosophy, and how I think about building products. It's designed to give you an honest, detailed, and genuinely useful conversation rather than generic chatbot fluff. Think of it as the digital version of me that's always awake and ready to talk shop.",
-  },
-  "how do you build ai products": {
-    text: "I build AI products with a product-first mindset. That means I start with the user problem, not the technology. I choose the right model and orchestration strategy (LangChain, LangGraph, or direct API), build a clean data pipeline (RAG when grounded knowledge is needed), and obsess over the UX. An AI product that feels smart but is frustrating to use isn't smart at all. I focus on reliability, latency, and making the AI feel like a natural part of the workflow.",
-  },
-  "what technologies do you use": {
-    text: "My stack is broad but intentional. Frontend: React, Next.js, TypeScript, Tailwind, Framer Motion. Backend: Node.js, Express, FastAPI, WebSockets. AI: LangChain, LangGraph, RAG, OpenAI, Ollama. Data: PostgreSQL, MongoDB, Redis. Tools: Git, GitHub, Vercel, Linux. I pick whatever solves the problem best, but TypeScript and Next.js are my daily drivers.",
-  },
-  "show me your best projects": {
-    text: "Some projects I'm proud of: NEXUS COGNITIVE — an AI orchestration engine for multi-agent workflows. AETHER OS — an in-browser WebAssembly desktop environment. SPECTRA PIPELINE — an asset optimization pipeline for game developers. VORTEX CORE — a WebGPU particle physics simulation handling millions of particles. And QUANTUM GRID — a real-time crypto ledger visualizer. Each one pushed something new — whether it was architecture, performance, or UX.",
-  },
-  "what's your design philosophy": {
-    text: "Design isn't decoration — it's communication. Every pixel, transition, and micro-interaction should serve a purpose. I believe in: 1) Motion with meaning — animation should guide, not distract. 2) Darkness with depth — dark UIs need texture, layering, and glow to feel premium. 3) Typography as voice — fonts set the tone before a single word is read. 4) Constraints breed creativity — good design thrives within boundaries.",
-  },
-  "how would you build my startup": {
-    text: "I'd start with the smallest possible version that actually delivers value. No over-engineering, no premature scaling. Pick a stack you can move fast in (Next.js + TypeScript is a solid bet), build a clean data model, invest in the UX early (it's your differentiator), and ship within weeks, not months. Once you have users, iterate based on real feedback, not assumptions. Speed and taste are your unfair advantages as a startup.",
-  },
-  "explain rag in simple terms": {
-    text: "RAG (Retrieval-Augmented Generation) is like giving an AI a textbook to reference before answering a question. Instead of relying only on what it learned during training (which gets stale), RAG lets the AI look up relevant information from a custom knowledge base in real-time. This means answers are more accurate, grounded in your data, and less prone to hallucinations. It's how you build AI that actually knows your specific stuff.",
-  },
-  "what are you currently building": {
-    text: "Right now I'm deep in AI-powered developer tooling — building systems that help engineers ship faster by automating the boring parts. I'm also exploring WebGPU for browser-based compute, refining my portfolio (you're looking at it), and thinking about the next big thing in human-AI interaction. I'm always building something. The specific project changes, but the drive doesn't.",
-  },
-  "career journey": {
-    text: "My journey started in 2022 with raw curiosity and a lot of broken code. 2023 was about shipping real products. 2024 I went deep into systems, cloud architecture, and scalability. 2025 I merged software engineering with AI. Now in 2026, I'm operating at the intersection of product, engineering, and intelligence — leading technical decisions and building things that matter. Each year was a deliberate step toward becoming the engineer I am today.",
-  },
-};
-
-const DEFAULT_RESPONSE = "That's a great question. I'd love to give you a thoughtful answer — could you ask it a bit differently? I can talk about my projects, tech stack, AI, startups, design philosophy, career journey, or whatever's on your mind.";
-
-function findResponse(text: string): string {
-  const normalized = text.toLowerCase().trim();
-  for (const [key, entry] of Object.entries(RESPONSES)) {
-    if (normalized.includes(key)) return entry.text;
-  }
-  return DEFAULT_RESPONSE;
-}
+import {
+  SUGGESTED_PROMPTS,
+  WELCOME_MESSAGE,
+  findResponse,
+} from "@/data/aiTwinData";
 
 /* ─── Typing indicator dots ─── */
 function TypingDots() {
@@ -102,8 +44,6 @@ export default function AiTwinSection() {
   const [showPrompts, setShowPrompts] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const welcomeMessage = "Hi, I'm Afsar's AI Twin.\n\nI can answer questions about my projects, skills, experience, development process, AI systems, product thinking, and future goals.\n\nAsk anything.";
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -236,7 +176,7 @@ export default function AiTwinSection() {
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
                 <div className="ait-welcome-icon">◆</div>
-                <p className="ait-welcome-text">{welcomeMessage}</p>
+                <p className="ait-welcome-text">{WELCOME_MESSAGE}</p>
               </motion.div>
             ) : (
               <div className="ait-msgs">
