@@ -152,12 +152,12 @@ function ContactModal({ open, onClose }: { open: boolean; onClose: () => void })
     <div className="ftr-modal-overlay" onClick={onClose}>
       <div className="ftr-modal" onClick={(e) => e.stopPropagation()}>
         <button className="ftr-modal-close" onClick={onClose}>×</button>
-        <h3 className="ftr-modal-title">SAY HELLO</h3>
+        <h3 className="ftr-modal-title">SAY <span className="ftr-modal-title-white">HELLO</span></h3>
         <form onSubmit={handleSubmit} className="ftr-modal-form">
           <input name="name" type="text" placeholder="Your Name" required className="ftr-modal-input" />
           <input name="email" type="email" placeholder="Your Email" required className="ftr-modal-input" />
           <textarea name="message" placeholder="Your Message" required rows={5} className="ftr-modal-input ftr-modal-textarea" />
-          <button type="submit" className="ftr-modal-submit">SEND MESSAGE</button>
+          <button type="submit" className="ftr-modal-submit"><span className="ftr-modal-submit-text">SEND MESSAGE</span></button>
         </form>
       </div>
     </div>
