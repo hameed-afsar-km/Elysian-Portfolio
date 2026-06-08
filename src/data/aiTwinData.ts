@@ -2,9 +2,9 @@ type ResponseEntry = { text: string };
 
 export const WELCOME_MESSAGE = `Hi, I'm Afsar's AI Twin. Ask me anything.`;
 
-
 export const DEFAULT_RESPONSE =
-  "Interesting question. Try asking about my projects, AI systems, startups, design journey, full stack development, RAG, multi-agent systems, or future goals.";
+  "That's an interesting one. I don't have a specific answer prepared for that, but I can tell you about my projects, my journey in AI and full stack development, the technologies I use, my startup ideas, or my design philosophy. What would you like to know?";
+
 export const SUGGESTED_PROMPTS = [
   "Tell me about yourself",
   "How do you build AI products?",
@@ -20,7 +20,7 @@ export const SUGGESTED_PROMPTS = [
   "What is PathFindr?",
 ];
 
-export const RESPONSES: Record<string, ResponseEntry> = {
+const RESPONSES: Record<string, ResponseEntry> = {
 
   "tell me about yourself": {
     text: `I'm Afsar — an AI Engineer, Full Stack Developer, and builder from India.
@@ -112,7 +112,6 @@ The best interfaces are the ones users understand without needing instructions.`
     text: `Right now I'm focused on AI-powered products and startup ideas.
 
 Some areas I'm actively exploring include:
-
 • Advanced RAG systems
 • Multi-agent architectures
 • AI workflow automation
@@ -202,6 +201,56 @@ That's why RAG systems are more accurate and useful for real-world applications.
 
 };
 
+/* ─── Keyword → response key mappings for semantic matching ─── */
+const KEYWORD_MAP: Record<string, string[]> = {
+  "tell me about yourself": [
+    "who", "name", "about", "yourself", "background", "introduce", "introduction",
+    "hi", "hello", "hey", "greetings", "sup", "yo", "whats up",
+  ],
+  "how do you build ai products": [
+    "build", "create", "develop", "ai product", "approach", "process", "workflow",
+    "how do you", "methodology",
+  ],
+  "what technologies do you use": [
+    "tech", "technologies", "stack", "tools", "framework", "language", "programming",
+    "react", "nextjs", "typescript", "tailwind", "python", "skills", "skill",
+  ],
+  "show me your best projects": [
+    "project", "projects", "portfolio", "work", "built", "showcase", "examples",
+    "best", "favorite", "achievement", "accomplishment",
+  ],
+  "what's your design philosophy": [
+    "design", "philosophy", "ui", "ux", "aesthetic", "visual", "interface",
+    "style", "theme", "creative",
+  ],
+  "what are you currently building": [
+    "currently", "now", "building", "working on", "present", "latest", "recent",
+    "current", "active",
+  ],
+  "career journey": [
+    "career", "journey", "experience", "history", "path", "timeline", "evolution",
+    "started", "began", "background",
+  ],
+  "why startups": [
+    "startup", "startups", "entrepreneur", "business", "company", "venture",
+    "founder", "why startup",
+  ],
+  "what is afsgpt": [
+    "afsgpt", "afs", "assistant", "ai twin",
+  ],
+  "what is gitsubway": [
+    "gitsubway", "subway", "git", "railway", "3d", "github profile",
+  ],
+  "what is pathfindr": [
+    "pathfindr", "pathfinder", "education", "career guidance", "learning",
+    "student", "mentorship",
+  ],
+  "explain rag in simple terms": [
+    "rag", "retrieval", "knowledge base", "search", "vector", "embedding",
+    "context", "retrieve",
+  ],
+};
+
 function normalize(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
 }
@@ -235,5 +284,32 @@ export function findResponse(input: string): string {
     }
   }
 
-  return bestScore > 0 ? RESPONSES[bestKey].text : DEFAULT_RESPONSE;
+  /* ─── Keyword enrichment pass ─── */
+  if (bestScore <= 0.5) {
+    let kwScore = 0;
+    let kwKey = "";
+    for (const key of keys) {
+      const keywords = KEYWORD_MAP[key] ?? [];
+      const inputWords = normalized.split(/\s+/);
+      let matchCount = 0;
+      for (const kw of keywords) {
+        const nKw = normalize(kw);
+        if (normalized.includes(nKw) || inputWords.some(w => nKw.includes(w) || w.includes(nKw))) {
+          matchCount++;
+        }
+      }
+      if (matchCount > kwScore) {
+        kwScore = matchCount;
+        kwKey = key;
+      }
+    }
+    if (kwScore > 0 && kwScore >= bestScore) {
+      bestScore = kwScore;
+      bestKey = kwKey;
+    }
+  }
+
+  if (bestScore > 0) return RESPONSES[bestKey].text;
+
+  return DEFAULT_RESPONSE;
 }
