@@ -13,8 +13,8 @@ const entries = [
     body: "Built a modern AI assistant platform supporting multiple LLM providers, speech capabilities, chat history, and intelligent workflows while focusing on production-ready UX and extensibility.",
     tags: ["Next.js", "LLMs", "TypeScript", "AI"],
     accentSide: "left" as const,
-    github: "https://github.com/hameed-afsar/afsgpt",
-    website: "https://afsgpt.vercel.app",
+    github: "https://github.com/hameed-afsar-km/afsGPT",
+    website: "https://afs-gpt.vercel.app",
   },
   {
     year: "2026",
@@ -25,8 +25,8 @@ const entries = [
     body: "Developed a multi-agent architecture where specialized AI agents coordinate research, budgeting, itinerary planning, and recommendations to generate personalized travel experiences.",
     tags: ["LangGraph", "Agents", "LLMs", "RAG"],
     accentSide: "right" as const,
-    github: "https://github.com/hameed-afsar/trip-planner",
-    website: "https://tripplanner.vercel.app",
+    github: "https://github.com/hameed-afsar-km/TRIPZ-AI",
+    website: "https://tripz-ai.vercel.app",
   },
   {
     year: "2026",
@@ -37,7 +37,7 @@ const entries = [
     body: "Created an intelligent surveillance system capable of detecting accidents, fire, fatalities, and abnormal incidents from video feeds using AI-powered computer vision pipelines.",
     tags: ["Python", "OpenCV", "YOLO", "AI"],
     accentSide: "left" as const,
-    github: "https://github.com/hameed-afsar/ai-surveillance",
+    github: "https://github.com/hameed-afsar-km/AI-Surveillance-System",
   },
   {
     year: "2026",
@@ -48,8 +48,8 @@ const entries = [
     body: "Built a complete ecommerce platform with authentication, product management, wishlist, cart, checkout flows, animations, and responsive user experience.",
     tags: ["Next.js", "Supabase", "React", "Tailwind"],
     accentSide: "right" as const,
-    github: "https://github.com/hameed-afsar/miaksaas-ecommerce",
-    website: "https://miaksaas.vercel.app",
+    github: "https://github.com/hameed-afsar-km/miaksaaa",
+    website: "https://miaksaaa.vercel.app",
   },
   {
     year: "2026",
@@ -60,8 +60,8 @@ const entries = [
     body: "Designed an immersive 3D web experience where repositories become railway stations, enabling developers to explore projects, analytics, and compete with others through gamified interactions.",
     tags: ["Three.js", "React", "GitHub API", "3D"],
     accentSide: "left" as const,
-    github: "https://github.com/hameed-afsar/gitsubway",
-    website: "https://gitsubway.vercel.app",
+    github: "https://github.com/hameed-afsar-km/GitSubway",
+    website: "https://git-subway.vercel.app",
   },
 ];
 

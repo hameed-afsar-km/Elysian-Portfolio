@@ -1209,7 +1209,26 @@ body {
   background: rgba(255, 70, 85, 0.1);
 }
 
-/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Progress bar ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
+.tl2-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.tl2-link {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.tl2-link:hover {
+  color: var(--val-red);
+  transform: translateY(-1px);
+}
+
+/* ---- Progress bar ---- */
 .tl2-progress {
   position: relative;
   z-index: 3;
