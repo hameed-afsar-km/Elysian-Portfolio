@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { useTransform, motion, useScroll, useSpring, MotionValue } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { useTransform, motion, useScroll, useSpring, useMotionValue } from "framer-motion";
 
 const entries = [
   {
@@ -13,6 +13,8 @@ const entries = [
     body: "Built a modern AI assistant platform supporting multiple LLM providers, speech capabilities, chat history, and intelligent workflows while focusing on production-ready UX and extensibility.",
     tags: ["Next.js", "LLMs", "TypeScript", "AI"],
     accentSide: "left" as const,
+    github: "https://github.com/hameed-afsar/afsgpt",
+    website: "https://afsgpt.vercel.app",
   },
   {
     year: "2026",
@@ -23,6 +25,8 @@ const entries = [
     body: "Developed a multi-agent architecture where specialized AI agents coordinate research, budgeting, itinerary planning, and recommendations to generate personalized travel experiences.",
     tags: ["LangGraph", "Agents", "LLMs", "RAG"],
     accentSide: "right" as const,
+    github: "https://github.com/hameed-afsar/trip-planner",
+    website: "https://tripplanner.vercel.app",
   },
   {
     year: "2026",
@@ -33,6 +37,7 @@ const entries = [
     body: "Created an intelligent surveillance system capable of detecting accidents, fire, fatalities, and abnormal incidents from video feeds using AI-powered computer vision pipelines.",
     tags: ["Python", "OpenCV", "YOLO", "AI"],
     accentSide: "left" as const,
+    github: "https://github.com/hameed-afsar/ai-surveillance",
   },
   {
     year: "2026",
@@ -43,6 +48,8 @@ const entries = [
     body: "Built a complete ecommerce platform with authentication, product management, wishlist, cart, checkout flows, animations, and responsive user experience.",
     tags: ["Next.js", "Supabase", "React", "Tailwind"],
     accentSide: "right" as const,
+    github: "https://github.com/hameed-afsar/miaksaas-ecommerce",
+    website: "https://miaksaas.vercel.app",
   },
   {
     year: "2026",
@@ -53,6 +60,8 @@ const entries = [
     body: "Designed an immersive 3D web experience where repositories become railway stations, enabling developers to explore projects, analytics, and compete with others through gamified interactions.",
     tags: ["Three.js", "React", "GitHub API", "3D"],
     accentSide: "left" as const,
+    github: "https://github.com/hameed-afsar/gitsubway",
+    website: "https://gitsubway.vercel.app",
   },
 ];
 
@@ -67,13 +76,33 @@ export default function TimelineSection() {
     offset: ["start start", "end end"],
   });
 
-  // Map 0→1 to card index 0→(n-1), spring it, then derive CSS x string
+  // Map 0→1 to card index 0→(n-1)
   const rawProgress = useTransform(scrollYProgress, [0, 1], [0, CARD_COUNT - 1]);
-  const springProgress = useSpring(rawProgress, { stiffness: 80, damping: 22, restDelta: 0.001 });
+  const snapProgress = useMotionValue(0);
+
+  // Spring for smooth animation (both tracking + snap)
+  const springProgress = useSpring(snapProgress, { stiffness: 180, damping: 30, restDelta: 0.01 });
   const translateX = useTransform(springProgress, (p) => `${-p * 100}vw`);
 
   // Progress bar fill
   const fillWidth = useTransform(springProgress, [0, CARD_COUNT - 1], ["0%", "100%"]);
+
+  // Snap to nearest card 200ms after scroll stops
+  useEffect(() => {
+    const raw = rawProgress.get();
+    snapProgress.set(raw);
+
+    let timer: ReturnType<typeof setTimeout>;
+    const unsub = rawProgress.on("change", (v) => {
+      snapProgress.set(v);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const nearest = Math.round(snapProgress.get());
+        snapProgress.set(nearest);
+      }, 200);
+    });
+    return () => { unsub(); clearTimeout(timer); };
+  }, []);
 
   return (
     // Outer: tall enough to give 100vh of scroll per card
@@ -150,6 +179,24 @@ function Slide({ entry, index }: { entry: (typeof entries)[0]; index: number }) 
           {entry.tags.map((tag) => (
             <span key={tag} className="tl2-tag">{tag}</span>
           ))}
+        </div>
+        <div className="tl2-links">
+          {entry.github && (
+            <a href={entry.github} target="_blank" rel="noopener noreferrer" className="tl2-link" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+            </a>
+          )}
+          {entry.website && (
+            <a href={entry.website} target="_blank" rel="noopener noreferrer" className="tl2-link" aria-label="Website">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+              </svg>
+            </a>
+          )}
         </div>
       </div>
     </div>

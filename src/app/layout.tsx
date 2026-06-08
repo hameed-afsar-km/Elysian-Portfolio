@@ -22,7 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Barlow+Condensed:wght@700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Press+Start+2P&display=swap"
         />
         <ReactLenis root>
           <Navbar />

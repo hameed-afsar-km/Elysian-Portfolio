@@ -130,12 +130,38 @@ export default function AiTwinSection() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showPrompts, setShowPrompts] = useState(true);
-  const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    const chat = chatRef.current;
+    if (!chat) return;
+    chat.scrollTop = chat.scrollHeight;
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    const chat = chatRef.current;
+    if (!box || !chat) return;
+
+    const handler = (e: WheelEvent) => {
+      e.stopPropagation();
+    };
+    chat.addEventListener("wheel", handler, { passive: false });
+
+    const ro = new ResizeObserver(() => {
+      chat.style.maxHeight = "";
+      const avail = box.clientHeight - (box.querySelector<HTMLElement>(".ait-box-h")?.offsetHeight ?? 0) - (box.querySelector<HTMLElement>(".ait-box-in")?.offsetHeight ?? 0);
+      chat.style.maxHeight = avail + "px";
+    });
+    ro.observe(box);
+
+    return () => {
+      chat.removeEventListener("wheel", handler);
+      ro.disconnect();
+    };
+  }, []);
 
   const now = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const [loadingText, loadProgress] = usePixelShuffle("LOADING…");
@@ -180,16 +206,16 @@ export default function AiTwinSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           {"ASK".split("").map((char, i) => (
             <motion.span
               key={i}
               className="ait-hc"
-              initial={{ opacity: 0, y: 30, rotateX: -60 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              initial={{ opacity: 0, y: 80, scale: 0.3 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.025, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.2 + i * 0.15, duration: 0.5, ease: [0.17, 0.67, 0.29, 1] }}
             >
               {char === " " ? "\u00A0" : char}
             </motion.span>
@@ -216,12 +242,9 @@ export default function AiTwinSection() {
           {taglineText}
         </motion.p>
 
-        <motion.div
+        <div
           className="ait-box"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ delay: 0.6, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          ref={boxRef}
         >
           {/* Header */}
           <div className="ait-box-h">
@@ -243,7 +266,7 @@ export default function AiTwinSection() {
           </div>
 
           {/* Chat */}
-          <div className="ait-box-c">
+          <div ref={chatRef} className="ait-box-c" style={{ overflow: messages.length === 0 && !isTyping ? "hidden" : undefined }}>
             <div className="ait-box-cs">
               {messages.length === 0 && !isTyping ? (
                 <motion.div
@@ -285,7 +308,6 @@ export default function AiTwinSection() {
                   )}
                 </div>
               )}
-              <div ref={chatEndRef} />
             </div>
           </div>
 
@@ -341,7 +363,7 @@ export default function AiTwinSection() {
               </svg>
             </motion.button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

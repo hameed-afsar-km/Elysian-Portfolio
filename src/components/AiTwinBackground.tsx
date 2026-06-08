@@ -97,12 +97,17 @@ export default function AiTwinBackground() {
           const dy = mouse.y - y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           let scale = 1;
-          if (dist < 150) scale = 1 + (150 - dist) / 150 * 2;
+          let intensity = 0;
+          if (dist < 150) {
+            intensity = (150 - dist) / 150;
+            scale = 1 + intensity * 2;
+          }
           ctx.save();
           ctx.translate(x, y);
           ctx.rotate(t * 0.1 + (x + y) * 0.001);
-          ctx.strokeStyle = "rgba(255, 70, 85, 0.2)";
-          ctx.lineWidth = 0.5;
+          const opacity = 0.2 + intensity * 0.6;
+          ctx.strokeStyle = `rgba(255, ${Math.round(70 - intensity * 50)}, ${Math.round(85 - intensity * 65)}, ${opacity})`;
+          ctx.lineWidth = 0.5 + intensity * 2;
           ctx.beginPath();
           ctx.moveTo(-2 * scale, 0); ctx.lineTo(2 * scale, 0);
           ctx.moveTo(0, -2 * scale); ctx.lineTo(0, 2 * scale);
@@ -127,7 +132,11 @@ export default function AiTwinBackground() {
 
     animId = requestAnimationFrame(draw);
 
-    const handleMouse = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    const handleMouse = (e: MouseEvent) => {
+      const rect = canvas!.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    };
     const handleLeave = () => { mouse.x = -1000; mouse.y = -1000; };
     window.addEventListener("mousemove", handleMouse);
     window.addEventListener("mouseleave", handleLeave);
