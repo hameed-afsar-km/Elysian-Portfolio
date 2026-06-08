@@ -1,7 +1,7 @@
 'use client';
 
 const TEXT = "AI SYSTEMS • AI AGENTS • AUTOMATION • DIGITAL EXPERIENCES • ";
-const REPEATS = 20;
+const REPEATS = 3;
 const FULL_TEXT = TEXT.repeat(REPEATS);
 
 type CurvedMarqueeProps = {
@@ -10,13 +10,14 @@ type CurvedMarqueeProps = {
 
 export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
   return (
-    <div className="hero-marquee-wrap">
+    <div className="hero-marquee-wrap" style={{ willChange: "transform" }}>
       <svg
         viewBox="0 0 1440 250"
         className="hero-marquee-svg"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid slice"
+        style={{ willChange: "transform" }}
       >
         <defs>
           <path
@@ -38,7 +39,7 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
                 <animate
                   attributeName="startOffset"
                   values="0%;-50%"
-                  dur="8s"
+                  dur="12s"
                   repeatCount="indefinite"
                 />
                 {FULL_TEXT}
@@ -56,7 +57,7 @@ export default function CurvedMarquee({ ribbon }: CurvedMarqueeProps) {
                 <animate
                   attributeName="startOffset"
                   values="-50%;0%"
-                  dur="8s"
+                  dur="12s"
                   repeatCount="indefinite"
                 />
                 {FULL_TEXT}

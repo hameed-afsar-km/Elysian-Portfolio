@@ -182,7 +182,7 @@ export default function AiTwinSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          {" >> AI_TWIN".split("").map((char, i) => (
+          {"ASK".split("").map((char, i) => (
             <motion.span
               key={i}
               className="ait-hc"
@@ -203,7 +203,7 @@ export default function AiTwinSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          Ask me anything about my projects, experience, AI, web development, startups, design decisions, or how I build products.
+          I build. You ask. Let's talk.
         </motion.p>
 
         <motion.p

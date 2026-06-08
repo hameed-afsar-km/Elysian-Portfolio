@@ -60,22 +60,22 @@ export default function Home() {
   );
 
   // ── Hero (0 → 0.15) ─────────────────────────────────────
-  const rawHeroScale = useTransform(scrollYProgress, [0, 0.15], [1, 10]);
-  const rawHeroY = useTransform(scrollYProgress, [0, 0.15], [0, -800]);
+  const rawHeroScale = useTransform(scrollYProgress, [0, 0.15], [1, 4]);
+  const rawHeroY = useTransform(scrollYProgress, [0, 0.15], [0, -500]);
   const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.10, 0.15], [1, 1, 0]);
-  const heroScale = useSpring(rawHeroScale, { stiffness: 200, damping: 30, restDelta: 0.001 });
-  const heroY = useSpring(rawHeroY, { stiffness: 200, damping: 30, restDelta: 0.001 });
-  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 250, damping: 35, restDelta: 0.001 });
+  const heroScale = useSpring(rawHeroScale, { stiffness: 120, damping: 20, restDelta: 0.05 });
+  const heroY = useSpring(rawHeroY, { stiffness: 120, damping: 20, restDelta: 0.05 });
+  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 150, damping: 25, restDelta: 0.05 });
 
   // ── Marquees (0 → 0.18) ────────────────────────────────
-  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.18], [1, 3]);
-  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.18], [0, -600]);
-  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.18], [0, 600]);
+  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.18], [1, 2]);
+  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.18], [0, -400]);
+  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.18], [0, 400]);
   const rawMarqueeOpacity = useTransform(scrollYProgress, [0, 0.14], [1, 0]);
-  const marqueeScale = useSpring(rawMarqueeScale, { stiffness: 100, damping: 25, restDelta: 0.001 });
-  const marqueeAY = useSpring(rawMarqueeAY, { stiffness: 100, damping: 25, restDelta: 0.001 });
-  const marqueeBY = useSpring(rawMarqueeBY, { stiffness: 100, damping: 25, restDelta: 0.001 });
-  const marqueeOpacity = useSpring(rawMarqueeOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
+  const marqueeScale = useSpring(rawMarqueeScale, { stiffness: 80, damping: 20, restDelta: 0.05 });
+  const marqueeAY = useSpring(rawMarqueeAY, { stiffness: 80, damping: 20, restDelta: 0.05 });
+  const marqueeBY = useSpring(rawMarqueeBY, { stiffness: 80, damping: 20, restDelta: 0.05 });
+  const marqueeOpacity = useSpring(rawMarqueeOpacity, { stiffness: 100, damping: 25, restDelta: 0.05 });
 
   // ── Background opacity (0 → 0.20) ──────────────────────
   const rawBgOpacity = useTransform(scrollYProgress, [0, 0.20], [1, 0.15]);
@@ -102,7 +102,7 @@ export default function Home() {
   );
   const rawAboutCardScale = useTransform(scrollYProgress, [0.65, 1.0], [1, 0.88]);
   const aboutCardY = useSpring(rawAboutCardY, { stiffness: 300, damping: 40, restDelta: 0.1 });
-  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 250, damping: 35, restDelta: 0.001 });
+  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 200, damping: 30, restDelta: 0.05 });
 
   // Terminal typing animation progress
   const rawCardProgress = useTransform(scrollYProgress, [0.30, 0.60], [0, 1]);
@@ -157,13 +157,13 @@ export default function Home() {
 
         {/* Curved Marquees — scale up and fly apart as hero zooms in */}
         <motion.div
-          style={{ scale: marqueeScale, y: marqueeBY, opacity: marqueeOpacity }}
+          style={{ scale: marqueeScale, y: marqueeBY, opacity: marqueeOpacity, willChange: "transform" }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]"
         >
           <CurvedMarquee ribbon="b" />
         </motion.div>
         <motion.div
-          style={{ scale: marqueeScale, y: marqueeAY, opacity: marqueeOpacity }}
+          style={{ scale: marqueeScale, y: marqueeAY, opacity: marqueeOpacity, willChange: "transform" }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[6]"
         >
           <CurvedMarquee ribbon="a" />
@@ -171,7 +171,7 @@ export default function Home() {
 
         {/* Hero Section Wrapper */}
         <motion.div
-          style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
+          style={{ scale: heroScale, y: heroY, opacity: heroOpacity, willChange: "transform" }}
           className="absolute inset-0 flex items-center justify-center"
         >
           <main className="hero-container">

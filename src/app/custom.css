@@ -2748,10 +2748,9 @@ body {
 /* ================================================================ */
 .ait-s {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   padding: 6rem 1.5rem;
   overflow: hidden;
   background: #050508;
@@ -2763,6 +2762,8 @@ body {
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2804,6 +2805,7 @@ body {
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 2rem;
+  min-height: 2.5em;
 }
 
 /* ── Retro pixel / arcade chat ── */
@@ -2833,6 +2835,8 @@ body {
   border-radius: 0;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
   animation: pixFlicker 0.15s infinite;
   box-shadow:
     6px 6px 0 rgba(255, 70, 85, 0.12),
@@ -2933,11 +2937,12 @@ body {
   position: relative;
   z-index: 2;
   flex: 1;
+  min-height: 0;
 }
 
 .ait-box-cs {
-  min-height: 320px;
-  max-height: 380px;
+  position: absolute;
+  inset: 0;
   overflow-y: auto;
   padding: 1rem;
   scroll-behavior: smooth;
@@ -3194,7 +3199,7 @@ body {
 
 @media (max-width: 640px) {
   .ait-s { padding: 4rem 1rem; }
-  .ait-box-cs { min-height: 260px; max-height: 320px; padding: 0.75rem; }
+  .ait-box-cs { padding: 0.75rem; }
   .ait-box-w { min-height: 240px; }
   .ait-mb { max-width: 88%; }
 }
@@ -3205,6 +3210,7 @@ body {
 .ftr-section {
   position: relative;
   width: 100%;
+  min-height: 100vh;
   padding: 10rem 0 5rem;
   background: #0a0a0a;
   border-top: 1px solid #2a2a2a;
