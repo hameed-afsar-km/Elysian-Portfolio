@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./custom.css";
 import Navbar from "@/components/Navbar";
 import { ReactLenis } from "lenis/react";
 

@@ -1,13 +1,6 @@
 type ResponseEntry = { text: string };
 
-export const WELCOME_MESSAGE =
-  `Hi, I'm Afsar's AI Twin.
-
-I'm a digital version of Afsar — an AI Engineer, Full Stack Developer, and startup builder focused on creating intelligent products.
-
-I can tell you about his projects, AI systems, startups, design journey, development process, and future ambitions.
-
-Ask me anything.`;
+export const WELCOME_MESSAGE = `Hi, I'm Afsar's AI Twin. Ask me anything.`;
 
 
 export const DEFAULT_RESPONSE =
