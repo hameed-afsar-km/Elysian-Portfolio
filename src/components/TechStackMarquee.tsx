@@ -47,16 +47,17 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 const CATEGORIES = ["All", ...Object.keys(CATEGORY_COLORS)];
 
-const PLACEMENTS = [
-  { x: 5, y: 5, r: -4 },    { x: 17, y: 3, r: 6 },   { x: 29, y: 7, r: -3 },
-  { x: 41, y: 4, r: 5 },    { x: 53, y: 6, r: -6 },  { x: 65, y: 3, r: 4 },
-  { x: 77, y: 7, r: -5 },   { x: 79, y: 18, r: 7 },  { x: 79, y: 31, r: -4 },
-  { x: 80, y: 44, r: 6 },   { x: 79, y: 57, r: -5 }, { x: 79, y: 72, r: 5 },
-  { x: 77, y: 87, r: -6 },  { x: 65, y: 89, r: 7 },  { x: 53, y: 86, r: -4 },
-  { x: 41, y: 90, r: 6 },   { x: 29, y: 87, r: -5 }, { x: 17, y: 89, r: 7 },
-  { x: 5, y: 87, r: -6 },   { x: 4, y: 72, r: 5 },   { x: 4, y: 57, r: -7 },
-  { x: 3, y: 44, r: 6 },    { x: 3, y: 31, r: -5 },  { x: 3, y: 18, r: 7 },
-];
+function computePlacement(index: number, total: number, seed: number): { x: number; y: number; r: number } {
+  const angle = -Math.PI / 2 + (index / total) * Math.PI * 2;
+  const rx = 42;
+  const ry = 36;
+  const rotOff = ((seed * 7 + index * 11) % 13) - 6;
+  return {
+    x: 50 + rx * Math.cos(angle),
+    y: 50 + ry * Math.sin(angle),
+    r: rotOff,
+  };
+}
 const CARD_TILT_RANGE = 14;
 const FRAME_TILT_RANGE = 22;
 
@@ -225,7 +226,7 @@ export default function TechStackMarquee() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-screen overflow-hidden bg-[#12080a] text-[#ece8e1]"
+      className="relative h-screen w-full overflow-hidden bg-[#12080a] text-[#ece8e1]"
       style={{ backgroundImage: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,70,85,0.08), transparent)" }}
     >
       <canvas
@@ -273,13 +274,13 @@ export default function TechStackMarquee() {
 
         <main className="relative min-h-0 sm:overflow-visible overflow-y-auto">
           {/* ── Desktop: center frame + scattered cards (hidden on mobile) ── */}
-          <div className="hidden sm:relative sm:block h-full" style={{ perspective: "1200px" }}>
+          <div className="hidden sm:relative sm:flex sm:items-center sm:justify-center h-full" style={{ perspective: "1200px" }}>
             {/* Center Frame — 3D perspective tilt on hover */}
             <div
               ref={frameRef}
               onPointerMove={handleFramePointer}
               onPointerLeave={handleFrameLeave}
-              className="absolute left-1/2 top-1/2 z-20 w-[min(95vw,665px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_40px_rgba(255,70,85,0.12)] sm:p-7"
+              className="z-20 w-[min(95vw,665px)] overflow-hidden border-2 bg-[#0a0a14]/95 p-5 shadow-[0_0_40px_rgba(255,70,85,0.12)] sm:p-7"
               style={{
                 transform: "perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
                 transition: "transform 0.12s ease-out",
@@ -355,7 +356,7 @@ export default function TechStackMarquee() {
             {/* Scattered sticker cards — each with individual 3D tilt */}
             <AnimatePresence mode="popLayout">
               {visibleTech.map((tech, index) => {
-                const placement = PLACEMENTS[index % PLACEMENTS.length];
+                const placement = computePlacement(index, visibleTech.length, 42);
                 const active = selectedTech.name === tech.name;
                 const color = CATEGORY_COLORS[tech.category];
 
@@ -363,7 +364,7 @@ export default function TechStackMarquee() {
                   <motion.button
                     key={tech.name}
                     type="button"
-                    className="absolute z-10 cursor-pointer"
+                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                     style={{ left: `${placement.x}%`, top: `${placement.y}%`, perspective: "600px" }}
                     layout
                     initial={{ opacity: 0, scale: 0.6, rotate: placement.r + 18 }}

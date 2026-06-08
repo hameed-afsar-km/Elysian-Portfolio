@@ -5,8 +5,9 @@ import Navbar from "@/components/Navbar";
 import { ReactLenis } from "lenis/react";
 
 export const metadata: Metadata = {
-  title: "Afsar | Portfolio",
+  title: "Hameed Afsar",
   description: "Portfolio of Afsar",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({
