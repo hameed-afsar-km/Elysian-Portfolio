@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface TechItem {
   name: string;
@@ -154,16 +154,6 @@ export default function TechStackMarquee() {
     };
   }, []);
 
-  // Parallax slide-up on scroll
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const rawParallaxY = useTransform(scrollYProgress, [0, 0.5, 1], [320, 0, -240]);
-  const rawParallaxOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.4, 1, 1, 0.4]);
-  const parallaxY = useSpring(rawParallaxY, { stiffness: 180, damping: 28, restDelta: 0.001 });
-  const parallaxOpacity = useSpring(rawParallaxOpacity, { stiffness: 200, damping: 30, restDelta: 0.001 });
-
   const visibleTech = useMemo(
     () => TECH.filter((tech) => category === "All" || tech.category === category),
     [category]
@@ -234,9 +224,8 @@ export default function TechStackMarquee() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{ width: "100%", height: "100%" }}
       />
-      <motion.div
+      <div
         className="relative z-10 mx-auto grid h-full w-full max-w-[1400px] grid-rows-[auto_1fr] px-4 py-4 sm:px-7 sm:py-6"
-        style={{ y: parallaxY, opacity: parallaxOpacity }}
       >
         <header className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
@@ -440,7 +429,7 @@ export default function TechStackMarquee() {
             </div>
           </div>
         </main>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
+import { useTransform, motion, useMotionValue, useSpring, useScroll } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 import ParticleBackground from "@/components/ParticleBackground";
@@ -120,6 +120,14 @@ export default function Home() {
     restDelta: 0.001,
   });
 
+  // ── Tech Stack parallax transition ──────────────────────
+  const techParallaxRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: techProgress } = useScroll({
+    target: techParallaxRef,
+    offset: ["start start", "end start"],
+  });
+  const techStackTranslateY = useTransform(techProgress, [0, 1], [0, "-15vh"]);
+
   return (
     <div ref={containerRef} data-scroll-container className="relative w-full bg-transparent">
       {/* Loader screen */}
@@ -226,8 +234,14 @@ export default function Home() {
       {/* Vertical Career Journey Section */}
       <VerticalTimeline />
 
-      {/* Tech Stack Infinite Marquee */}
-      <TechStackMarquee />
+      {/* Tech Stack Infinite Marquee - sticky parallax */}
+      <div ref={techParallaxRef} className="relative z-[12]" style={{ height: "130vh" }}>
+        <div className="sticky top-0 h-screen overflow-hidden">
+          <motion.div className="h-full" style={{ y: techStackTranslateY }}>
+            <TechStackMarquee />
+          </motion.div>
+        </div>
+      </div>
 
       {/* Projects Section — horizontal scroll in normal flow */}
       <TimelineSection />

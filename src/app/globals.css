@@ -3169,23 +3169,41 @@ body {
   font-family: 'Droid Sans Mono', monospace;
   font-size: 0.82rem;
   padding: 0.55rem 0.8rem;
-  border: 1px solid rgba(255, 70, 85, 0.15);
+  border: 1px solid rgba(255, 70, 85, 0.16);
   background: rgba(0, 0, 0, 0.3);
   color: var(--val-light);
   outline: none;
   border-radius: 0;
   transition: border-color 0.1s;
+  animation: inputGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes inputGlow {
+  0%, 100% { border-color: rgba(255, 70, 85, 0.25); }
+  50% { border-color: rgba(255, 70, 85, 0.55); }
 }
 
 .ait-box-ii:focus {
   border-color: var(--val-red);
   background: rgba(0, 0, 0, 0.4);
+  animation: none;
 }
 
 .ait-box-ii::placeholder {
-  color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.2);
   text-transform: uppercase;
   letter-spacing: 1px;
+  animation: placeholderPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes placeholderPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.ait-box-ii:focus::placeholder {
+  animation: none;
+  opacity: 0.4;
 }
 
 .ait-box-ii:disabled {
