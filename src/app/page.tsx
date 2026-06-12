@@ -17,8 +17,10 @@ import ResumeSection from "@/components/ResumeSection";
 import AiTwinSection from "@/components/AiTwinSection";
 import FooterSection from "@/components/FooterSection";
 
+let splashShown = false;
+
 export default function Home() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!splashShown);
   const containerRef = useRef<HTMLDivElement>(null);
   const lenisRef = useLenis();
 
@@ -42,6 +44,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
+      splashShown = true;
     }, 3300);
     return () => clearTimeout(timer);
   }, []);

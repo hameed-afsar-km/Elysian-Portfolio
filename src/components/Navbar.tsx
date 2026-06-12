@@ -26,6 +26,8 @@ export default function Navbar() {
   const y = useSpring(rawY, { stiffness: 200, damping: 30, restDelta: 0.001 });
   const opacity = useSpring(rawOpacity, { stiffness: 250, damping: 35, restDelta: 0.001 });
 
+  if (pathname === "/projects") return null;
+
   return (
     <motion.div
       style={{ y, scale, opacity }}
