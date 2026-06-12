@@ -3926,11 +3926,6 @@ body {
 .tl2-slide--more {
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.3s ease;
-}
-
-.tl2-slide--more:hover {
-  background: #0a0a18;
 }
 
 .tl2-more-arrow-wrap {

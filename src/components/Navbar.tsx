@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
@@ -8,6 +9,7 @@ import { useLenis } from "lenis/react";
 const WORDS = ["HAMEED", "AFSAR", "KM"];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const scrollYProgress = useMotionValue(0);
 
   useLenis(

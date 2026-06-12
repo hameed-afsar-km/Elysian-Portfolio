@@ -152,8 +152,9 @@ export default function TimelineSection() {
 }
 
 function MoreSlide({ index }: { index: number }) {
+  const isRight = index % 2 === 1;
   return (
-    <Link href="/projects" className="tl2-slide tl2-slide--more">
+    <Link href="/projects" className={`tl2-slide tl2-slide--more ${isRight ? "tl2-slide--right" : ""}`}>
       <div className="tl2-watermark" aria-hidden="true">ALL</div>
       <div className="tl2-slash" />
 
