@@ -3749,3 +3749,216 @@ body {
   }
   .ftr-clock-box { justify-content: center; }
 }
+
+/* ================================================================ */
+/* ── FLOWING MENU (fm-*)  ─────────────────────────────────────── */
+/* ================================================================ */
+.fm-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.fm-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.fm-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.fm-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 4vh, 3rem);
+  font-family: 'Droid 1997', sans-serif;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+}
+
+.fm-link:hover {
+  opacity: 0;
+}
+
+.fm-marquee {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(101%);
+}
+
+.fm-marquee-inner {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+}
+
+.fm-marquee-part {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.fm-marquee-text {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vh, 3rem);
+  line-height: 1;
+  padding: 0 1vw;
+  font-family: 'Droid 1997', sans-serif;
+}
+
+.fm-marquee-image {
+  width: 200px;
+  height: 7vh;
+  margin: 2em 2vw;
+  border-radius: 50px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* ================================================================ */
+/* ── PROJECTS PAGE (projects-page-*)  ─────────────────────────── */
+/* ================================================================ */
+.projects-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #05050d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.projects-page-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 2rem 1rem;
+  flex-shrink: 0;
+}
+
+.projects-back-btn {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(236, 232, 225, 0.4);
+  text-decoration: none;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  transition: color 0.2s;
+  z-index: 10;
+}
+
+.projects-back-btn:hover {
+  color: var(--val-red);
+}
+
+.projects-page-tag {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--val-red);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.projects-page-title {
+  font-family: 'Droid 1997', sans-serif;
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--val-light);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1;
+}
+
+.projects-page-line {
+  width: 40px;
+  height: 2px;
+  background: var(--val-red);
+  margin-top: 0.25rem;
+  box-shadow: 0 0 10px rgba(255, 70, 85, 0.4);
+}
+
+.projects-page-desc {
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(118, 128, 121, 0.6);
+  letter-spacing: 2px;
+  margin-top: 0.5rem;
+}
+
+.projects-page-menu {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+/* ================================================================ */
+/* ── MORE SLIDE (tl2-slide--more)  ────────────────────────────── */
+/* ================================================================ */
+.tl2-slide--more {
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.tl2-slide--more:hover {
+  background: #0a0a18;
+}
+
+.tl2-more-arrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tl2-more-arrow {
+  color: var(--val-red);
+  transition: transform 0.3s ease;
+}
+
+.tl2-slide--more:hover .tl2-more-arrow {
+  transform: translate(4px, -4px);
+}
+
+@keyframes moreArrowPulse {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(4px, -4px); }
+}
+
+.tl2-more-arrow {
+  animation: moreArrowPulse 2s ease-in-out infinite;
+}
+
+.tl2-slide--more:hover .tl2-more-arrow {
+  animation: none;
+  transform: translate(6px, -6px);
+}

@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { useTransform, motion, useScroll, useSpring, useMotionValue } from "framer-motion";
 
 const entries = [
@@ -65,7 +67,7 @@ const entries = [
   },
 ];
 
-const CARD_COUNT = entries.length;
+const CARD_COUNT = entries.length + 1;
 
 export default function TimelineSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -128,6 +130,7 @@ export default function TimelineSection() {
               {entries.map((entry, i) => (
                 <Slide key={i} entry={entry} index={i} />
               ))}
+              <MoreSlide index={entries.length} />
             </motion.div>
           </div>
 
@@ -137,7 +140,7 @@ export default function TimelineSection() {
               <motion.div className="tl2-progress-fill" style={{ width: fillWidth }} />
             </div>
             <div className="tl2-progress-labels">
-              {entries.map((e) => (
+              {[...entries, { index: "06", year: "MORE" }].map((e) => (
                 <span key={e.index} className="tl2-progress-label">{e.year}</span>
               ))}
             </div>
@@ -145,6 +148,41 @@ export default function TimelineSection() {
         </div>
       </div>
     </div>
+  );
+}
+
+function MoreSlide({ index }: { index: number }) {
+  return (
+    <Link href="/projects" className="tl2-slide tl2-slide--more">
+      <div className="tl2-watermark" aria-hidden="true">ALL</div>
+      <div className="tl2-slash" />
+
+      <div className="tl2-col-left">
+        <div className="tl2-index-wrap">
+          <span className="tl2-index">0{index + 1}</span>
+          <span className="tl2-total">/ 0{entries.length}</span>
+        </div>
+        <div className="tl2-vert-year">MORE</div>
+        <div className="tl2-vert-era">PROJECTS</div>
+        <div className="tl2-vert-line" />
+      </div>
+
+      <div className="tl2-col-right">
+        <span className="tl2-sub">FULL ARCHIVE</span>
+        <h3 className="tl2-headline">
+          <span className="tl2-headline-line">VIEW ALL</span>
+          <span className="tl2-headline-line">PROJECTS</span>
+        </h3>
+        <div className="tl2-rule" />
+        <p className="tl2-body">
+          Explore the complete collection of projects, experiments, and
+          collaborations spanning AI, full-stack, 3D, and more.
+        </p>
+        <div className="tl2-more-arrow-wrap">
+          <ArrowUpRight size={32} className="tl2-more-arrow" />
+        </div>
+      </div>
+    </Link>
   );
 }
 
