@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import FlowingMenu from "@/components/FlowingMenu";
 
 const allProjects = [
@@ -49,6 +49,14 @@ const allProjects = [
 ];
 
 export default function ProjectsPage() {
+  const [query, setQuery] = useState("");
+
+  const filtered = query.trim()
+    ? allProjects.filter((p) =>
+        p.text.toLowerCase().includes(query.toLowerCase())
+      )
+    : allProjects;
+
   return (
     <div className="projects-page">
       <div className="projects-page-header">
@@ -59,14 +67,21 @@ export default function ProjectsPage() {
         <div className="projects-page-tag">// ALL PROJECTS</div>
         <h1 className="projects-page-title">THE WORK</h1>
         <div className="projects-page-line" />
-        <p className="projects-page-desc">
-          Hover over each project to preview. Click to explore.
-        </p>
+        <div className="projects-search-wrap">
+          <Search size={14} className="projects-search-icon" />
+          <input
+            className="projects-search-input"
+            type="text"
+            placeholder="Search projects..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="projects-page-menu">
         <FlowingMenu
-          items={allProjects}
+          items={filtered}
           speed={18}
           textColor="#ece8e1"
           bgColor="#05050d"
