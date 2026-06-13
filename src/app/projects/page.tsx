@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Search } from "lucide-react";
 import FlowingMenu from "@/components/FlowingMenu";
+import ParticleBackgroundMono from "@/components/ParticleBackgroundMono";
 
 const allProjects = [
   {
@@ -75,6 +76,11 @@ export default function ProjectsPage() {
 
   return (
     <div className="projects-page">
+      {/* Particle background matching footer */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <ParticleBackgroundMono />
+      </div>
+
       <div className="projects-page-header">
         <Link href="/#projects" className="projects-back-btn">
           <ArrowLeft size={20} />
