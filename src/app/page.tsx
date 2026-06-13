@@ -17,10 +17,10 @@ import ResumeSection from "@/components/ResumeSection";
 import AiTwinSection from "@/components/AiTwinSection";
 import FooterSection from "@/components/FooterSection";
 
-let splashShown = false;
-
 export default function Home() {
-  const [loading, setLoading] = useState(!splashShown);
+  // Keep initial state consistent between SSR and hydration.
+  // Client-only adjustments (sessionStorage, hash) happen in effects below.
+  const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const lenisRef = useLenis();
 
@@ -41,13 +41,33 @@ export default function Home() {
     }
   }, [loading, lenisRef]);
 
+  // ── Client-only initialisation ──────────────────────────────
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Skip splash if already seen this session
+    const alreadyShown = sessionStorage.getItem("splashShown") === "true";
+    if (alreadyShown) {
       setLoading(false);
-      splashShown = true;
-    }, 3300);
-    return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem("splashShown", "true");
+      }, 3300);
+      return () => clearTimeout(timer);
+    }
   }, []);
+
+  // Hash navigation from /projects → /#projects: hide hero instantly
+  // and scroll the projects section into view.
+  useEffect(() => {
+    if (window.location.hash === "#projects") {
+      scrollYProgress.set(1);
+      if (lenisRef) {
+        const el = document.getElementById("projects");
+        if (el) lenisRef.scrollTo(el, { immediate: true });
+      }
+    }
+  }, [lenisRef]);
 
   // Sync Lenis scroll to progress MotionValue (focused on first 300vh)
   useLenis(

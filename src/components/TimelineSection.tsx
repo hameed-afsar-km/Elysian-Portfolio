@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { useTransform, motion, useScroll, useSpring, useMotionValue } from "framer-motion";
+import { useTransform, motion, useScroll, useMotionValue, animate } from "framer-motion";
 
 const entries = [
   {
@@ -80,30 +80,28 @@ export default function TimelineSection() {
 
   // Map 0→1 to card index 0→(n-1)
   const rawProgress = useTransform(scrollYProgress, [0, 1], [0, CARD_COUNT - 1]);
-  const snapProgress = useMotionValue(0);
+  const displayProgress = useMotionValue(0);
+  const translateX = useTransform(displayProgress, (p) => `${-p * 100}vw`);
+  const fillWidth = useTransform(displayProgress, [0, CARD_COUNT - 1], ["0%", "100%"]);
 
-  // Spring for smooth animation (both tracking + snap)
-  const springProgress = useSpring(snapProgress, { stiffness: 180, damping: 30, restDelta: 0.01 });
-  const translateX = useTransform(springProgress, (p) => `${-p * 100}vw`);
-
-  // Progress bar fill
-  const fillWidth = useTransform(springProgress, [0, CARD_COUNT - 1], ["0%", "100%"]);
-
-  // Snap to nearest card 200ms after scroll stops
+  // Follow scroll instantly during motion, snap to nearest card after idle
   useEffect(() => {
     const raw = rawProgress.get();
-    snapProgress.set(raw);
+    displayProgress.set(raw);
 
     let timer: ReturnType<typeof setTimeout>;
+    let snapAnim: ReturnType<typeof animate> | null = null;
     const unsub = rawProgress.on("change", (v) => {
-      snapProgress.set(v);
+      if (snapAnim) { snapAnim.stop(); snapAnim = null; }
+      displayProgress.set(v);
       clearTimeout(timer);
       timer = setTimeout(() => {
-        const nearest = Math.round(snapProgress.get());
-        snapProgress.set(nearest);
+        snapAnim = animate(displayProgress, Math.round(v), {
+          type: "spring", stiffness: 400, damping: 45,
+        });
       }, 200);
     });
-    return () => { unsub(); clearTimeout(timer); };
+    return () => { unsub(); clearTimeout(timer); if (snapAnim) snapAnim.stop(); };
   }, []);
 
   return (
