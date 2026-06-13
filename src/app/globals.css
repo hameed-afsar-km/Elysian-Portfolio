@@ -3842,7 +3842,7 @@ body {
 .projects-page {
   position: relative;
   width: 100%;
-  min-height: calc(100vh + 40px);
+  min-height: calc(100vh + 120px);
   background: #0a0a0a;
   display: flex;
   flex-direction: column;
