@@ -55,7 +55,7 @@ export default function VerticalTimeline() {
     offset: ["start 60%", "end 40%"],
   });
   const rawScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const lineScaleY = useSpring(rawScaleY, { stiffness: 50, damping: 18, restDelta: 0.001 });
+  const lineScaleY = useSpring(rawScaleY, { stiffness: 50, damping: 18, restDelta: 0.05 });
 
   return (
     <section ref={sectionRef} className="vtl-section" id="journey">

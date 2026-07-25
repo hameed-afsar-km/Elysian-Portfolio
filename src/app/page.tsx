@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useTransform, motion, useMotionValue, useSpring, useScroll } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 import ParticleBackground from "@/components/ParticleBackground";
@@ -17,14 +19,21 @@ import ResumeSection from "@/components/ResumeSection";
 import AiTwinSection from "@/components/AiTwinSection";
 import FooterSection from "@/components/FooterSection";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Home() {
-  // Keep initial state consistent between SSR and hydration.
-  // Client-only adjustments (sessionStorage, hash) happen in effects below.
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const lenisRef = useLenis();
 
-  // Scroll progress driven by Lenis (container-relative 0–1)
+  // ── Refs for GSAP-animated elements ─────────────────────
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const marqueeARef = useRef<HTMLDivElement>(null);
+  const marqueeBRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  // Scroll progress driven by Lenis (kept for about section Framer Motion)
   const scrollYProgress = useMotionValue(0);
 
   // Lock body scroll while loader is active; pause/resume Lenis accordingly
@@ -44,7 +53,6 @@ export default function Home() {
   // ── Client-only initialisation ──────────────────────────────
 
   useEffect(() => {
-    // Skip splash if already seen this session
     const alreadyShown = sessionStorage.getItem("splashShown") === "true";
     if (alreadyShown) {
       setLoading(false);
@@ -58,10 +66,9 @@ export default function Home() {
   }, []);
 
   // Hash navigation from /projects → /#projects: hide hero instantly
-  // and scroll the projects section into view.
   useEffect(() => {
     if (window.location.hash === "#projects") {
-      scrollYProgress.set(1);
+      // Scroll past the hero spacer to hide everything
       if (lenisRef) {
         const el = document.getElementById("projects");
         if (el) lenisRef.scrollTo(el, { immediate: true });
@@ -69,78 +76,145 @@ export default function Home() {
     }
   }, [lenisRef]);
 
-  // Sync Lenis scroll to progress MotionValue (focused on first 300vh)
+  // Sync Lenis scroll → GSAP ScrollTrigger + Framer Motion scrollYProgress (about section)
   useLenis(
     useCallback((lenis: Lenis) => {
+      // Update Framer Motion progress for about section
       const el = containerRef.current;
-      if (!el) return;
-      const elTop = el.offsetTop;
-      const vh = window.innerHeight;
-      const range = vh * 3; // Lock scroll-scrub range to exactly 300vh
-      const p = range > 0 ? (lenis.scroll - elTop) / range : 0;
-      scrollYProgress.set(Math.max(0, Math.min(1, p)));
+      if (el) {
+        const elTop = el.offsetTop;
+        const vh = window.innerHeight;
+        const range = vh * 3;
+        const p = range > 0 ? (lenis.scroll - elTop) / range : 0;
+        scrollYProgress.set(Math.max(0, Math.min(1, p)));
+      }
     }, [])
   );
 
-  // ── Hero (0 → 0.15) ─────────────────────────────────────
-  const rawHeroScale = useTransform(scrollYProgress, [0, 0.15], [1, 4]);
-  const rawHeroY = useTransform(scrollYProgress, [0, 0.15], [0, -500]);
-  const rawHeroOpacity = useTransform(scrollYProgress, [0, 0.10, 0.15], [1, 1, 0]);
-  const heroScale = useSpring(rawHeroScale, { stiffness: 120, damping: 20, restDelta: 0.05 });
-  const heroY = useSpring(rawHeroY, { stiffness: 120, damping: 20, restDelta: 0.05 });
-  const heroOpacity = useSpring(rawHeroOpacity, { stiffness: 150, damping: 25, restDelta: 0.05 });
+  // Sync Lenis with GSAP ScrollTrigger
+  useEffect(() => {
+    if (!lenisRef) return;
+    lenisRef.on("scroll", ScrollTrigger.update);
+    return () => {
+      lenisRef.off("scroll", ScrollTrigger.update);
+    };
+  }, [lenisRef]);
 
-  // ── Marquees (0 → 0.18) ────────────────────────────────
-  const rawMarqueeScale = useTransform(scrollYProgress, [0, 0.18], [1, 2]);
-  const rawMarqueeAY = useTransform(scrollYProgress, [0, 0.18], [0, -400]);
-  const rawMarqueeBY = useTransform(scrollYProgress, [0, 0.18], [0, 400]);
-  const rawMarqueeOpacity = useTransform(scrollYProgress, [0, 0.14], [1, 0]);
-  const marqueeScale = useSpring(rawMarqueeScale, { stiffness: 80, damping: 20, restDelta: 0.05 });
-  const marqueeAY = useSpring(rawMarqueeAY, { stiffness: 80, damping: 20, restDelta: 0.05 });
-  const marqueeBY = useSpring(rawMarqueeBY, { stiffness: 80, damping: 20, restDelta: 0.05 });
-  const marqueeOpacity = useSpring(rawMarqueeOpacity, { stiffness: 100, damping: 25, restDelta: 0.05 });
+  // ── GSAP ScrollTrigger for hero, marquees, bg ─────────────
+  useEffect(() => {
+    if (loading) return;
 
-  // ── Background opacity (0 → 0.20) ──────────────────────
-  const rawBgOpacity = useTransform(scrollYProgress, [0, 0.20], [1, 0.15]);
-  const bgOpacity = useSpring(rawBgOpacity, { stiffness: 150, damping: 30, restDelta: 0.001 });
+    const ctx = gsap.context(() => {
+      const trigger = containerRef.current;
+      if (!trigger) return;
 
-  // ── Fixed viewport display toggles ─────────────────────
-  const fixedContainerDisplay = useTransform(scrollYProgress, (p) =>
-    p >= 1.0 ? "none" : "flex"
-  );
+      const scrollEnd = () => window.innerHeight * 3;
 
-  // ── About Me (0.15 → 1.0) ─────────────────────────────
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger,
+          start: "top top",
+          end: scrollEnd,
+          scrub: 0.3,
+          onUpdate: (self) => {
+            if (fixedRef.current) {
+              fixedRef.current.style.display = self.progress >= 1.0 ? "none" : "";
+            }
+          },
+        },
+      });
+
+      // Marquee A: scale 1→2, y 0→-800, opacity 1→0 over 0→7%
+      tl.fromTo(
+        marqueeARef.current,
+        { scale: 1, y: 0, opacity: 1 },
+        { scale: 2, y: -800, opacity: 0, ease: "none", duration: 0.07 },
+        0
+      );
+
+      // Marquee B: scale 1→2, y 0→800, opacity 1→0 over 0→7%
+      tl.fromTo(
+        marqueeBRef.current,
+        { scale: 1, y: 0, opacity: 1 },
+        { scale: 2, y: 800, opacity: 0, ease: "none", duration: 0.07 },
+        0
+      );
+
+      // Background opacity: 1→0.15 over 0→20%
+      tl.fromTo(
+        bgRef.current,
+        { opacity: 1 },
+        { opacity: 0.15, ease: "none", duration: 0.20 },
+        0
+      );
+    });
+
+    return () => ctx.revert();
+  }, [loading]);
+
+  // ── Hero text — direct scroll listener (same speed as Navbar, opposite direction) ──
+  useEffect(() => {
+    if (loading) return;
+    const el = heroRef.current;
+    if (!el) return;
+    const scrollContainer = document.querySelector("[data-scroll-container]");
+    if (!scrollContainer) return;
+
+    const update = () => {
+      const rect = scrollContainer.getBoundingClientRect();
+      const scrollRange = window.innerHeight * 3;
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / scrollRange));
+      const progress = Math.min(1, p / 0.05);
+
+      gsap.set(el, {
+        scale: 1 + progress * 1.5,
+        y: progress * 350,
+        opacity: 1 - progress,
+      });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { update(); ticking = false; });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [loading]);
+
+  // ── About Me (Framer Motion — kept as-is) ────────────────
   const aboutDisplay = useTransform(scrollYProgress, (p) =>
     (p < 0.15 || p >= 1.0) ? "none" : "flex"
   );
-  // Hide card after parallax exit completes at 1.0
   const aboutCardDisplay = useTransform(scrollYProgress, (p) =>
     (p < 0.15 || p >= 1.0) ? "none" : "flex"
   );
-  // Slide in → hold while typing → parallax shrink + slide up out
   const rawAboutCardY = useTransform(
     scrollYProgress,
     [0.15, 0.30, 0.65, 1.0],
     [1200, 0, 0, -1000]
   );
   const rawAboutCardScale = useTransform(scrollYProgress, [0.65, 1.0], [1, 0.88]);
-  const aboutCardY = useSpring(rawAboutCardY, { stiffness: 300, damping: 40, restDelta: 0.1 });
-  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 200, damping: 30, restDelta: 0.05 });
+  const aboutCardY = useSpring(rawAboutCardY, { stiffness: 300, damping: 40, restDelta: 0.5 });
+  const aboutCardScale = useSpring(rawAboutCardScale, { stiffness: 200, damping: 30, restDelta: 0.1 });
 
-  // Terminal typing animation progress
   const rawCardProgress = useTransform(scrollYProgress, [0.30, 0.60], [0, 1]);
   const cardProgress = useSpring(rawCardProgress, {
     stiffness: 150,
     damping: 30,
-    restDelta: 0.001,
+    restDelta: 0.01,
   });
 
-  // Terminal exit animation progress (lines fade out as card exits)
   const rawAboutExit = useTransform(scrollYProgress, [0.65, 0.95], [0, 1]);
   const aboutExit = useSpring(rawAboutExit, {
     stiffness: 300,
     damping: 40,
-    restDelta: 0.001,
+    restDelta: 0.01,
   });
 
   // ── Tech Stack parallax transition ──────────────────────
@@ -175,34 +249,39 @@ export default function Home() {
         <p className="loader-hint md:hidden">use desktop view<br />for a better experience</p>
       </div>
 
-      {/* Particle Background */}
-      <motion.div style={{ opacity: bgOpacity }} className="pointer-events-none">
+      {/* Particle Background — GSAP controlled opacity */}
+      <div ref={bgRef} className="pointer-events-none">
         <ParticleBackground />
-      </motion.div>
+      </div>
 
-      {/* Fixed Viewport Container — stays in view regardless of scroll distance */}
-      <motion.div
-        style={{ display: fixedContainerDisplay }}
+      {/* Fixed Viewport Container */}
+      <div
+        ref={fixedRef}
         className="fixed top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center pointer-events-none z-[10]"
+        style={{ contain: "layout style" }}
       >
-
-        {/* Curved Marquees — scale up and fly apart as hero zooms in */}
-        <motion.div
-          style={{ scale: marqueeScale, y: marqueeBY, opacity: marqueeOpacity, willChange: "transform" }}
+        {/* Marquee B — GSAP animated */}
+        <div
+          ref={marqueeBRef}
+          style={{ willChange: "transform, opacity" }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[5]"
         >
           <CurvedMarquee ribbon="b" />
-        </motion.div>
-        <motion.div
-          style={{ scale: marqueeScale, y: marqueeAY, opacity: marqueeOpacity, willChange: "transform" }}
+        </div>
+
+        {/* Marquee A — GSAP animated */}
+        <div
+          ref={marqueeARef}
+          style={{ willChange: "transform, opacity" }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-[6]"
         >
           <CurvedMarquee ribbon="a" />
-        </motion.div>
+        </div>
 
-        {/* Hero Section Wrapper */}
-        <motion.div
-          style={{ scale: heroScale, y: heroY, opacity: heroOpacity, willChange: "transform" }}
+        {/* Hero Section Wrapper — GSAP animated */}
+        <div
+          ref={heroRef}
+          style={{ willChange: "transform, opacity" }}
           className="absolute inset-0 flex items-center justify-center"
         >
           <main className="hero-container">
@@ -218,9 +297,9 @@ export default function Home() {
               </span>
             </h1>
           </main>
-        </motion.div>
+        </div>
 
-        {/* About Me Background — dark canvas */}
+        {/* About Me Background — Framer Motion */}
         <motion.div
           id="about"
           style={{ display: aboutDisplay }}
@@ -229,7 +308,7 @@ export default function Home() {
           <ParticleBackgroundMono />
         </motion.div>
 
-        {/* About Me Card — parallax: shrinks + slides up as timeline takes over */}
+        {/* About Me Card — Framer Motion */}
         <motion.div
           style={{
             display: aboutCardDisplay,
@@ -245,8 +324,7 @@ export default function Home() {
             </ContainerScroll>
           </div>
         </motion.div>
-
-      </motion.div>
+      </div>
 
       {/* Spacer for hero + about scroll range */}
       <div style={{ height: "300vh" }} />
@@ -266,16 +344,16 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Projects Section — horizontal scroll in normal flow */}
+      {/* Projects Section */}
       <TimelineSection />
 
-      {/* Resume Section — 3D interactive tilt sheet preview */}
+      {/* Resume Section */}
       <ResumeSection />
 
-      {/* AI Twin Section — interactive chat experience */}
+      {/* AI Twin Section */}
       <AiTwinSection />
 
-      {/* Complete Footer Section — Outlined marquee + HUD status */}
+      {/* Footer Section */}
       <FooterSection />
     </div>
   );

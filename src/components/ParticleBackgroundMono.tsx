@@ -11,17 +11,24 @@ export default function ParticleBackgroundMono() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // The About Me panel is absolute inset-0 inside a h-screen sticky container,
-    // so it always equals the viewport. Use window dimensions directly to avoid
-    // the 0×0 bug that occurs when the parent has display:none at mount time.
-    let width  = (canvas.width  = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const isMobile = window.innerWidth <= 768;
+    const dpr = isMobile ? 0.5 : 1;
+
+    let width  = (canvas.width  = window.innerWidth * dpr);
+    let height = (canvas.height = window.innerHeight * dpr);
+    if (isMobile) {
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+    }
+
     let animationId: number;
     let time = 0;
+    let isVisible = true;
+    let lastFrame = 0;
+    const FRAME_INTERVAL = 33; // 30fps on all viewports
 
     const mouse = { x: -1000, y: -1000, active: false };
 
-    // ── Floating outline shapes (same geometry as hero ParticleBackground) ──
     class FloatingShape {
       x: number; y: number; size: number;
       vx: number; vy: number; angle: number; rotationSpeed: number;
@@ -76,50 +83,89 @@ export default function ParticleBackgroundMono() {
       }
     }
 
-    const shapes = Array.from({ length: 8 }, () => new FloatingShape());
+    const SHAPES_COUNT = isMobile ? 4 : 8;
+    const shapes = Array.from({ length: SHAPES_COUNT }, () => new FloatingShape());
 
-    function animate() {
+    const MOUSE_RADIUS = 180;
+    const HALF_SIZE = 4;
+    const spacing = isMobile ? 100 : 80;
+
+    function animate(timestamp: number) {
       if (!ctx) return;
+      if (!isVisible) {
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (FRAME_INTERVAL && timestamp - lastFrame < FRAME_INTERVAL) {
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrame = timestamp;
       time++;
 
-      // Solid black background
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, width, height);
 
-      const spacing = 80;
+      const angle = time * 0.002;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      const hx = HALF_SIZE * cos;
+      const hy = HALF_SIZE * sin;
+      const vx = -HALF_SIZE * sin;
+      const vy = HALF_SIZE * cos;
+
       ctx.lineWidth = 1;
 
+      const mrSq = MOUSE_RADIUS * MOUSE_RADIUS * dpr * dpr;
+      const mr = MOUSE_RADIUS * dpr;
+
+      // Batch all default crosshairs into one path
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.10)";
+      ctx.beginPath();
       for (let x = spacing / 2; x < width; x += spacing) {
         for (let y = spacing / 2; y < height; y += spacing) {
-          const dx = mouse.x - x;
-          const dy = mouse.y - y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const dx = mouse.x * dpr - x;
+          const dy = mouse.y * dpr - y;
+          if (dx * dx + dy * dy < mrSq) continue;
 
-          let angleOffset = 0;
-          let scale = 1;
-          let color = "rgba(255, 255, 255, 0.10)";
+          ctx.moveTo(x - hx, y - hy);
+          ctx.lineTo(x + hx, y + hy);
+          ctx.moveTo(x - vx, y - vy);
+          ctx.lineTo(x + vx, y + vy);
+        }
+      }
+      ctx.stroke();
 
-          if (dist < 180) {
-            const factor = (180 - dist) / 180;
-            angleOffset = factor * 0.5;
-            scale = 1 + factor * 2.5;
-            color = `rgba(255, 255, 255, ${0.10 + factor * 0.50})`;
-          }
+      // Draw mouse-affected crosshairs individually
+      for (let x = spacing / 2; x < width; x += spacing) {
+        for (let y = spacing / 2; y < height; y += spacing) {
+          const dx = mouse.x * dpr - x;
+          const dy = mouse.y * dpr - y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq >= mrSq) continue;
+
+          const dist = Math.sqrt(distSq);
+          const factor = (mr - dist) / mr;
+          const aOff = factor * 0.5;
+          const scale = 1 + factor * 2.5;
 
           ctx.save();
           ctx.translate(x, y);
-          ctx.rotate(angleOffset + time * 0.002);
-          ctx.strokeStyle = color;
+          ctx.rotate(aOff + angle);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.10 + factor * 0.50})`;
           ctx.beginPath();
-          ctx.moveTo(-4 * scale, 0); ctx.lineTo(4 * scale, 0);
-          ctx.moveTo(0, -4 * scale); ctx.lineTo(0, 4 * scale);
+          ctx.moveTo(-HALF_SIZE * scale, 0);
+          ctx.lineTo(HALF_SIZE * scale, 0);
+          ctx.moveTo(0, -HALF_SIZE * scale);
+          ctx.lineTo(0, HALF_SIZE * scale);
           ctx.stroke();
           ctx.restore();
 
-          if ((Math.floor(x) % 240 === 0) && (Math.floor(y) % 240 === 0)) {
+          if ((Math.floor(x) % (240 * dpr) === 0) && (Math.floor(y) % (240 * dpr) === 0)) {
             ctx.fillStyle = "rgba(255, 255, 255, 0.20)";
-            ctx.font = "8px monospace";
-            ctx.fillText(`[${Math.floor(x)},${Math.floor(y)}]`, x + 10, y + 3);
+            ctx.font = `${8 * dpr}px monospace`;
+            ctx.fillText(`[${Math.floor(x / dpr)},${Math.floor(y / dpr)}]`, x + 10 * dpr, y + 3 * dpr);
           }
         }
       }
@@ -136,18 +182,25 @@ export default function ParticleBackgroundMono() {
     };
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; mouse.active = false; };
     const handleResize = () => {
-      width  = canvas.width  = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width  = canvas.width  = window.innerWidth * dpr;
+      height = canvas.height = window.innerHeight * dpr;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("resize", handleResize);
 
-    animate();
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+
+    animationId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animationId);
+      observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);

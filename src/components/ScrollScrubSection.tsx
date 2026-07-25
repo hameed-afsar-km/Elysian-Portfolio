@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring, useMotionValueEvent, type MotionValue } from "framer-motion";
 import { useLenis } from "lenis/react";
 import type Lenis from "lenis";
@@ -38,7 +38,7 @@ interface AnimLineProps {
 function AnimLine({ text, dir, accent, progress, triggerAt }: AnimLineProps) {
   const rawOffset = useTransform(progress, [Math.max(0, triggerAt - 0.08), triggerAt], [1, 0]);
   const rawOpacity = useTransform(progress, [Math.max(0, triggerAt - 0.08), triggerAt], [0, 1]);
-  const springOffset = useSpring(rawOffset, { stiffness: 70, damping: 18, restDelta: 0.005 });
+  const springOffset = useSpring(rawOffset, { stiffness: 70, damping: 18, restDelta: 0.02 });
   const x = useTransform(springOffset, (val) => `${val * dir * 110}px`);
 
   return (
@@ -54,9 +54,22 @@ function AnimLine({ text, dir, accent, progress, triggerAt }: AnimLineProps) {
 export default function ScrollScrubSection() {
   const ref = useRef<HTMLDivElement>(null);
   const scrollYProgress = useMotionValue(0);
+  const isVisibleRef = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useLenis(
     useCallback((lenis: Lenis) => {
+      if (!isVisibleRef.current) return;
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -77,7 +90,7 @@ export default function ScrollScrubSection() {
 
   // ── Frame scrubber ───────────────────────────────────
   const rawFrame = useTransform(scrollYProgress, [0, 1], [0, Math.max(TOTAL_FRAMES - 1, 0)]);
-  const smoothFrame = useSpring(rawFrame, { stiffness: 100, damping: 28, restDelta: 0.001 });
+  const smoothFrame = useSpring(rawFrame, { stiffness: 100, damping: 28, restDelta: 0.01 });
 
   const [displaySrc, setDisplaySrc] = useState("");
   const [prevSrc, setPrevSrc] = useState("");
@@ -101,8 +114,8 @@ export default function ScrollScrubSection() {
   // ── Parallax entrance ──────────────────────────────
   const rawEntranceY = useTransform(scrollYProgress, [0, 0.04], [100, 0]);
   const rawEntranceOpacity = useTransform(scrollYProgress, [0, 0.02], [0, 1]);
-  const entranceY = useSpring(rawEntranceY, { stiffness: 250, damping: 25, restDelta: 0.001 });
-  const entranceOpacity = useSpring(rawEntranceOpacity, { stiffness: 300, damping: 25, restDelta: 0.001 });
+  const entranceY = useSpring(rawEntranceY, { stiffness: 250, damping: 25, restDelta: 0.01 });
+  const entranceOpacity = useSpring(rawEntranceOpacity, { stiffness: 300, damping: 25, restDelta: 0.01 });
 
   // ── Philosophy line triggers ─────────────────────────
   const triggers = [0.18, 0.38, 0.58, 0.78];

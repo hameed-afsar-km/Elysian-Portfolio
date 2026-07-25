@@ -1,65 +1,85 @@
 "use client";
 
-import { useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useTransform, motion, useMotionValue, useSpring } from "framer-motion";
-import type Lenis from "lenis";
-import { useLenis } from "lenis/react";
+import { gsap } from "gsap";
 
 const WORDS = ["HAMEED", "AFSAR", "KM"];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const scrollYProgress = useMotionValue(0);
+  const navRef = useRef<HTMLDivElement>(null);
 
-  useLenis(
-    useCallback((l: Lenis) => {
-      const p = l.limit > 0 ? l.scroll / l.limit : 0;
-      scrollYProgress.set(Math.max(0, Math.min(1, p)));
-    }, [])
-  );
+  useEffect(() => {
+    if (pathname === "/projects") return;
+    if (!navRef.current) return;
 
-  const rawScale = useTransform(scrollYProgress, [0, 0.04], [1, 10]);
-  const rawY = useTransform(scrollYProgress, [0, 0.04], [0, -800]);
-  const rawOpacity = useTransform(scrollYProgress, [0, 0.025, 0.04], [1, 1, 0]);
-  const scale = useSpring(rawScale, { stiffness: 200, damping: 30, restDelta: 0.001 });
-  const y = useSpring(rawY, { stiffness: 200, damping: 30, restDelta: 0.001 });
-  const opacity = useSpring(rawOpacity, { stiffness: 250, damping: 35, restDelta: 0.001 });
+    const el = navRef.current;
+    const scrollContainer = document.querySelector("[data-scroll-container]");
+    if (!scrollContainer) return;
+
+    const update = () => {
+      const rect = scrollContainer.getBoundingClientRect();
+      const scrollRange = window.innerHeight * 3;
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / scrollRange));
+
+      const progress = p / 0.05;
+      const clamped = Math.min(1, progress);
+
+      gsap.set(el, {
+        scale: 1 + clamped * 1.5,
+        y: clamped * -350,
+        opacity: 1 - clamped,
+      });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [pathname]);
 
   if (pathname === "/projects") return null;
 
+  let charIdx = 0;
+
   return (
-    <motion.div
-      style={{ y, scale, opacity }}
+    <div
+      ref={navRef}
       className="fixed top-0 left-0 w-full flex items-center justify-center pointer-events-none z-[9997]"
     >
       <h1 className="navbar-name">
-        {(() => {
-          let charIdx = 0;
-          return WORDS.map((word, wi) => (
-            <span key={wi} className="navbar-word">
-              {word.split("").map((char, ci) => {
-                const idx = charIdx++;
-                return (
-                  <motion.span
-                    key={ci}
-                    initial={{ opacity: 0, y: -24, filter: "blur(6px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{
-                      delay: 3 + idx * 0.035,
-                      duration: 0.45,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="inline-block"
-                  >
-                    {char}
-                  </motion.span>
-                );
-              })}
-            </span>
-          ));
-        })()}
+        {WORDS.map((word, wi) => (
+          <span key={wi} className="navbar-word">
+            {word.split("").map((char, ci) => {
+              const idx = charIdx++;
+              return (
+                <span
+                  key={ci}
+                  className="inline-block navbar-char"
+                  style={{ "--char-idx": idx } as React.CSSProperties}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </span>
+        ))}
       </h1>
-    </motion.div>
+    </div>
   );
 }

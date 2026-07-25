@@ -11,11 +11,22 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const isMobile = window.innerWidth <= 768;
+    const dpr = isMobile ? 0.5 : 1;
+
+    let width = (canvas.width = window.innerWidth * dpr);
+    let height = (canvas.height = window.innerHeight * dpr);
+    if (isMobile) {
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+    }
+
     let animationId: number;
     let time = 0;
-    let isVisible = true;
+    let lastFrame = 0;
+    const FRAME_INTERVAL = 33; // 30fps on all viewports (crosshairs rotate slowly, 30fps is visually identical)
+    let cachedParentOpacity = 1;
+    let opacityCheckFrame = 0;
 
     const mouse = { x: -1000, y: -1000, active: false };
 
@@ -37,7 +48,7 @@ export default function ParticleBackground() {
         this.vy = (Math.random() - 0.5) * 0.4;
         this.angle = Math.random() * Math.PI * 2;
         this.rotationSpeed = (Math.random() - 0.5) * 0.005;
-        
+
         const types: ("circle" | "square" | "triangle" | "crosshair")[] = ["circle", "square", "triangle", "crosshair"];
         this.type = types[Math.floor(Math.random() * types.length)];
       }
@@ -85,58 +96,97 @@ export default function ParticleBackground() {
       }
     }
 
-    const shapes = Array.from({ length: 8 }, () => new FloatingShape());
+    const SHAPES_COUNT = isMobile ? 4 : 8;
+    const shapes = Array.from({ length: SHAPES_COUNT }, () => new FloatingShape());
 
-    function animate() {
+    const MOUSE_RADIUS = 180;
+    const HALF_SIZE = 4;
+    const spacing = isMobile ? 100 : 80;
+
+    function animate(timestamp: number) {
       if (!ctx) return;
-      if (!isVisible) {
+      if (timestamp - lastFrame < FRAME_INTERVAL) {
         animationId = requestAnimationFrame(animate);
         return;
       }
+      lastFrame = timestamp;
+
+      // Check parent opacity every ~30 frames to skip drawing when scrolled past hero
+      opacityCheckFrame++;
+      if (opacityCheckFrame % 30 === 0 && canvas?.parentElement) {
+        cachedParentOpacity = parseFloat(getComputedStyle(canvas.parentElement).opacity) || 0;
+      }
+      if (cachedParentOpacity < 0.01) {
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+
       time++;
 
       ctx.fillStyle = "#ff4655";
       ctx.fillRect(0, 0, width, height);
 
-      const spacing = 80;
+      const angle = time * 0.002;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      const hx = HALF_SIZE * cos;
+      const hy = HALF_SIZE * sin;
+      const vx = -HALF_SIZE * sin;
+      const vy = HALF_SIZE * cos;
+
       ctx.lineWidth = 1;
 
+      // Batch all default crosshairs into one path
+      ctx.strokeStyle = "rgba(7, 7, 11, 0.15)";
+      ctx.beginPath();
       for (let x = spacing / 2; x < width; x += spacing) {
         for (let y = spacing / 2; y < height; y += spacing) {
-          const dx = mouse.x - x;
-          const dy = mouse.y - y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          let angleOffset = 0;
-          let scale = 1;
-          let color = "rgba(7, 7, 11, 0.15)";
+          const dx = mouse.x * dpr - x;
+          const dy = mouse.y * dpr - y;
+          if (dx * dx + dy * dy < MOUSE_RADIUS * MOUSE_RADIUS * dpr * dpr) continue;
 
-          if (dist < 180) {
-            const factor = (180 - dist) / 180;
-            angleOffset = factor * 0.5;
-            scale = 1 + factor * 2.5;
-            color = `rgba(7, 7, 11, ${0.15 + factor * 0.55})`;
-          }
+          ctx.moveTo(x - hx, y - hy);
+          ctx.lineTo(x + hx, y + hy);
+          ctx.moveTo(x - vx, y - vy);
+          ctx.lineTo(x + vx, y + vy);
+        }
+      }
+      ctx.stroke();
+
+      // Draw mouse-affected crosshairs individually (typically < 20)
+      const mrSq = MOUSE_RADIUS * MOUSE_RADIUS * dpr * dpr;
+      for (let x = spacing / 2; x < width; x += spacing) {
+        for (let y = spacing / 2; y < height; y += spacing) {
+          const dx = mouse.x * dpr - x;
+          const dy = mouse.y * dpr - y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq >= mrSq) continue;
+
+          const dist = Math.sqrt(distSq);
+          const mr = MOUSE_RADIUS * dpr;
+          const factor = (mr - dist) / mr;
+          const aOff = factor * 0.5;
+          const scale = 1 + factor * 2.5;
 
           ctx.save();
           ctx.translate(x, y);
-          ctx.rotate(angleOffset + time * 0.002);
-          ctx.strokeStyle = color;
-
+          ctx.rotate(aOff + angle);
+          ctx.strokeStyle = `rgba(7, 7, 11, ${0.15 + factor * 0.55})`;
           ctx.beginPath();
-          ctx.moveTo(-4 * scale, 0); ctx.lineTo(4 * scale, 0);
-          ctx.moveTo(0, -4 * scale); ctx.lineTo(0, 4 * scale);
+          ctx.moveTo(-HALF_SIZE * scale, 0);
+          ctx.lineTo(HALF_SIZE * scale, 0);
+          ctx.moveTo(0, -HALF_SIZE * scale);
+          ctx.lineTo(0, HALF_SIZE * scale);
           ctx.stroke();
-
           ctx.restore();
 
-          if ((Math.floor(x) % 240 === 0) && (Math.floor(y) % 240 === 0)) {
+          if ((Math.floor(x) % (240 * dpr) === 0) && (Math.floor(y) % (240 * dpr) === 0)) {
             ctx.fillStyle = "rgba(7, 7, 11, 0.35)";
-            ctx.font = "8px monospace";
+            ctx.font = `${8 * dpr}px monospace`;
             ctx.fillText(
-              `[${Math.floor(x)},${Math.floor(y)}]`,
-              x + 10,
-              y + 3
+              `[${Math.floor(x / dpr)},${Math.floor(y / dpr)}]`,
+              x + 10 * dpr,
+              y + 3 * dpr
             );
           }
         }
@@ -163,27 +213,20 @@ export default function ParticleBackground() {
     };
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      const newMobile = window.innerWidth <= 768;
+      const newDpr = newMobile ? 0.5 : 1;
+      width = canvas.width = window.innerWidth * newDpr;
+      height = canvas.height = window.innerHeight * newDpr;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("resize", handleResize);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-      },
-      { threshold: 0 }
-    );
-    observer.observe(canvas);
-
-    animate();
+    animationId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animationId);
-      observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);
@@ -200,7 +243,7 @@ export default function ParticleBackground() {
         width: "100%",
         height: "100%",
         zIndex: 0,
-        pointerEvents: "none", // Avoid intercepting clicks so page works fine
+        pointerEvents: "none",
       }}
     />
   );
