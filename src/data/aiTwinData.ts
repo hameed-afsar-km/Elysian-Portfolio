@@ -79,17 +79,19 @@ I focus on choosing the right technology for the problem instead of chasing tren
   "show me your best projects": {
     text: `Some of my favorite projects are:
 
-• afsGPT — A multi-model AI assistant platform with support for intelligent workflows and personalized AI interactions.
+• afsGPT — A multi-model AI assistant platform supporting intelligent workflows and multi-provider LLMs.
 
-• GitSubway — A unique 3D world where GitHub repositories become railway stations, allowing developers to explore their coding journey visually.
+• Ferrari F1 Experience — A cinematic interactive 3D web experience with 3D model visualization, audio, and custom physics.
 
-• Multi-Agent Trip Planner — A collaborative AI system where specialized agents work together to create personalized travel plans.
+• Crescent Technocrats Club (CTC) — The official flagship club platform with interactive OS mockups and event registration.
 
-• AI Surveillance System — A computer vision solution that detects accidents, fire incidents, fatalities, and abnormal events.
+• Miaksaaa Ecommerce — A modern full-stack scalable shopping platform with complete checkout and product management.
 
-• PathFindr — An AI-powered education and career guidance platform that I aim to grow into a future startup.
+• GitSubway 3D World — A 3D WebGL universe where GitHub repositories become railway stations.
 
-Each project represents a different stage of my evolution as an engineer.`,
+• DefinitelySafe™, Crave, and CityStat — Other featured projects spanning scrollytelling, queue-free food ordering, and 3D geospatial intelligence.
+
+Each project represents a different stage of my evolution across AI, 3D WebGL, and Full-Stack Engineering.`,
   },
 
   "what's your design philosophy": {
