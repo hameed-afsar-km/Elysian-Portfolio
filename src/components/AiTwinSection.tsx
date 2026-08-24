@@ -8,6 +8,7 @@ import {
   findResponse,
 } from "@/data/aiTwinData";
 import AiTwinBackground from "@/components/AiTwinBackground";
+import { AiTwinMarkdown } from "@/components/AiTwinMarkdown";
 
 const SHUFFLE_CHARS = "!@#$%^&*<>?/;:ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const rng = () => SHUFFLE_CHARS[Math.floor(Math.random() * SHUFFLE_CHARS.length)];
@@ -118,7 +119,11 @@ function Message({ role, text, time }: { role: "user" | "assistant"; text: strin
       className={`ait-m ${role === "user" ? "ait-m-u" : "ait-m-a"}`}
     >
       <div className={`ait-mb ${role === "user" ? "ait-mb-u" : "ait-mb-a"}`}>
-        <p>{text}</p>
+        {role === "user" ? (
+          <p className="ait-user-text">{text}</p>
+        ) : (
+          <AiTwinMarkdown content={text} />
+        )}
         <span className="ait-mt">{time}</span>
       </div>
     </motion.div>
@@ -152,8 +157,11 @@ export default function AiTwinSection() {
 
     const ro = new ResizeObserver(() => {
       chat.style.maxHeight = "";
-      const avail = box.clientHeight - (box.querySelector<HTMLElement>(".ait-box-h")?.offsetHeight ?? 0) - (box.querySelector<HTMLElement>(".ait-box-in")?.offsetHeight ?? 0);
-      chat.style.maxHeight = avail + "px";
+      const hH = box.querySelector<HTMLElement>(".ait-box-h")?.offsetHeight ?? 0;
+      const inH = box.querySelector<HTMLElement>(".ait-box-in")?.offsetHeight ?? 0;
+      const pH = box.querySelector<HTMLElement>(".ait-box-p")?.offsetHeight ?? 0;
+      const avail = box.clientHeight - hH - inH - pH;
+      chat.style.maxHeight = Math.max(120, avail) + "px";
     });
     ro.observe(box);
 
@@ -161,7 +169,7 @@ export default function AiTwinSection() {
       chat.removeEventListener("wheel", handler);
       ro.disconnect();
     };
-  }, []);
+  }, [showPrompts, messages.length]);
 
   const now = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   const [loadingText, loadProgress] = usePixelShuffle("LOADING…");
@@ -171,17 +179,39 @@ export default function AiTwinSection() {
     const trimmed = text.trim();
     if (!trimmed || isTyping) return;
 
-    setMessages(prev => [...prev, { role: "user", text: trimmed, time: now() }]);
+    const userTime = now();
+    const updatedMessages = [...messages, { role: "user" as const, text: trimmed, time: userTime }];
+    setMessages(updatedMessages);
     setInput("");
     setIsTyping(true);
     setShowPrompts(false);
 
-    const response = findResponse(trimmed);
-    const delay = Math.max(800, Math.min(2500, response.length * 6));
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: updatedMessages.map((m) => ({ role: m.role, text: m.text })),
+          prompt: trimmed,
+        }),
+      });
 
-    await new Promise(r => setTimeout(r, delay));
+      if (res.ok) {
+        const data = await res.json();
+        if (data.text) {
+          setMessages((prev) => [...prev, { role: "assistant", text: data.text, time: now() }]);
+          setIsTyping(false);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Groq chat API unavailable, using local persona engine:", err);
+    }
 
-    setMessages(prev => [...prev, { role: "assistant", text: response, time: now() }]);
+    const fallbackResponse = findResponse(trimmed);
+    const delay = Math.max(600, Math.min(1800, fallbackResponse.length * 4));
+    await new Promise((r) => setTimeout(r, delay));
+    setMessages((prev) => [...prev, { role: "assistant", text: fallbackResponse, time: now() }]);
     setIsTyping(false);
   };
 
@@ -267,7 +297,7 @@ export default function AiTwinSection() {
 
           {/* Chat */}
           <div ref={chatRef} className="ait-box-c" style={{ overflow: messages.length === 0 && !isTyping ? "hidden" : undefined }}>
-            <div className="ait-box-cs">
+            <div className={`ait-box-cs ${messages.length === 0 && !isTyping ? "ait-box-cs--empty" : ""}`}>
               {messages.length === 0 && !isTyping ? (
                 <motion.div
                   initial={{ opacity: 0 }}

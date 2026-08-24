@@ -3058,20 +3058,233 @@ body {
 }
 
 .ait-mb {
-  max-width: 78%;
-  padding: 0.6rem 0.9rem;
+  max-width: 85%;
+  padding: 0.75rem 1.05rem;
   position: relative;
   border-radius: 0;
+  box-sizing: border-box;
 }
 
-.ait-mb p {
+.ait-user-text {
   position: relative;
   z-index: 1;
   margin: 0;
-  white-space: pre-line;
-  font-size: 0.82rem;
+  white-space: pre-wrap;
+  font-size: 0.84rem;
   line-height: 1.55;
   font-family: 'Droid Sans Mono', monospace;
+  color: #ffffff;
+}
+
+/* ── Rich Markdown Renderer for AI Twin ── */
+.ait-md {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ait-md-p {
+  margin: 0;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ait-md-h {
+  font-family: 'LEDLIGHT', monospace;
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: var(--val-red);
+  text-transform: uppercase;
+  margin: 0.5rem 0 0.15rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-shadow: 0 0 10px rgba(255, 70, 85, 0.35);
+}
+
+.ait-md-h::before {
+  content: '//';
+  opacity: 0.55;
+  font-size: 0.75rem;
+  color: var(--val-red);
+}
+
+.ait-md-strong {
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.15);
+}
+
+.ait-md-em {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ait-md-ul {
+  list-style: none;
+  margin: 0.2rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ait-md-li {
+  position: relative;
+  padding-left: 1.1rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ait-md-li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.55em;
+  width: 4px;
+  height: 4px;
+  background: var(--val-red);
+  box-shadow: 0 0 5px rgba(255, 70, 85, 0.7);
+}
+
+.ait-md-ol {
+  list-style: none;
+  counter-reset: ait-counter;
+  margin: 0.2rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ait-md-ol-li {
+  counter-increment: ait-counter;
+  position: relative;
+  padding-left: 1.6rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ait-md-ol-li::before {
+  content: counter(ait-counter, decimal-leading-zero) '.';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--val-red);
+}
+
+.ait-md-quote {
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255, 70, 85, 0.05);
+  border-left: 2px solid var(--val-red);
+  color: rgba(255, 255, 255, 0.78);
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.ait-md-code-inline {
+  background: rgba(255, 70, 85, 0.12);
+  color: #ff8a93;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid rgba(255, 70, 85, 0.25);
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.75rem;
+  border-radius: 0;
+}
+
+.ait-md-code-block {
+  margin: 0.5rem 0;
+  background: #06060c;
+  border: 1px solid rgba(255, 70, 85, 0.25);
+  box-shadow: 2px 2px 0 rgba(255, 70, 85, 0.08);
+  overflow: hidden;
+}
+
+.ait-md-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0.65rem;
+  background: rgba(255, 70, 85, 0.08);
+  border-bottom: 1px solid rgba(255, 70, 85, 0.15);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: rgba(255, 70, 85, 0.85);
+}
+
+.ait-md-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  transition: color 0.15s ease;
+  padding: 2px 4px;
+}
+
+.ait-md-copy-btn:hover {
+  color: var(--val-red);
+}
+
+.ait-md-code-pre {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  overflow-x: auto;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 0.75rem;
+  color: #ece8e1;
+  line-height: 1.5;
+  background: transparent;
+}
+
+.ait-md-code-pre::-webkit-scrollbar {
+  height: 4px;
+}
+
+.ait-md-code-pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 70, 85, 0.4);
+}
+
+.ait-md-link {
+  color: var(--val-red);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 70, 85, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+
+.ait-md-link:hover {
+  color: #ffffff;
+  border-bottom-style: solid;
+  border-bottom-color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 70, 85, 0.6);
+}
+
+.ait-md-hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 70, 85, 0.3), transparent);
+  margin: 0.6rem 0;
 }
 
 .ait-mb-u {
