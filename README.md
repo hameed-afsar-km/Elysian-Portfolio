@@ -1,10 +1,40 @@
 # Hameed Afsar — Portfolio Website
 
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white&style=for-the-badge)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black&style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white&style=for-the-badge)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12-0055FF?logo=framer&logoColor=white&style=for-the-badge)
+![GSAP](https://img.shields.io/badge/GSAP-3-88CE02?logo=greensock&logoColor=white&style=for-the-badge)
+![Lenis](https://img.shields.io/badge/Lenis-1-FF6B6B?style=for-the-badge)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?logo=vercel&logoColor=white&style=for-the-badge)
+
+![GitHub stars](https://img.shields.io/github/stars/hameedafsar/someuniqueportfolio?style=social)
+![GitHub forks](https://img.shields.io/github/forks/hameedafsar/someuniqueportfolio?style=social)
+![GitHub issues](https://img.shields.io/github/issues/hameedafsar/someuniqueportfolio?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+---
+
 A distinctive, interactive developer portfolio built with **Next.js 16**, **React 19**, **Framer Motion**, **GSAP**, and **Lenis**. Features immersive scroll-driven animations, a terminal-style about section, 3D resume card, horizontal project timeline, and an AI-powered chat twin.
 
 ## Live Demo
 
+[![Portfolio Preview](https://img.shields.io/badge/View_Live-Demo-ff4655?style=for-the-badge&logo=vercel&logoColor=white)](https://hameedafsar.vercel.app)
+
 [https://hameedafsar.vercel.app](https://hameedafsar.vercel.app) *(deploy on Vercel)*
+
+## 🎬 Animated Previews
+
+| Section | Preview |
+|---------|---------|
+| **Hero + Marquees** | ![Hero](https://github.com/hameedafsar/someuniqueportfolio/assets/hero-demo.gif) |
+| **Terminal About** | ![About](https://github.com/hameedafsar/someuniqueportfolio/assets/about-demo.gif) |
+| **Projects Timeline** | ![Projects](https://github.com/hameedafsar/someuniqueportfolio/assets/projects-demo.gif) |
+| **3D Resume Card** | ![Resume](https://github.com/hameedafsar/someuniqueportfolio/assets/resume-demo.gif) |
+| **AI Twin Chat** | ![AI Twin](https://github.com/hameedafsar/someuniqueportfolio/assets/ai-twin-demo.gif) |
+
+> **Note**: Replace the GIF URLs above with actual recordings of your deployed site. Use tools like [Kap](https://getkap.co/), [ScreenToGif](https://www.screentogif.com/), or Vercel's [OG image generation](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation) for animated previews.
 
 ---
 
